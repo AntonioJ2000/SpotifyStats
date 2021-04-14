@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ApiNodeService } from '../services/api-node.service';
 
 @Component({
   selector: 'app-tab1',
@@ -7,6 +8,10 @@ import { Component } from '@angular/core';
 })
 export class Tab1Page {
 
-  constructor() {}
+  constructor(private apiNode:ApiNodeService) {}
 
+  public async login(){
+    const d = await this.apiNode.Authorize();
+    console.log(d);
+  }
 }
