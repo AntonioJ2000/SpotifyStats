@@ -7,6 +7,13 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="fontStyle">
-  <ion-button style="--background:#1DB954" (click)="login()"> A PROBAR</ion-button>
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+  <ion-button style="--background:#1DB954" (click)="login()">A PROBAR</ion-button>
+
+  <ion-label>
+    <ion-text>
+      <h1>{{status}}</h1>
+    </ion-text>
+  </ion-label>
+  <ion-button (click)="grabarAudio()">Grabar</ion-button>
+  <ion-button (click)="pararAudio()">Parar</ion-button>
 </ion-content>
