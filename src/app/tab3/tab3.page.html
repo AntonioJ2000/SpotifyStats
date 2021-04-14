@@ -1,0 +1,111 @@
+<ion-header [translucent]="true">
+  <ion-toolbar mode="ios">
+    <ion-title class="titleTab3">
+       Estadísticas
+    </ion-title>
+    <ion-buttons slot="end">   
+      <ion-button fill="clear">
+        <ion-icon class="dotsColor" icon="ellipsis-vertical"></ion-icon>
+      </ion-button>
+      </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="fontStyle">
+  <super-tabs>
+    <super-tabs-toolbar slot="top" style="background-color: rgb(59, 59, 59); color: white;">
+      
+      <super-tab-button>
+        <ion-label class="fontStyle">Canciones</ion-label>
+      </super-tab-button>  
+
+      <super-tab-button>
+        <ion-label class="fontStyle">Artistas</ion-label>
+      </super-tab-button>  
+
+
+      <super-tab-button>
+        <ion-label class="fontStyle">Recientes</ion-label>
+      </super-tab-button>  
+  
+    </super-tabs-toolbar>
+
+    <super-tabs-container>
+
+      <super-tab>
+        <ion-content class="fontStyle">
+          <ion-card>
+            <ion-item lines="full" class="songOrArtistItem">
+              <ion-avatar slot="start">
+                <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+              </ion-avatar> 
+              <p class="index">1. </p>
+              <p class="songOrArtist">Nombre de los artistas - Nombre de la canción</p>
+            </ion-item>
+          </ion-card>
+
+          <ion-card>
+            <ion-item lines="full" class="songOrArtistItem">
+              <ion-avatar slot="start">
+                <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+              </ion-avatar> 
+              <p class="index">2. </p>
+              <p class="songOrArtist">Nombre de los artistas - Nombre de la canción</p>
+            </ion-item>
+          </ion-card>
+          
+        </ion-content>
+      </super-tab>
+
+      <super-tab>
+        <ion-content class="fontStyle">
+          <ion-card class="songOrArtistItem">
+            <ion-card-header>
+              <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y" class="center">
+            </ion-card-header>
+          
+            <ion-card-content>
+              <ion-item lines="full" class="songOrArtistItem">
+                <p class="index">1. </p>
+                <p class="songOrArtist">Nombre del artista</p>
+              </ion-item>
+            </ion-card-content>
+          </ion-card>
+
+          <ion-card class="songOrArtistItem">
+            <ion-card-header>
+              <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y" class="center">
+            </ion-card-header>
+          
+            <ion-card-content>
+              <ion-item lines="full" class="songOrArtistItem">
+                <p class="index">1. </p>
+                <p class="songOrArtist">Nombre del artista</p>
+              </ion-item>
+            </ion-card-content>
+          </ion-card>
+          
+        </ion-content>
+      </super-tab>
+
+      <super-tab>
+        <ion-content class="fontStyle">
+          <ion-card>
+            <ion-item lines="full" class="songOrArtistItem">
+              <ion-avatar slot="start">
+                <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+              </ion-avatar> 
+            <ion-label>
+              <p style="color: white;">Bad bunny - Veteasdasdaadsdasdssdsdasdasdasdsa</p>
+              <p style="text-align: end;">00-00-0000 00:00</p>
+            </ion-label>
+            </ion-item>
+          </ion-card>
+        </ion-content>
+      </super-tab>
+
+    </super-tabs-container>
+
+
+  </super-tabs>
+</ion-content>
