@@ -2,6 +2,10 @@ import { Component } from '@angular/core';
 import { ApiNodeService } from '../services/api-node.service';
 import { File } from '@ionic-native/file/ngx';
 import { Media, MediaObject } from '@ionic-native/media/ngx';
+import { SpotifyAuth } from '@ionic-native/spotify-auth/ngx';
+import { NavController } from '@ionic/angular';
+
+declare var cordova: any;
 
 @Component({
   selector: 'app-tab1',
@@ -10,15 +14,35 @@ import { Media, MediaObject } from '@ionic-native/media/ngx';
 })
 export class Tab1Page {
 
+  
+
+  result={};
   status:string = "";
   audioFile:MediaObject;
 
-  constructor(private apiNode:ApiNodeService, private media:Media, private file:File) {}
+  constructor(private apiNode:ApiNodeService, private media:Media, private file:File,
+              private spotifyAuth: SpotifyAuth, public navCtrl:NavController) {}
 
-  public async login(){
-    const d = await this.apiNode.Authorize();
-    console.log(d);
+  ionViewWillEnter(){
+    console.log("VOLVEMOS")
   }
+
+  public login(){
+    const config = {
+      clientId: "6c3f918a4ab240db97b1c104475c8ea6",
+      redirectUrl: "spotifystats://callback",
+      scopes: ["user-read-recently-played", "streaming", "playlist-read-private", "playlist-read-collaborative", "user-top-read"],
+      tokenExchangeUrl: "https://ajsstats.herokuapp.com/exchange",
+      tokenRefreshUrl: "https://ajsstats.herokuapp.com/refresh"
+    };
+
+   cordova.plugins.spotifyAuth.authorize(config)
+   .then((data) =>{
+     this.result = data.accessToken;
+   });
+   
+  }
+
 
   public grabarAudio(){
     this.audioFile = this.media.create(this.file.externalRootDirectory+"/audiofile.mp3");

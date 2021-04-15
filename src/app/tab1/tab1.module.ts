@@ -14,7 +14,7 @@ import { ApiNodeService } from '../services/api-node.service';
     CommonModule,
     FormsModule,
     ExploreContainerComponentModule,
-    Tab1PageRoutingModule
+    Tab1PageRoutingModule,
   ],
   declarations: [Tab1Page]
 })
