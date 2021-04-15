@@ -1,18 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ApiNodeService } from '../services/api-node.service';
 import { File } from '@ionic-native/file/ngx';
 import { Media, MediaObject } from '@ionic-native/media/ngx';
 import { SpotifyAuth } from '@ionic-native/spotify-auth/ngx';
-import { NavController } from '@ionic/angular';
+import { NavController, Platform } from '@ionic/angular';
+import { MediaCapture, MediaFile, CaptureError, CaptureImageOptions } from '@ionic-native/media-capture/ngx';
 
 declare var cordova: any;
+
+const MEDIA_FOLDER_NAME = "my_media";
 
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss']
 })
-export class Tab1Page {
+export class Tab1Page implements OnInit {
 
   
 
@@ -20,11 +23,31 @@ export class Tab1Page {
   status:string = "";
   audioFile:MediaObject;
 
-  constructor(private apiNode:ApiNodeService, private media:Media, private file:File,
-              private spotifyAuth: SpotifyAuth, public navCtrl:NavController) {}
+  constructor(
+    private apiNode:ApiNodeService, 
+    private media:Media, 
+    private file:File, 
+    private mediaCapture:MediaCapture,         
+    private spotifyAuth: SpotifyAuth, 
+    private plt:Platform,
+    public navCtrl:NavController) {}
+
+  
+  ngOnInit(){
+    this.plt.ready().then(()=>{
+      let path = this.file.externalRootDirectory;
+      //this.file.checkDir(path, MEDIA_FOLDER_NAME);
+      //this.file.createDir(path, MEDIA_FOLDER_NAME, true);
+      console.log(path);
+    }, err => {
+      let path = this.file.externalRootDirectory;
+      
+      console.log("hola");
+    })
+  }
 
   ionViewWillEnter(){
-    console.log("VOLVEMOS")
+    console.log("VOLVEMOS");
   }
 
   public login(){
@@ -46,6 +69,7 @@ export class Tab1Page {
 
   public grabarAudio(){
     this.audioFile = this.media.create(this.file.externalRootDirectory+"/audiofile.mp3");
+    this.audioFile.setRate(44100);
     this.audioFile.startRecord();
     this.status = "recording...";
   }
@@ -59,6 +83,52 @@ export class Tab1Page {
       console.log(base64Audio);
     })
 
+  }
+
+  public recordAudio(){
+    this.mediaCapture.captureAudio().then(
+      (data: MediaFile[]) => {
+        if(data.length > 0){
+          console.log(data[0].fullPath);
+          this.copyFileToLocalDir(data[0].fullPath);
+        }
+      },
+      (err:CaptureError) => console.error(err)
+    )
+
+  }
+
+
+  public copyFileToLocalDir(fullPath){
+    let myPath = fullPath;
+
+    if(fullPath.indexOf('file://') < 0){
+      myPath = 'file://' + fullPath;
+    }
+
+    const ext = myPath.split('.').pop();
+    const d = Date.now();
+    const newName = `${d}.${ext}`;
+
+    const name = myPath.substr(myPath.lastIndexOf('/')+1);
+    console.log(name);
+    const copyFrom = myPath.substr(0, myPath.lastIndexOf('/')+1);
+    console.log(copyFrom);
+    const copyTo = this.file.externalRootDirectory + MEDIA_FOLDER_NAME;
+    console.log(copyTo);
+    console.log(newName);
+
+    this.file.checkFile(copyFrom, name).then((data)=>{
+      console.log(data);
+    })
+
+    /*this.file.moveFile(copyFrom, name, copyTo, newName).then(()=>{
+      console.log("Copiado");
+    },err => console.log("error: ", err))*/
+
+    this.file.copyFile(copyFrom, name, copyTo, newName).then(()=>{
+      console.log("Copiado");
+    },err => console.log("error: ", err))
   }
 
   
