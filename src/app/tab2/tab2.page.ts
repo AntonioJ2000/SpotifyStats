@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { track } from '../model/track';
+import { SpotifyApiService } from '../services/spotify-api.service';
 
 @Component({
   selector: 'app-tab2',
@@ -7,6 +9,17 @@ import { Component } from '@angular/core';
 })
 export class Tab2Page {
 
-  constructor() {}
+  listaCanciones: track[];
 
+  constructor(private spotifyApi:SpotifyApiService) {}
+
+  ionViewWillEnter(){
+    this.getUserSavedTracks();
+  }
+
+  public async getUserSavedTracks(){
+    let t = await this.spotifyApi.getCurrentUserSavedTracks();
+
+    console.log(t.items);
+  }
 }

@@ -5,6 +5,8 @@ import { Media, MediaObject } from '@ionic-native/media/ngx';
 import { SpotifyAuth } from '@ionic-native/spotify-auth/ngx';
 import { NavController, Platform } from '@ionic/angular';
 import { MediaCapture, MediaFile, CaptureError, CaptureImageOptions } from '@ionic-native/media-capture/ngx';
+import { ClientcredentialsService } from '../services/clientcredentials.service';
+import { SpotifyApiService } from '../services/spotify-api.service';
 
 declare var cordova: any;
 
@@ -17,20 +19,18 @@ const MEDIA_FOLDER_NAME = "my_media";
 })
 export class Tab1Page implements OnInit {
 
-  
-
   result={};
   status:string = "";
   audioFile:MediaObject;
 
   constructor(
-    private apiNode:ApiNodeService, 
     private media:Media, 
     private file:File, 
     private mediaCapture:MediaCapture,         
-    private spotifyAuth: SpotifyAuth, 
     private plt:Platform,
-    public navCtrl:NavController) {}
+    public navCtrl:NavController,
+    private clientCredentials:ClientcredentialsService,
+    private spotifyApi:SpotifyApiService) {}
 
   
   ngOnInit(){
@@ -46,24 +46,41 @@ export class Tab1Page implements OnInit {
     })
   }
 
-  ionViewWillEnter(){
-    console.log("VOLVEMOS");
-  }
 
   public login(){
     const config = {
       clientId: "6c3f918a4ab240db97b1c104475c8ea6",
       redirectUrl: "spotifystats://callback",
-      scopes: ["user-read-recently-played", "streaming", "playlist-read-private", "playlist-read-collaborative", "user-top-read"],
+      scopes: ["user-read-recently-played", "streaming", "playlist-read-private", "playlist-read-collaborative", "user-top-read", "user-library-read"],
       tokenExchangeUrl: "https://ajsstats.herokuapp.com/exchange",
       tokenRefreshUrl: "https://ajsstats.herokuapp.com/refresh"
     };
 
    cordova.plugins.spotifyAuth.authorize(config)
    .then((data) =>{
-     this.result = data.accessToken;
+      this.result = data.accessToken;
+      //Sobreescribimos las variables del cliente
+      this.clientCredentials.client.access_token = data.accessToken;
+      this.clientCredentials.client.encrypted_refresh_token = data.encryptedRefreshToken;
+      this.clientCredentials.client.expires_in = data.expiresAt
+
+      console.log(this.clientCredentials.client)
+
    });
    
+  }
+
+  public async getUserProfile(){
+    let u = await this.spotifyApi.getCurrentUserProfile();
+
+    this.clientCredentials.user.display_name = u.display_name;
+    this.clientCredentials.user.external_urls = u.external_urls.spotify;
+    this.clientCredentials.user.followers = u.followers.total;
+    this.clientCredentials.user.id = u.id;
+    this.clientCredentials.user.image = u.images[0].url;
+    this.clientCredentials.user.type=u.type;
+
+    console.log(this.clientCredentials.user);
   }
 
 
