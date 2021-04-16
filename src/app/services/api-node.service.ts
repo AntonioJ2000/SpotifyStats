@@ -24,6 +24,21 @@ export class ApiNodeService {
     })
   }
 
+  public getToken():Promise<any | null>{
+    return new Promise((resolve, reject)=>{
+      const endpoint = 'http://localhost:8888/callback';
+      this.http.get(endpoint,{},this.header)
+      .then(d=>{
+        if(d){
+          //console.log(d);
+          resolve(d)
+        }else{
+          resolve(null);
+        }
+      }).catch(err => reject(err))
+    })
+  }
+
   private get header():any{
     return {
       'Access-Control-Allow-Origin': '*',

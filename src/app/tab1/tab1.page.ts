@@ -20,6 +20,11 @@ export class Tab1Page {
     console.log(d);
   }
 
+  public async getToken(){
+    const d = await this.apiNode.getToken();
+    console.log(d);
+  }
+
   public grabarAudio(){
     this.audioFile = this.media.create(this.file.externalRootDirectory+"/audiofile.mp3");
     this.audioFile.startRecord();
