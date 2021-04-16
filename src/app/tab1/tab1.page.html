@@ -9,7 +9,10 @@
 <ion-content [fullscreen]="true" class="fontStyle">
 
   <ion-button style="--background:#1DB954" (click)="login()">A PROBAR</ion-button>
-  <ion-button style="--background:#1DB954" (click)="getToken()">TOKEN</ion-button>
+  {{ result | json }}
+
+  <ion-button style="--background:#1DB954" (click)="getUserProfile()">Perfil</ion-button>
+
 
   <ion-label>
     <ion-text>
@@ -18,4 +21,6 @@
   </ion-label>
   <ion-button (click)="grabarAudio()">Grabar</ion-button>
   <ion-button (click)="pararAudio()">Parar</ion-button>
+
+  <ion-button (click)="recordAudio()">Media Capture</ion-button>
 </ion-content>

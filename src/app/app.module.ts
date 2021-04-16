@@ -13,6 +13,8 @@ import { HTTP } from '@ionic-native/http/ngx';
 
 import { File } from '@ionic-native/file/ngx';
 import { Media } from '@ionic-native/media/ngx';
+import { SpotifyAuth } from '@ionic-native/spotify-auth/ngx';
+import { MediaCapture } from '@ionic-native/media-capture/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,6 +25,8 @@ import { Media } from '@ionic-native/media/ngx';
     ApiNodeService,
     File,
     Media,
+    MediaCapture,
+    SpotifyAuth,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent],

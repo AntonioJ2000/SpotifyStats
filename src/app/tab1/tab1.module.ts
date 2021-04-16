@@ -6,7 +6,6 @@ import { Tab1Page } from './tab1.page';
 import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
 
 import { Tab1PageRoutingModule } from './tab1-routing.module';
-import { ApiNodeService } from '../services/api-node.service';
 
 @NgModule({
   imports: [
@@ -14,7 +13,7 @@ import { ApiNodeService } from '../services/api-node.service';
     CommonModule,
     FormsModule,
     ExploreContainerComponentModule,
-    Tab1PageRoutingModule
+    Tab1PageRoutingModule,
   ],
   declarations: [Tab1Page]
 })
