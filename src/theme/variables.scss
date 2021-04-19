@@ -10,13 +10,16 @@
  /** my-app-theming **/
   --ion-background-color: #141414;
   --ion-border-color: #1DB954;
+  --ion-tab-bar-border-color: #1DB954;
+  --ion-item-border-color: #1DB954;
   --ion-toolbar-background: rgb(59, 59, 59);
   --ion-text-color: white;
 
   .myTabBar{
     --ion-tab-bar-color-selected: #2ae76c;
-    --ion-tab-bar-background: rgb(59, 59, 59);
   }
+
+  
 
   .myTabButtons{
     --color: rgb(175, 175, 175);

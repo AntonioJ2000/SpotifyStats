@@ -5,4 +5,5 @@ export interface track{
     artists:any[], //track.artists (array)
     spotifyURL:any, //track.external_urls.spotify
     previewURL:any //track.preview_url
+    playedat?:any;
 }

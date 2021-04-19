@@ -6,7 +6,22 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="fontStyle">
 
-  
+<ion-content [fullscreen]="true" class="fontStyle">
+  <ion-list>
+    <ion-item lines="none" *ngFor = "let savedTrack of listaCancionesGuardadas; let i=index"> 
+      <ion-card>
+        <ion-item lines="full" class="itemBackground">
+          <p slot="start" class="index">{{i+1}}.</p>
+            <img slot ="start" style="height: 20%; width: 20%; margin-top: 7px; margin-bottom: 7px; margin-left: -13px;" src="{{savedTrack.trackThumbnail}}">          
+          <ion-label>
+            <p class="track">{{savedTrack.trackName}}</p>
+            <p *ngFor = "let artist of this.savedTrack.artists;">{{artist.name}}</p>
+          </ion-label>
+            <ion-icon slot="end" name="play"></ion-icon>
+          </ion-item>
+      </ion-card>
+    </ion-item>
+  </ion-list>
 </ion-content>
+

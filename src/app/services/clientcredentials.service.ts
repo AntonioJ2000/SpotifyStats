@@ -20,5 +20,9 @@ export class ClientcredentialsService {
     type:''
   }
 
+  config = {
+    time_range: 'long_term'
+  }
+
   constructor() { }
 }

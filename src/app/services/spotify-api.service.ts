@@ -17,7 +17,7 @@ export class SpotifyApiService {
     public getCurrentUserProfile():Promise<any | null>{
       return new Promise((resolve, reject)=>{
         const endpoint = environment.currentUserEndpoint;
-        this.http.get(endpoint,{},this.headerCurrentUser)
+        this.http.get(endpoint,{},this.header)
         .then(d=>{
           if(d){
             resolve(JSON.parse(d.data))
@@ -31,7 +31,7 @@ export class SpotifyApiService {
     public getCurrentUserSavedTracks():Promise<any | null>{
       return new Promise((resolve, reject)=>{
         const endpoint = environment.currentUserSavedTracks;
-        this.http.get(endpoint,{}, this.headerSavedTracks)
+        this.http.get(endpoint,{}, this.header)
         .then(d =>{
           if(d){
             resolve(JSON.parse(d.data))
@@ -42,17 +42,54 @@ export class SpotifyApiService {
       })
     }
 
-    private get headerCurrentUser():any{
+    public getCurrentUserTopTracks():Promise<any | null>{
+      return new Promise((resolve,reject)=>{
+        const endpoint = environment.currentUserTop + 'tracks?' + 'time_range=' + this.clientCredentials.config.time_range
+        this.http.get(endpoint,{},this.header)
+        .then(d =>{
+          if(d){
+            resolve(JSON.parse(d.data))
+          }else{
+            resolve(null);
+          }
+        }).catch(err => reject(err))
+      })
+    }
+
+    public getCurrentUserTopArtists():Promise<any | null>{
+      return new Promise((resolve,reject)=>{
+        const endpoint = environment.currentUserTop + 'artists?' + 'time_range=' + this.clientCredentials.config.time_range
+        this.http.get(endpoint,{},this.header)
+        .then(d =>{
+          if(d){
+            resolve(JSON.parse(d.data))
+          }else{
+            resolve(null);
+          }
+        }).catch(err => reject(err))
+      })
+    }
+
+    public getCurrentUserRecentlyPlayed():Promise<any | null>{
+      return new Promise((resolve,reject)=>{
+        const endpoint = environment.currentUserRecentlyPlayed;
+        this.http.get(endpoint,{},this.header)
+        .then(d =>{
+          if(d){
+            resolve(JSON.parse(d.data))
+          }else{
+            resolve(null);
+          }
+        }).catch(err => reject(err))
+      })
+    }
+
+    private get header():any{
       return {
         'Authorization': this.getToken()
       }
     }
 
-    private get headerSavedTracks():any{
-      return {
-        'Authorization': this.getToken()
-      }
-    }
 
 
     private getToken():string{

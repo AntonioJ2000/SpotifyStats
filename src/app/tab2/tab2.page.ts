@@ -9,11 +9,11 @@ import { SpotifyApiService } from '../services/spotify-api.service';
 })
 export class Tab2Page {
 
-  listaCanciones: track[] = [];
+  listaCancionesGuardadas: track[] = [];
 
   constructor(private spotifyApi:SpotifyApiService) {}
 
-  ionViewWillEnter(){
+  ngOnInit(){
     this.getUserSavedTracks();
   }
 
@@ -28,12 +28,11 @@ export class Tab2Page {
         spotifyURL: songList[i].track.external_urls.spotify,
         previewURL: songList[i].track.preview_url,
         artists: songList[i].track.artists,
-        trackThumbnail: songList[i].track.album.images[0]
+        trackThumbnail: songList[i].track.album.images[1].url
       }  
-      this.listaCanciones.push(trackToView);
+      this.listaCancionesGuardadas.push(trackToView);
       
     }
  
-      console.log(this.listaCanciones);
   }
 }
