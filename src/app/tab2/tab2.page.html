@@ -23,10 +23,9 @@
       </ion-card>
     </ion-item>
 
-    <ion-infinite-scroll *ngIf="this.listaCancionesGuardadas.length > 0" threshold="50px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll *ngIf="this.listaCancionesGuardadas.length > 0" threshold="100px" (ionInfinite)="loadData($event)">
       <ion-infinite-scroll-content
-        loadingSpinner="dots"
-        loadingText="Cargando más canciones...">
+        loadingSpinner="dots">
       </ion-infinite-scroll-content>
     </ion-infinite-scroll>
 
