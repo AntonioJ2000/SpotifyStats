@@ -4,8 +4,11 @@
        Estadísticas
     </ion-title>
     <ion-buttons slot="end">   
+      <ion-button>
+        <ion-icon class="iconColor "name="reload-outline"></ion-icon>
+      </ion-button>
       <ion-button fill="clear">
-        <ion-icon class="dotsColor" icon="ellipsis-vertical"></ion-icon>
+        <ion-icon class="iconColor" icon="ellipsis-vertical"></ion-icon>
       </ion-button>
       </ion-buttons>
   </ion-toolbar>
@@ -38,7 +41,12 @@
             <ion-item lines="none" *ngFor = "let topTrack of listaTopCanciones; let i=index"> 
               <ion-card class="cardBackground">
                 <ion-item lines="full" class="itemBackground">
-                  <p slot="start" class="index">{{i+1}}.</p>
+                  
+                  <p *ngIf="this.i > 2" slot="start" class="index">{{i+1}}.</p>
+                  <p *ngIf="this.i === 0" slot="start" style="color:gold" class="index">{{i+1}}.</p>
+                  <p *ngIf="this.i === 1" slot="start" style="color:silver" class="index">{{i+1}}.</p>
+                  <p *ngIf="this.i === 2" slot="start" style="color:#CD7F32" class="index">{{i+1}}.</p>
+
                     <img slot ="start" style="height: 20%; width: 20%; margin-top: 7px; margin-bottom: 7px; margin-left: -13px;" src="{{topTrack.trackThumbnail}}">          
                   <ion-label>
                     <p class="track">{{topTrack.trackName}}</p>
@@ -57,27 +65,50 @@
           <ion-list>
             <ion-card *ngFor="let topArtist of listaTopArtistas; let i=index" style="--background: rgb(59, 59, 59)">
               <ion-card-header>
-                <img class="center" src="{{topArtist.image}}">
-                <ion-card-subtitle>Popularidad: {{topArtist.popularity}}</ion-card-subtitle>
-                <ion-card-title style="font-weight: bold;">{{i+1}}. {{topArtist.name}}</ion-card-title>
-                <p style="text-align: right; margin-bottom: -5px;">{{topArtist.followers}} seguidores</p>
+                  <ion-toolbar style="--background: transparent">
+                    <ion-avatar>
+                      <img class="center" src="{{topArtist.image}}">
+                    </ion-avatar>
+                    <ion-buttons slot="end">
+                      <ion-icon *ngIf="this.i === 0" size="large" src="assets/trophy.svg"></ion-icon>
+                      <ion-icon *ngIf="this.topArtist.popularity > 80" size="large" src="assets/popularity.svg" style="margin-left: 8px;"></ion-icon>
+                      <ion-icon *ngIf="this.topArtist.followers > 1000000" size="large" src="assets/million.svg" style="margin-left: 8px;"></ion-icon>
+                      <ion-button fill="none" (click)="this.openArtistProfile(topArtist)">
+                        <ion-icon size="large" src="assets/spotify.svg"></ion-icon>
+                      </ion-button>
+                      </ion-buttons>
+                  </ion-toolbar>
+                 
+                <ion-card-title *ngIf="this.i > 2" style="font-weight: bold; margin-top: 15px;">{{i+1}}. {{topArtist.name}}</ion-card-title>
+                <ion-card-title *ngIf="this.i === 0" style="font-weight: bold; margin-top: 15px; color:gold">{{i+1}}. {{topArtist.name}}</ion-card-title>
+                <ion-card-title *ngIf="this.i === 1" style="font-weight: bold; margin-top: 15px; color:silver">{{i+1}}. {{topArtist.name}}</ion-card-title>
+                <ion-card-title *ngIf="this.i === 2" style="font-weight: bold; margin-top: 15px; color:#CD7F32">{{i+1}}. {{topArtist.name}}</ion-card-title>
+
+                <ion-toolbar style="--background: transparent">
+                  <ion-chip slot="start" style="margin-top: 20px;">
+                    <ion-icon name="people" style="color:white;"></ion-icon>
+                    <ion-label>Popularidad: {{topArtist.popularity}}</ion-label>
+                  </ion-chip>
+                    <p style="text-align: right; margin-bottom: -5px; margin-right: 3px;">{{topArtist.followers}} seguidores</p>
+                </ion-toolbar>
+                
               </ion-card-header>
             </ion-card>
-          </ion-list>
+          </ion-list>     
         </ion-content>
       </super-tab>
 
       <super-tab>
         <ion-content class="fontStyle">
-          
           <ion-list>
-            <ion-item lines="none" *ngFor = "let playedTrack of listaEscuchadasRecientemente; let i=index"> 
+            <ion-item lines="none" *ngFor = "let playedTrack of listaEscuchadasRecientemente"> 
               <ion-card>
                 <ion-item lines="full" class="itemBackground">
-                    <img slot ="start" style="height: 20%; width: 20%; margin-top: 7px; margin-bottom: 7px;" src="{{playedTrack.trackThumbnail}}">          
-                  <ion-label>
+                      <img slot="start" style="height: 20%; width: 20%; margin-top: 7px; margin-bottom: 7px;" src="{{playedTrack.trackThumbnail}}">          
+                    <ion-label>
                     <p class="track">{{playedTrack.trackName}}</p>
                     <p *ngFor = "let artist of this.playedTrack.artists;">{{artist.name}}</p>
+                    <p class="dataTime">{{(playedTrack.playedat)?.substring(0,10)}}</p>
                   </ion-label>
                   </ion-item>
               </ion-card>

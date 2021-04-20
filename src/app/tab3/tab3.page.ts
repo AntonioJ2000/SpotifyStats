@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
 import { artist } from '../model/artist';
 import { track } from '../model/track';
 import { SpotifyApiService } from '../services/spotify-api.service';
@@ -16,14 +17,21 @@ export class Tab3Page {
   listaTopArtistas: artist[] = [];
   listaEscuchadasRecientemente: track[] = [];
 
-  constructor(private spotifyApi:SpotifyApiService) {}
+  constructor(private spotifyApi:SpotifyApiService,
+              private inAppBrowser: InAppBrowser) {}
 
-  ngOnInit(){
+  ionViewWillEnter(){
     this.getUserTopTracks();
     this.getUserTopArtists();
     this.getUserRecentlyPlayed();
   }
-
+ 
+  ionViewDidLeave(){
+    this.listaTopCanciones = [];
+    this.listaTopArtistas = [];
+    this.listaEscuchadasRecientemente = [];
+  }
+  
   public async getUserTopTracks(){
     let t = await this.spotifyApi.getCurrentUserTopTracks();
     let songList:any[] = t.items;
@@ -71,11 +79,19 @@ export class Tab3Page {
         artists: songList[i].track.artists,
         trackThumbnail: songList[i].track.album.images[1].url,
         playedat: songList[i].played_at
-      }  
+      }
+      
       this.listaEscuchadasRecientemente.push(trackToView);
     }
     
     console.log(this.listaEscuchadasRecientemente)
+  }
 
+  public openArtistProfile(selectedArtist:artist){
+    const options: InAppBrowserOptions = {
+      toolbar: 'yes',
+      zoom: 'no'
+    }
+    const browser = this.inAppBrowser.create(selectedArtist.spotifyURL, '_system', options);
   }
 }

@@ -28,9 +28,9 @@ export class SpotifyApiService {
       })
     }
 
-    public getCurrentUserSavedTracks():Promise<any | null>{
+    public getCurrentUserSavedTracks(offsetVar:number):Promise<any | null>{
       return new Promise((resolve, reject)=>{
-        const endpoint = environment.currentUserSavedTracks;
+        const endpoint = environment.currentUserSavedTracks + '?offset=' + offsetVar;
         this.http.get(endpoint,{}, this.header)
         .then(d =>{
           if(d){

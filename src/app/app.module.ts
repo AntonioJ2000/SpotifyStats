@@ -15,6 +15,7 @@ import { File } from '@ionic-native/file/ngx';
 import { Media } from '@ionic-native/media/ngx';
 import { SpotifyAuth } from '@ionic-native/spotify-auth/ngx';
 import { MediaCapture } from '@ionic-native/media-capture/ngx';
+import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,6 +28,7 @@ import { MediaCapture } from '@ionic-native/media-capture/ngx';
     Media,
     MediaCapture,
     SpotifyAuth,
+    InAppBrowser,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent],

@@ -22,6 +22,7 @@
     "@ionic-native/core": "^5.32.0",
     "@ionic-native/file": "^5.32.0",
     "@ionic-native/http": "^5.32.0",
+    "@ionic-native/in-app-browser": "^5.32.1",
     "@ionic-native/media": "^5.32.0",
     "@ionic-native/media-capture": "^5.32.1",
     "@ionic-native/spotify-auth": "^5.32.0",
@@ -29,6 +30,7 @@
     "@ionic/angular": "^5.5.2",
     "cordova-android": "9.1.0",
     "cordova-browser": "6.0.0",
+    "cordova-plugin-inappbrowser": "^5.0.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
@@ -93,7 +95,8 @@
       "cordova-plugin-customurlscheme": {
         "URL_SCHEME": "spotifystats"
       },
-      "cordova-plugin-media-capture": {}
+      "cordova-plugin-media-capture": {},
+      "cordova-plugin-inappbrowser": {}
     },
     "platforms": [
       "browser",

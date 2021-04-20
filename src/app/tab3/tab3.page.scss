@@ -4,7 +4,7 @@
     color: white;
 }
 
-.dotsColor{
+.iconColor{
     color: white;
 }
 
@@ -25,8 +25,6 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
-    width: 60%;
-    margin-bottom: 30px;
   }
 
   .itemBackground{
@@ -36,6 +34,11 @@
 .track{
     font-weight: bold;
     color: white
+}
+
+.dataTime{
+    color:white;
+    text-align: right;
 }
 
 .index{
