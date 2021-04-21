@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonInfiniteScroll } from '@ionic/angular';
+import { IonInfiniteScroll, LoadingController } from '@ionic/angular';
 import { track } from '../model/track';
+import { ClientcredentialsService } from '../services/clientcredentials.service';
 import { SpotifyApiService } from '../services/spotify-api.service';
 
 @Component({
@@ -13,33 +14,63 @@ export class Tab2Page {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
   listaCancionesGuardadas: track[] = [];
+  listaCancionesGuardadasReturned: track[] = [];
+  firtTime: boolean = true;
   offsetVar:number = 0;
 
-  constructor(private spotifyApi:SpotifyApiService) {}
+  constructor(private spotifyApi:SpotifyApiService,
+              private loadingController:LoadingController,
+              private clientCredentials:ClientcredentialsService) {}
 
-  ionViewWillEnter(){
-    this.getUserSavedTracks();
+  async ngOnInit(){
+    const loading = await this.loadingController.create({
+      spinner:null,
+      cssClass: 'loading-class',
+      message: 'Cargando tus canciones, por favor, espere.'
+    })
+
+    await loading.present();
+
+    await this.getUserSavedTracks().then(async()=>{
+      await loading.dismiss();
+      this.listaCancionesGuardadasReturned = this.listaCancionesGuardadas;
+    });
+
+    this.firtTime = false;
+
+  }
+  
+  async ionViewWillEnter(){
+    if(!this.firtTime){
+      const loading = await this.loadingController.create({
+        spinner:null,
+        cssClass: 'loading-class',
+        message: 'Cargando'
+      })
+      await loading.present();
+  
+      await (this.listaCancionesGuardadas = this.listaCancionesGuardadasReturned);
+  
+      await loading.dismiss();
+    }
   }
 
-  
   ionViewDidLeave(){
     this.listaCancionesGuardadas = [];
-    this.offsetVar = 0;
   }
   
 
   public async getUserSavedTracks(){
     let t = await this.spotifyApi.getCurrentUserSavedTracks(this.offsetVar);
-    let songList:any[] = t.items;
 
-    for(let i=0; i < songList.length; i++){
+    for(let i=0; i < t.items.length; i++){
       let trackToView:track = {
-        id: songList[i].track.id,
-        trackName: songList[i].track.name,
-        spotifyURL: songList[i].track.external_urls.spotify,
-        previewURL: songList[i].track.preview_url,
-        artists: songList[i].track.artists,
-        trackThumbnail: songList[i].track.album.images[1].url
+        id: t.items[i].track.id,
+        trackName: t.items[i].track.name,
+        spotifyURL: t.items[i].track.external_urls.spotify,
+        previewURL: t.items[i].track.preview_url,
+        artists: t.items[i].track.artists,
+        trackThumbnail: t.items[i].track.album.images[1].url
     
       }
       this.offsetVar++;  
@@ -50,16 +81,14 @@ export class Tab2Page {
 
   loadData(event) {
     setTimeout(async () => {
-      console.log('Done');
-        await this.getUserSavedTracks();
-  
-      event.target.complete();
-
-      // App logic to determine if all data is loaded
-      // and disable the infinite scroll
-      if (this.listaCancionesGuardadas.length == 1000) {
-        event.target.disabled = true;
-      }
+        if (this.listaCancionesGuardadas.length == 120) {
+          event.target.disabled = true;
+        }else{
+          await this.getUserSavedTracks().then(()=>{
+            event.target.complete();
+          });
+        }
+          this.listaCancionesGuardadasReturned = this.listaCancionesGuardadas;
     }, 1000);
   }
 

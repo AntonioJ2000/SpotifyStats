@@ -25,4 +25,10 @@ export class ClientcredentialsService {
   }
 
   constructor() { }
+
+  logout(){
+    this.client.access_token = '';
+    this.client.encrypted_refresh_token = '';
+    this.client.expires_in = 0;
+  }
 }

@@ -63,10 +63,13 @@ export class Tab1Page implements OnInit {
       this.clientCredentials.client.encrypted_refresh_token = data.encryptedRefreshToken;
       this.clientCredentials.client.expires_in = data.expiresAt
 
-      console.log(this.clientCredentials.client)
-
    });
    
+  }
+
+  public async logout(){
+    cordova.plugins.spotifyAuth.forget();
+    this.clientCredentials.logout();
   }
 
   public async getUserProfile(){
@@ -79,7 +82,6 @@ export class Tab1Page implements OnInit {
     this.clientCredentials.user.image = u.images[0].url;
     this.clientCredentials.user.type=u.type;
 
-    console.log(this.clientCredentials.user);
   }
 
 
