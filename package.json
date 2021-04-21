@@ -52,6 +52,7 @@
     "@typescript-eslint/eslint-plugin": "4.16.1",
     "@typescript-eslint/parser": "4.16.1",
     "cordova-plugin-advanced-http": "^3.1.0",
+    "cordova-plugin-customurlscheme": "^5.0.2",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-file": "^6.0.2",
     "cordova-plugin-ionic-keyboard": "^2.2.0",

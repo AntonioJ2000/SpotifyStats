@@ -6,6 +6,7 @@ import { NavController, Platform } from '@ionic/angular';
 import { MediaCapture, MediaFile, CaptureError, CaptureImageOptions } from '@ionic-native/media-capture/ngx';
 import { ClientcredentialsService } from '../services/clientcredentials.service';
 import { SpotifyApiService } from '../services/spotify-api.service';
+import { LoadingService } from '../services/loading.service';
 
 declare var cordova: any;
 
@@ -28,11 +29,13 @@ export class Tab1Page implements OnInit {
     private mediaCapture:MediaCapture,         
     private plt:Platform,
     public navCtrl:NavController,
+    private loading:LoadingService,
     private clientCredentials:ClientcredentialsService,
     private spotifyApi:SpotifyApiService) {}
 
   
-  ngOnInit(){
+  async ngOnInit(){
+    await this.loading.cargarLoading();
     this.plt.ready().then(()=>{
       let path = this.file.externalRootDirectory;
       //this.file.checkDir(path, MEDIA_FOLDER_NAME);

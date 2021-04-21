@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { IonInfiniteScroll, LoadingController } from '@ionic/angular';
 import { track } from '../model/track';
 import { ClientcredentialsService } from '../services/clientcredentials.service';
+import { LoadingService } from '../services/loading.service';
 import { SpotifyApiService } from '../services/spotify-api.service';
 
 @Component({
@@ -20,19 +21,14 @@ export class Tab2Page {
 
   constructor(private spotifyApi:SpotifyApiService,
               private loadingController:LoadingController,
+              private loading:LoadingService,
               private clientCredentials:ClientcredentialsService) {}
 
   async ngOnInit(){
-    const loading = await this.loadingController.create({
-      spinner:null,
-      cssClass: 'loading-class',
-      message: 'Cargando tus canciones, por favor, espere.'
-    })
-
-    await loading.present();
+    await this.loading.cargarLoading();
 
     await this.getUserSavedTracks().then(async()=>{
-      await loading.dismiss();
+      await this.loading.pararLoading();
       this.listaCancionesGuardadasReturned = this.listaCancionesGuardadas;
     });
 
