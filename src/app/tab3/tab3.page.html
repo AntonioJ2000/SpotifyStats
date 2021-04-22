@@ -37,6 +37,7 @@
 
       <super-tab>
         <ion-content class="fontStyle">
+          <div *ngIf="listaTopCanciones.length === 30">
           <ion-list>
             <ion-item lines="none" *ngFor = "let topTrack of listaTopCanciones; let i=index"> 
               <ion-card class="cardBackground" style="width:100%; margin-left: auto; margin-right: auto; align-items: center;">
@@ -56,12 +57,37 @@
               </ion-card>
             </ion-item>
           </ion-list>
+        </div>
+
+          <div *ngIf="30 > listaTopCanciones.length">
+            <ion-list>
+            <ion-item lines="none" *ngFor="let skeletonTrack of skeletonList;">
+              <ion-card style="width:100%; margin-left: auto; margin-right: auto; align-items: center;">
+              <ion-item lines="full">
+                  <ion-thumbnail>
+                    <ion-skeleton-text animated></ion-skeleton-text>
+                  </ion-thumbnail>
+                <ion-label>
+                  <p style="margin-left: 30px;">
+                    <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+                  </p>
+        
+                  <p style="margin-left: 30px;">
+                    <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+                  </p>
+                </ion-label>
+                </ion-item>
+              </ion-card>
+            </ion-item>
+          </ion-list>
+        </div>
           
         </ion-content>
       </super-tab>
 
       <super-tab>
         <ion-content class="fontStyle">
+          <div *ngIf="listaTopArtistas.length === 30">
           <ion-list>
             <ion-card *ngFor="let topArtist of listaTopArtistas; let i=index" style="--background: rgb(59, 59, 59); width:95%; margin-left: auto; margin-right: auto; align-items: center;">
               <ion-card-header>
@@ -94,12 +120,39 @@
                 
               </ion-card-header>
             </ion-card>
-          </ion-list>     
+          </ion-list> 
+        </div>
+          
+          <div *ngIf="30 > listaTopArtistas.length">
+            <ion-list>
+            <ion-item lines="none" *ngFor="let skeletonTrack of skeletonList;">
+              <ion-card style="width:100%; margin-left: auto; margin-right: auto; align-items: center;">
+                <ion-card-header>
+                  <ion-toolbar>
+                  <ion-avatar>
+                      <ion-skeleton-text animated></ion-skeleton-text>
+                  </ion-avatar>
+                </ion-toolbar>
+                  <ion-card-title>
+                    <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+                  </ion-card-title>
+
+                    <p style="text-align: center;">
+                      <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text> 
+                    </p>
+
+                </ion-card-header>
+              </ion-card>
+            </ion-item>
+          </ion-list>
+        </div>
+
         </ion-content>
       </super-tab>
 
       <super-tab>
         <ion-content class="fontStyle">
+          <div *ngIf="listaEscuchadasRecientemente.length === 20">
           <ion-list>
             <ion-item lines="none" *ngFor = "let playedTrack of listaEscuchadasRecientemente"> 
               <ion-card style="width:100%; margin-left: auto; margin-right: auto; align-items: center;">
@@ -114,6 +167,30 @@
               </ion-card>
             </ion-item>
           </ion-list>
+        </div>
+
+          <div *ngIf="20 > listaEscuchadasRecientemente.length">
+            <ion-list>
+            <ion-item lines="none" *ngFor="let skeletonTrack of skeletonList;">
+              <ion-card style="width:100%; margin-left: auto; margin-right: auto; align-items: center;">
+              <ion-item lines="full">
+                  <ion-thumbnail>
+                    <ion-skeleton-text animated></ion-skeleton-text>
+                  </ion-thumbnail>
+                <ion-label>
+                  <p style="margin-left: 30px;">
+                    <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+                  </p>
+        
+                  <p style="margin-left: 30px;">
+                    <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+                  </p>
+                </ion-label>
+                </ion-item>
+              </ion-card>
+            </ion-item>
+          </ion-list>
+        </div>
 
         </ion-content>
       </super-tab>

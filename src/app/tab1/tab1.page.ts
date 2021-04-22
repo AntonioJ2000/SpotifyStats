@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiNodeService } from '../services/api-node.service';
 import { File } from '@ionic-native/file/ngx';
 import { Media, MediaObject } from '@ionic-native/media/ngx';
 import { NavController, Platform } from '@ionic/angular';
@@ -7,6 +6,7 @@ import { MediaCapture, MediaFile, CaptureError, CaptureImageOptions } from '@ion
 import { ClientcredentialsService } from '../services/clientcredentials.service';
 import { SpotifyApiService } from '../services/spotify-api.service';
 import { LoadingService } from '../services/loading.service';
+import { AuthService } from '../services/auth.service';
 
 declare var cordova: any;
 
@@ -19,7 +19,6 @@ const MEDIA_FOLDER_NAME = "my_media";
 })
 export class Tab1Page implements OnInit {
 
-  result={};
   status:string = "";
   audioFile:MediaObject;
 
@@ -31,11 +30,11 @@ export class Tab1Page implements OnInit {
     public navCtrl:NavController,
     private loading:LoadingService,
     private clientCredentials:ClientcredentialsService,
-    private spotifyApi:SpotifyApiService) {}
+    private spotifyApi:SpotifyApiService,
+    private authService:AuthService) {}
 
   
   async ngOnInit(){
-    await this.loading.cargarLoading();
     this.plt.ready().then(()=>{
       let path = this.file.externalRootDirectory;
       //this.file.checkDir(path, MEDIA_FOLDER_NAME);
@@ -48,32 +47,6 @@ export class Tab1Page implements OnInit {
     })
   }
 
-
-  public login(){
-    const config = {
-      clientId: "6c3f918a4ab240db97b1c104475c8ea6",
-      redirectUrl: "spotifystats://callback",
-      scopes: ["user-read-recently-played", "streaming", "playlist-read-private", "playlist-read-collaborative", "user-top-read", "user-library-read"],
-      tokenExchangeUrl: "https://ajsstats.herokuapp.com/exchange",
-      tokenRefreshUrl: "https://ajsstats.herokuapp.com/refresh"
-    };
-
-   cordova.plugins.spotifyAuth.authorize(config)
-   .then((data) =>{
-      this.result = data.accessToken;
-      //Sobreescribimos las variables del cliente
-      this.clientCredentials.client.access_token = data.accessToken;
-      this.clientCredentials.client.encrypted_refresh_token = data.encryptedRefreshToken;
-      this.clientCredentials.client.expires_in = data.expiresAt
-
-   });
-   
-  }
-
-  public async logout(){
-    cordova.plugins.spotifyAuth.forget();
-    this.clientCredentials.logout();
-  }
 
   public async getUserProfile(){
     let u = await this.spotifyApi.getCurrentUserProfile();

@@ -32,4 +32,15 @@ export class LoadingService {
     await this.loadingController.dismiss();
     this.loadingActivo = false;
   }
+
+  public async cargarLoadingOscuro(){
+    if(!this.loadingActivo){
+      const loading = await this.loadingController.create({
+        cssClass: 'my-custom-class',
+        spinner: null
+      });
+      await loading.present();
+      this.loadingActivo = true;
+    }
+  }
 }

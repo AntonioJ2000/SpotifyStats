@@ -8,11 +8,17 @@
           <ion-icon class="iconColor" name="help-circle-outline"></ion-icon>
         </ion-button>
       </ion-buttons>
+      <ion-buttons slot="end">
+        <ion-button (click)="reloadSavedSongs()">
+          <ion-icon class="iconColor" name="reload-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 
 <ion-content [fullscreen]="true" class="fontStyle">
+  <div *ngIf="listaCancionesGuardadas.length >= 20">
   <ion-list>
     <ion-item lines="none" *ngFor = "let savedTrack of listaCancionesGuardadas; let i=index"> 
       <ion-card style="width:100%; margin-left: auto; margin-right: auto; align-items: center;">
@@ -28,11 +34,36 @@
       </ion-card>
     </ion-item>
 
-    <ion-infinite-scroll *ngIf="this.listaCancionesGuardadas.length > 0" threshold="100px" (ionInfinite)="loadData($event)">
-      <ion-infinite-scroll-content *ngIf="120 > this.listaCancionesGuardadas.length"
+    <ion-infinite-scroll *ngIf="this.listaCancionesGuardadas.length > 0" threshold="60px" (ionInfinite)="loadData($event)">
+      <ion-infinite-scroll-content *ngIf="100 > this.listaCancionesGuardadas.length"
         loadingSpinner="dots">
       </ion-infinite-scroll-content>
     </ion-infinite-scroll>
   </ion-list>
+  </div>
+
+  <div *ngIf="20 > listaCancionesGuardadas.length">
+    <ion-list>
+    <ion-item lines="none" *ngFor="let skeletonTrack of skeletonList;">
+      <ion-card style="width:100%; margin-left: auto; margin-right: auto; align-items: center;">
+      <ion-item lines="full">
+          <ion-thumbnail>
+            <ion-skeleton-text animated></ion-skeleton-text>
+          </ion-thumbnail>
+        <ion-label>
+          <p style="margin-left: 30px;">
+            <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+          </p>
+
+          <p style="margin-left: 30px;">
+            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+          </p>
+        </ion-label>
+        </ion-item>
+      </ion-card>
+    </ion-item>
+  </ion-list>
+</div>
+
 </ion-content>
 

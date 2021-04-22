@@ -4,6 +4,7 @@ import { ActionSheetController, LoadingController } from '@ionic/angular';
 import { artist } from '../model/artist';
 import { track } from '../model/track';
 import { ClientcredentialsService } from '../services/clientcredentials.service';
+import { LoadingService } from '../services/loading.service';
 import { SpotifyApiService } from '../services/spotify-api.service';
 
 
@@ -15,6 +16,27 @@ import { SpotifyApiService } from '../services/spotify-api.service';
 })
 export class Tab3Page {
 
+  skeletonTrack: track = {
+    id: '',
+    artists: [],
+    previewURL: '',
+    spotifyURL: '',
+    trackName:'',
+    trackThumbnail: '',
+    playedat: ''
+  };
+  
+  skeletonList: track[] = [
+    this.skeletonTrack,
+    this.skeletonTrack, 
+    this.skeletonTrack, 
+    this.skeletonTrack, 
+    this.skeletonTrack, 
+    this.skeletonTrack, 
+    this.skeletonTrack,
+    this.skeletonTrack
+  ]
+
   listaTopCanciones: track[] = []; 
   listaTopArtistas: artist[] = [];
   listaEscuchadasRecientemente: track[] = [];
@@ -23,25 +45,23 @@ export class Tab3Page {
 
   constructor(private spotifyApi:SpotifyApiService,
               private inAppBrowser: InAppBrowser,
-              private loadingController:LoadingController,
               private actionSheetController: ActionSheetController,
-              private clientCredentials:ClientcredentialsService) {}
+              private clientCredentials:ClientcredentialsService,
+              private loading:LoadingService) {}
 
   async ionViewWillEnter(){
-    const loading = await this.loadingController.create({
-      spinner:null,
-      cssClass: 'loading-class',
-      message: 'Cargando estadísticas, por favor, espere.'
-    })
+    await this.loading.cargarLoading();
 
-    await loading.present();
-    await this.getUserTopTracks().then(async()=>{
-      await this.getUserTopArtists().then(async()=>{
-        await this.getUserRecentlyPlayed().then(async()=>{
-          await loading.dismiss();
-        });
-      })
-    });
+    setTimeout(async() => {
+      await this.getUserTopTracks().then(async()=>{
+        await this.getUserTopArtists().then(async()=>{
+          await this.getUserRecentlyPlayed().then(async()=>{
+            await this.loading.pararLoading();
+          });
+        })
+      });
+    }, 2000);
+    
   }
  
   async ionViewDidLeave(){
@@ -100,26 +120,22 @@ export class Tab3Page {
   }
 
   public async reloadStats(){
+    this.listaTopCanciones = [];
+    this.listaTopArtistas = [];
+    this.listaEscuchadasRecientemente = [];
 
-    const loading = await this.loadingController.create({
-      spinner:null,
-      cssClass: 'loading-class',
-      message: 'Recargando datos, por favor, espere.'
-    })
-    await loading.present();
+    await this.loading.cargarLoading();
+
     
-    this.listaTopCanciones = [],
-    this.listaTopArtistas = [],
-    this.listaEscuchadasRecientemente = [],
-    
-    await this.getUserTopTracks().then(async()=>{
-      await this.getUserTopArtists().then(async()=>{
-        await this.getUserRecentlyPlayed().then(async()=>{
-          await loading.dismiss();
-        });
+    setTimeout(async() => {
+      await this.getUserTopTracks().then(async()=>{
+        await this.getUserTopArtists().then(async()=>{
+          await this.getUserRecentlyPlayed().then(async()=>{
+            await this.loading.pararLoading();
+          });
+        })
       })
-    })
-
+    }, 2000);
   }
 
 

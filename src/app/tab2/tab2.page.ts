@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonInfiniteScroll, LoadingController } from '@ionic/angular';
+import { VirtualTimeScheduler } from 'rxjs';
 import { track } from '../model/track';
 import { ClientcredentialsService } from '../services/clientcredentials.service';
 import { LoadingService } from '../services/loading.service';
@@ -14,45 +15,48 @@ export class Tab2Page {
 
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
+  skeletonTrack: track = {
+    id: '',
+    artists: [],
+    previewURL: '',
+    spotifyURL: '',
+    trackName:'',
+    trackThumbnail: '',
+    playedat: ''
+  };
+  
+  skeletonList: track[] = [
+    this.skeletonTrack,
+    this.skeletonTrack, 
+    this.skeletonTrack, 
+    this.skeletonTrack, 
+    this.skeletonTrack, 
+    this.skeletonTrack, 
+    this.skeletonTrack,
+    this.skeletonTrack
+  ]
+
   listaCancionesGuardadas: track[] = [];
-  listaCancionesGuardadasReturned: track[] = [];
-  firtTime: boolean = true;
+
   offsetVar:number = 0;
 
   constructor(private spotifyApi:SpotifyApiService,
-              private loadingController:LoadingController,
-              private loading:LoadingService,
-              private clientCredentials:ClientcredentialsService) {}
+              private loading:LoadingService) {}
 
-  async ngOnInit(){
+  async ionViewWillEnter(){
     await this.loading.cargarLoading();
 
-    await this.getUserSavedTracks().then(async()=>{
-      await this.loading.pararLoading();
-      this.listaCancionesGuardadasReturned = this.listaCancionesGuardadas;
-    });
-
-    this.firtTime = false;
+    setTimeout(async() => {
+      await this.getUserSavedTracks().then(async()=>{
+        await this.loading.pararLoading();
+      });
+    }, 1500); 
 
   }
   
-  async ionViewWillEnter(){
-    if(!this.firtTime){
-      const loading = await this.loadingController.create({
-        spinner:null,
-        cssClass: 'loading-class',
-        message: 'Cargando'
-      })
-      await loading.present();
-  
-      await (this.listaCancionesGuardadas = this.listaCancionesGuardadasReturned);
-  
-      await loading.dismiss();
-    }
-  }
-
   ionViewDidLeave(){
     this.listaCancionesGuardadas = [];
+    this.offsetVar = 0;
   }
   
 
@@ -75,21 +79,37 @@ export class Tab2Page {
     }
   }
 
+  public async reloadSavedSongs(){
+    this.listaCancionesGuardadas = [];
+    this.offsetVar = 0;
+
+    await this.loading.cargarLoading();
+
+    setTimeout(async() => {
+      await this.getUserSavedTracks().then(async()=>{
+        await this.loading.pararLoading();
+      })
+    }, 1500);
+   
+      
+  }
+
   loadData(event) {
     setTimeout(async () => {
-        if (this.listaCancionesGuardadas.length == 120) {
+        if (this.listaCancionesGuardadas.length == 100) {
           event.target.disabled = true;
         }else{
           await this.getUserSavedTracks().then(()=>{
             event.target.complete();
           });
         }
-          this.listaCancionesGuardadasReturned = this.listaCancionesGuardadas;
     }, 1000);
   }
 
   toggleInfiniteScroll() {
     this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
   }
+
+
 
 }

@@ -15,7 +15,7 @@ export class ClientcredentialsService {
     display_name: '',
     external_urls: '',
     followers: 0,
-    id:'',
+    id:0,
     image:'',
     type:''
   }
