@@ -152,10 +152,10 @@ export class Tab3Page {
       header: 'Seleccione una opción',
       cssClass: 'config-sheet',
       buttons: [{
-        text: 'Ajustar lapso de tiempo',
-        icon: 'time-outline',
+        text: 'Este botón no hace nada',
+        icon: 'assets/spotify.svg',
         handler: ()=>{
-          this.timeLapseSheet();
+          console.log('No hay nada')
         }
       }]
     });

@@ -1,4 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
+import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
 import { IonInfiniteScroll, LoadingController } from '@ionic/angular';
 import { VirtualTimeScheduler } from 'rxjs';
 import { track } from '../model/track';
@@ -39,18 +40,24 @@ export class Tab2Page {
   listaCancionesGuardadas: track[] = [];
 
   offsetVar:number = 0;
+  firtTime:boolean = false;
+
 
   constructor(private spotifyApi:SpotifyApiService,
-              private loading:LoadingService) {}
+              private loading:LoadingService,
+              private inAppBrowser:InAppBrowser) {}
 
   async ionViewWillEnter(){
-    await this.loading.cargarLoading();
-
+    if(!this.firtTime){
+      await this.loading.cargarLoading();
+      this.firtTime = false;
+    }
+    
     setTimeout(async() => {
       await this.getUserSavedTracks().then(async()=>{
         await this.loading.pararLoading();
       });
-    }, 1500); 
+    }, 500); 
 
   }
   
@@ -89,7 +96,7 @@ export class Tab2Page {
       await this.getUserSavedTracks().then(async()=>{
         await this.loading.pararLoading();
       })
-    }, 1500);
+    }, 500);
    
       
   }
@@ -110,6 +117,13 @@ export class Tab2Page {
     this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
   }
 
+  public openSongInSpotify(selectedTrack:track){
+    const options: InAppBrowserOptions = {
+      toolbar: 'yes',
+      zoom: 'no'
+    }
+    const browser = this.inAppBrowser.create(selectedTrack.spotifyURL, '_system', options);
+  }
 
 
 }

@@ -47,6 +47,11 @@ export class Tab1Page implements OnInit {
     })
   }
 
+  ionViewWillEnter(){
+    setTimeout(() => {
+      this.loading.pararLoading();  
+    }, 1500);
+  }
 
   public async getUserProfile(){
     let u = await this.spotifyApi.getCurrentUserProfile();

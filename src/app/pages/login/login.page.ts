@@ -16,18 +16,22 @@ export class LoginPage {
               private loading:LoadingService,
               private router:Router) { }
 
+  comprobadorToken:any = '';  
 
-  async login(){
-    await this.loading.cargarLoading();
-    let success = this.authService.login();
-    if(success = 1){
-      setTimeout(async() => {
-        this.router.navigate(['/']);
-      }, 1000);
+  async login(){ 
+    this.loading.cargarLoading();
+    setTimeout(() => {
+      this.authService.login(); 
+    }, 500);
       
-      setTimeout(async() => {
-        await this.loading.pararLoading();
-      }, 2000);   
+    //Debería de parar el bucle cuando el token fuese distinto de ''
+    /*
+    while(this.comprobadorToken == ''){
+      if(this.clientCredentials.client.access_token.length > 0){
+        this.comprobadorToken = this.clientCredentials.client.access_token;
+      }
     }
+    */
+    
   }
 }

@@ -7,8 +7,6 @@ export class ClientcredentialsService {
 
   client = {
     access_token: '',
-    expires_in: 0,
-    encrypted_refresh_token: ''
   }
 
   user = {
@@ -28,7 +26,5 @@ export class ClientcredentialsService {
 
   logout(){
     this.client.access_token = '';
-    this.client.encrypted_refresh_token = '';
-    this.client.expires_in = 0;
   }
 }

@@ -12,10 +12,9 @@ export class AuthService implements CanActivate{
   constructor(private clientCredentials:ClientcredentialsService,
               private router:Router) { }
 
- ready:boolean = false;
 
   canActivate(route: ActivatedRouteSnapshot): boolean {
-    if(!this.ready){
+    if(!this.isLogged()){
       this.router.navigate(['/login']);
       return false;
     }else{
@@ -23,7 +22,15 @@ export class AuthService implements CanActivate{
     }
   }
 
-  public login():number{
+  public isLogged(): boolean{
+    if(this.clientCredentials.client.access_token == ''){
+      return false;
+    }else{
+      return true;
+    }
+  }
+
+  public login(){
     const config = {
       clientId: "6c3f918a4ab240db97b1c104475c8ea6",
       redirectUrl: "spotifystats://callback",
@@ -33,29 +40,19 @@ export class AuthService implements CanActivate{
     };
 
     cordova.plugins.spotifyAuth.authorize(config)
-    .then((data) =>{
+    .then(({ accessToken, encryptedRefreshToken, expiresAt }) =>{
        //Sobreescribimos las variables del cliente
-       this.clientCredentials.client.access_token = data.accessToken;
-       this.clientCredentials.client.encrypted_refresh_token = data.encryptedRefreshToken;
-       this.clientCredentials.client.expires_in = data.expiresAt
-    });
-
-      do{
-        //Nada, a esperar el token
-        setTimeout(() => {
-          console.log('Sin token')
-        }, 1000); 
-      }while(this.clientCredentials.client.access_token = ''); 
+      this.clientCredentials.client.access_token = accessToken;
       
-      this.ready = true;
-      return 1;  
-
+      if(this.clientCredentials.client.access_token != ''){
+        this.router.navigate(['/']);
+      }
+    });
   }
 
   public logout(){
     cordova.plugins.spotifyAuth.forget();
     this.clientCredentials.logout();
-    this.ready = false;
 
     if(this.clientCredentials.client.access_token = ''){
       this.router.navigate(['/login'])

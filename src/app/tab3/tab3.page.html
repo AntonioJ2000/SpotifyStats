@@ -3,14 +3,22 @@
     <ion-title class="titleTab3">
        Tus Estadísticas ({{time_range}})
     </ion-title>
+
     <ion-buttons slot="end">   
-      <ion-button (click)="reloadStats()">
-        <ion-icon class="iconColor" name="reload-outline"></ion-icon>
+        <ion-button (click)="reloadStats()">
+          <ion-icon class="iconColor" name="reload-outline"></ion-icon>
+        </ion-button>
+        <ion-button (click)="presentActionSheet()" fill="clear">
+          <ion-icon class="iconColor" icon="ellipsis-vertical"></ion-icon>
+        </ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="start">
+      <ion-button (click)="timeLapseSheet()">
+        <ion-icon class="iconColor" name="time-outline"></ion-icon>
       </ion-button>
-      <ion-button (click)="presentActionSheet()" fill="clear">
-        <ion-icon class="iconColor" icon="ellipsis-vertical"></ion-icon>
-      </ion-button>
-      </ion-buttons>
+    </ion-buttons>
+    
   </ion-toolbar>
 </ion-header>
 
