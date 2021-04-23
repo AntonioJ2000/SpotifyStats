@@ -1,9 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
 import { IonInfiniteScroll, LoadingController } from '@ionic/angular';
-import { VirtualTimeScheduler } from 'rxjs';
+import { artist } from '../model/artist';
 import { track } from '../model/track';
-import { ClientcredentialsService } from '../services/clientcredentials.service';
 import { LoadingService } from '../services/loading.service';
 import { SpotifyApiService } from '../services/spotify-api.service';
 
@@ -69,6 +68,7 @@ export class Tab2Page {
 
   public async getUserSavedTracks(){
     let t = await this.spotifyApi.getCurrentUserSavedTracks(this.offsetVar);
+    
 
     for(let i=0; i < t.items.length; i++){
       let trackToView:track = {
@@ -81,8 +81,7 @@ export class Tab2Page {
     
       }
       this.offsetVar++;  
-      this.listaCancionesGuardadas.push(trackToView);
-      
+      this.listaCancionesGuardadas.push(trackToView);      
     }
   }
 

@@ -59,8 +59,17 @@
                     <img slot ="start" style="height: 20%; width: 20%; margin-top: 7px; margin-bottom: 7px; margin-left: -13px;" src="{{topTrack.trackThumbnail}}">          
                   <ion-label>
                     <p class="track">{{topTrack.trackName}}</p>
-                    <p style="color:#9c9c9c" *ngFor = "let artist of this.topTrack.artists;">{{artist.name}}</p>
+                   
+                    <ion-label style="color:#9c9c9c" *ngFor = "let artist of this.topTrack.artists;">
+                      <p *ngIf="4 > this.topTrack.artists.length">{{artist.name}}</p>
+                    </ion-label>
+        
+                    <ion-label *ngFor = "let artist2 of this.topTrack.artists.slice(0,4); let o=index" >
+                      <p *ngIf="this.topTrack.artists.length >= 4">{{artist2.name}}</p>
+                      <p style="color:#bdbdbd" *ngIf="this.o === 3">Y más artistas</p>
+                    </ion-label>                  
                   </ion-label>
+                  
                   </ion-item>
               </ion-card>
             </ion-item>
@@ -168,7 +177,15 @@
                       <img slot="start" style="height: 20%; width: 20%; margin-top: 7px; margin-bottom: 7px;" src="{{playedTrack.trackThumbnail}}">          
                     <ion-label>
                     <p class="track">{{playedTrack.trackName}}</p>
-                    <p style="color:#9c9c9c" *ngFor = "let artist of this.playedTrack.artists;">{{artist.name}}</p>
+
+                      <ion-label style="color:#9c9c9c" *ngFor = "let artist of this.playedTrack.artists;">
+                        <p *ngIf="4 > this.playedTrack.artists.length">{{artist.name}}</p>
+                      </ion-label>
+          
+                      <ion-label *ngFor = "let artist2 of this.playedTrack.artists.slice(0,3); let o=index" >
+                        <p *ngIf="this.playedTrack.artists.length > 4">{{artist2.name}}</p>
+                        <p style="color:#bdbdbd" *ngIf="this.o === 3">Y más artistas</p>
+                      </ion-label>
                     <p class="dataTime">{{(playedTrack.playedat)?.substring(0,10)}}</p>
                   </ion-label>
                   </ion-item>

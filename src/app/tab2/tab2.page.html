@@ -27,7 +27,16 @@
             <img slot ="start" style="height: 20%; width: 20%; margin-top: 7px; margin-bottom: 7px; margin-left: -13px;" src="{{savedTrack.trackThumbnail}}">          
           <ion-label>
             <p class="track">{{savedTrack.trackName}}</p>
-            <p style="color:#9c9c9c" *ngFor = "let artist of this.savedTrack.artists;">{{artist.name}}</p>
+           
+            <ion-label style="color:#9c9c9c" *ngFor = "let artist of this.savedTrack.artists;">
+              <p *ngIf="4 > this.savedTrack.artists.length">{{artist.name}}</p>
+            </ion-label>
+
+            <ion-label *ngFor = "let artist2 of this.savedTrack.artists.slice(0,3); let o=index" >
+              <p *ngIf="this.savedTrack.artists.length > 4">{{artist2.name}}</p>
+              <p style="color:#bdbdbd" *ngIf="this.o === 2">Y más artistas</p>
+            </ion-label>
+          
           </ion-label>
             <ion-icon src="assets/spotify.svg" slot="end"></ion-icon>
           </ion-item>
