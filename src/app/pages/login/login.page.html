@@ -1,9 +1,18 @@
 <ion-content>
  
-    <img src="assets/stats_bars.png" class="imgEdit">
+    <div class="alignImage">
+        <img src="assets/stats_bars.png" class="imgEdit">
+    </div>
+
     <div style="text-align: center; margin-top: -40px;">
-        <ion-button size="large" style="--border-color:#1DB954;" slots="icon-only" fill="outline" (click)="login()">
+        <ion-button size="large" shape="round" class="loginButton" slots="icon-only" fill="outline" (click)="login()">
             <ion-icon size="large" src="assets/spotify.svg"></ion-icon>    
+            <ion-label style="margin-left: 12px;">Iniciar sesión</ion-label>
         </ion-button>
+        <p style="font-size: 15px;">Por favor, inicie sesión con <span style="font-weight: bold; color: #1DB954;">Spotify</span> para continuar</p>
     </div>
 </ion-content>
+
+<ion-footer class="ion-no-border">
+        <p style="font-size: 11px; width: 90%; text-align: center; margin-left: auto; margin-right: auto; color: white;"><span style="font-weight: bold;">*</span> La información del usuario no será guardada en ningún caso. Los credenciales son completamente privados y manejados por Spotify.</p>
+</ion-footer>

@@ -1,227 +1,76 @@
 <ion-header [translucent]="true">
   <ion-toolbar mode="ios">
     <ion-title class="titleTab3">
-       Tus Estadísticas ({{time_range}})
+      Tu perfil
     </ion-title>
-
-    <ion-buttons slot="end">   
-        <ion-button (click)="reloadStats()">
-          <ion-icon class="iconColor" name="reload-outline"></ion-icon>
-        </ion-button>
-        <ion-button (click)="presentActionSheet()" fill="clear">
-          <ion-icon class="iconColor" icon="ellipsis-vertical"></ion-icon>
-        </ion-button>
-    </ion-buttons>
-
-    <ion-buttons slot="start">
-      <ion-button (click)="timeLapseSheet()">
-        <ion-icon class="iconColor" name="time-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-    
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" class="fontStyle">
-  <super-tabs style="--st-indicator-color: #1DB954;">
-    <super-tabs-toolbar slot="top" style="background-color: rgb(59, 59, 59); color: white;">
-      
-      <super-tab-button>
-        <ion-label class="fontStyle">Canciones</ion-label>
-      </super-tab-button>  
 
-      <super-tab-button>
-        <ion-label class="fontStyle">Artistas</ion-label>
-      </super-tab-button>  
+  <!------
+  <ion-label>
+    <ion-text>
+      <h1>{{status}}</h1>
+    </ion-text>
+  </ion-label>
+  <ion-button (click)="grabarAudio()">Grabar</ion-button>
+  <ion-button (click)="pararAudio()">Parar</ion-button>
 
+  <ion-button (click)="recordAudio()">Media Capture</ion-button>
+  --->
+  <ion-avatar class="imgEdit">
+    <img src="{{loggedUser.image}}">
+  </ion-avatar>
 
-      <super-tab-button>
-        <ion-label class="fontStyle">Recientes</ion-label>
-      </super-tab-button>  
+  <p class="display Name">{{loggedUser.display_name}}</p>
+
+  <ion-toolbar lines="none" style="margin-top: -25px; --background: transparent;">
+      <p slot="start" class="userId">ID: {{loggedUser.id}}</p>
+      <p slot="end" class="followers">{{loggedUser.followers}} seguidores</p> 
+  </ion-toolbar>
   
-    </super-tabs-toolbar>
+  <div style="text-align: center; position:relative; margin-top: 3%;">
+    <ion-button fill="outline" shape="round" class="profileButton" (click)="openUserProfile()">
+      <ion-icon src="assets/spotify.svg" slot="start"></ion-icon>
+      <ion-label>Ver en Spotify</ion-label> 
+    </ion-button>
+  </div>
 
-    <super-tabs-container>
+  <h4 style="margin-left: 5%;">Tu canción más escuchada</h4>
 
-      <super-tab>
-        <ion-content class="fontStyle">
-          <div *ngIf="listaTopCanciones.length === 30">
-          <ion-list>
-            <ion-item lines="none" *ngFor = "let topTrack of listaTopCanciones; let i=index"> 
-              <ion-card class="cardBackground" style="width:100%; margin-left: auto; margin-right: auto; align-items: center;">
-                <ion-item lines="full" class="itemBackground">
-                  
-                  <p *ngIf="this.i > 2" slot="start" class="index">{{i+1}}.</p>
-                  <p *ngIf="this.i === 0" slot="start" style="color:gold" class="index">{{i+1}}.</p>
-                  <p *ngIf="this.i === 1" slot="start" style="color:silver" class="index">{{i+1}}.</p>
-                  <p *ngIf="this.i === 2" slot="start" style="color:#CD7F32" class="index">{{i+1}}.</p>
-
-                    <img slot ="start" style="height: 20%; width: 20%; margin-top: 7px; margin-bottom: 7px; margin-left: -13px;" src="{{topTrack.trackThumbnail}}">          
-                  <ion-label>
-                    <p class="track">{{topTrack.trackName}}</p>
-                   
-                    <ion-label style="color:#9c9c9c" *ngFor = "let artist of this.topTrack.artists;">
-                      <p *ngIf="4 > this.topTrack.artists.length">{{artist.name}}</p>
-                    </ion-label>
+    <ion-card style="width:90%; margin-left: auto; margin-right: auto; align-items: center;">
+      <ion-item lines="full" (click)="openFavouriteSong()">
+        <img slot="start" style="height: 20%; width: 20%; margin-top: 7px; margin-bottom: 7px;" src="{{this.favouriteSong.trackThumbnail}}">
+        <ion-label>
+          <p class="track">{{this.favouriteSong.trackName}}</p>
+        <ion-label *ngFor = "let artist of this.favouriteSong.artists">
+          <p>{{artist.name}}</p>
+        </ion-label>
         
-                    <ion-label *ngFor = "let artist2 of this.topTrack.artists.slice(0,4); let o=index" >
-                      <p *ngIf="this.topTrack.artists.length >= 4">{{artist2.name}}</p>
-                      <p style="color:#bdbdbd" *ngIf="this.o === 3">Y más artistas</p>
-                    </ion-label>                  
-                  </ion-label>
-                  
-                  </ion-item>
-              </ion-card>
-            </ion-item>
-          </ion-list>
-        </div>
+        </ion-label>
+        <ion-icon src="assets/spotify.svg" slot="end"></ion-icon>
+      </ion-item>
+    </ion-card>  
 
-          <div *ngIf="30 > listaTopCanciones.length">
-            <ion-list>
-            <ion-item lines="none" *ngFor="let skeletonTrack of skeletonList;">
-              <ion-card style="width:100%; margin-left: auto; margin-right: auto; align-items: center;">
-              <ion-item lines="full">
-                  <ion-thumbnail>
-                    <ion-skeleton-text animated></ion-skeleton-text>
-                  </ion-thumbnail>
-                <ion-label>
-                  <p style="margin-left: 30px;">
-                    <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
-                  </p>
-        
-                  <p style="margin-left: 30px;">
-                    <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
-                  </p>
-                </ion-label>
-                </ion-item>
-              </ion-card>
-            </ion-item>
-          </ion-list>
-        </div>
-          
-        </ion-content>
-      </super-tab>
-
-      <super-tab>
-        <ion-content class="fontStyle">
-          <div *ngIf="listaTopArtistas.length === 30">
-          <ion-list>
-            <ion-card *ngFor="let topArtist of listaTopArtistas; let i=index" style="--background: rgb(59, 59, 59); width:95%; margin-left: auto; margin-right: auto; align-items: center;">
-              <ion-card-header>
-                  <ion-toolbar style="--background: transparent">
-                    <ion-avatar>
-                      <img src="{{topArtist.image}}">
-                    </ion-avatar>
-                    <ion-buttons slot="end">
-                        <ion-icon *ngIf="this.i === 0" size="large" src="assets/trophy.svg"></ion-icon>
-                        <ion-icon *ngIf="this.topArtist.popularity > 80" size="large" src="assets/popularity.svg" style="margin-left: 8px;"></ion-icon>
-                        <ion-icon *ngIf="this.topArtist.followers > 1000000" size="large" src="assets/million.svg" style="margin-left: 8px;"></ion-icon>
-                      
-                      <ion-icon size="large" (click)="this.openArtistProfile(topArtist)" style="margin-left: 8px;" src="assets/spotify.svg"></ion-icon>
-                    
-                      </ion-buttons>
-                  </ion-toolbar>
-                 
-                <ion-card-title *ngIf="this.i > 2" style="font-weight: bold; margin-top: 15px; color:white;">{{i+1}}. {{topArtist.name}}</ion-card-title>
-                <ion-card-title *ngIf="this.i === 0" style="font-weight: bold; margin-top: 15px; color:gold">{{i+1}}. {{topArtist.name}}</ion-card-title>
-                <ion-card-title *ngIf="this.i === 1" style="font-weight: bold; margin-top: 15px; color:silver">{{i+1}}. {{topArtist.name}}</ion-card-title>
-                <ion-card-title *ngIf="this.i === 2" style="font-weight: bold; margin-top: 15px; color:#CD7F32">{{i+1}}. {{topArtist.name}}</ion-card-title>
-
-                <ion-toolbar style="--background: transparent">
-                  <ion-chip slot="start" style="margin-top: 20px;">
-                    <ion-icon name="people" style="color:white;"></ion-icon>
-                    <ion-label style="color:white;">Popularidad: {{topArtist.popularity}}</ion-label>
-                  </ion-chip>
-                    <p style="text-align: right; margin-bottom: -5px; margin-right: 3px;">{{topArtist.followers}} seguidores</p>
-                </ion-toolbar>
-                
-              </ion-card-header>
-            </ion-card>
-          </ion-list> 
-        </div>
-          
-          <div *ngIf="30 > listaTopArtistas.length">
-            <ion-list>
-            <ion-item lines="none" *ngFor="let skeletonTrack of skeletonList;">
-              <ion-card style="width:100%; margin-left: auto; margin-right: auto; align-items: center;">
-                <ion-card-header>
-                  <ion-toolbar>
-                  <ion-avatar>
-                      <ion-skeleton-text animated></ion-skeleton-text>
-                  </ion-avatar>
-                </ion-toolbar>
-                  <ion-card-title>
-                    <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
-                  </ion-card-title>
-
-                    <p style="text-align: center;">
-                      <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text> 
-                    </p>
-
-                </ion-card-header>
-              </ion-card>
-            </ion-item>
-          </ion-list>
-        </div>
-
-        </ion-content>
-      </super-tab>
-
-      <super-tab>
-        <ion-content class="fontStyle">
-          <div *ngIf="listaEscuchadasRecientemente.length === 20">
-          <ion-list>
-            <ion-item lines="none" *ngFor = "let playedTrack of listaEscuchadasRecientemente"> 
-              <ion-card style="width:100%; margin-left: auto; margin-right: auto; align-items: center;">
-                <ion-item lines="full" class="itemBackground">
-                      <img slot="start" style="height: 20%; width: 20%; margin-top: 7px; margin-bottom: 7px;" src="{{playedTrack.trackThumbnail}}">          
-                    <ion-label>
-                    <p class="track">{{playedTrack.trackName}}</p>
-
-                      <ion-label style="color:#9c9c9c" *ngFor = "let artist of this.playedTrack.artists;">
-                        <p *ngIf="4 > this.playedTrack.artists.length">{{artist.name}}</p>
-                      </ion-label>
-          
-                      <ion-label *ngFor = "let artist2 of this.playedTrack.artists.slice(0,3); let o=index" >
-                        <p *ngIf="this.playedTrack.artists.length > 4">{{artist2.name}}</p>
-                        <p style="color:#bdbdbd" *ngIf="this.o === 3">Y más artistas</p>
-                      </ion-label>
-                    <p class="dataTime">{{(playedTrack.playedat)?.substring(0,10)}}</p>
-                  </ion-label>
-                  </ion-item>
-              </ion-card>
-            </ion-item>
-          </ion-list>
-        </div>
-
-          <div *ngIf="20 > listaEscuchadasRecientemente.length">
-            <ion-list>
-            <ion-item lines="none" *ngFor="let skeletonTrack of skeletonList;">
-              <ion-card style="width:100%; margin-left: auto; margin-right: auto; align-items: center;">
-              <ion-item lines="full">
-                  <ion-thumbnail>
-                    <ion-skeleton-text animated></ion-skeleton-text>
-                  </ion-thumbnail>
-                <ion-label>
-                  <p style="margin-left: 30px;">
-                    <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
-                  </p>
-        
-                  <p style="margin-left: 30px;">
-                    <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
-                  </p>
-                </ion-label>
-                </ion-item>
-              </ion-card>
-            </ion-item>
-          </ion-list>
-        </div>
-
-        </ion-content>
-      </super-tab>
-
-    </super-tabs-container>
+    <h4 style="margin-left: 5%;">Tu artista más escuchado</h4>
+    <ion-card style="width:90%; margin-left: auto; margin-right: auto; align-items: center;">
+      <ion-item lines="full" (click)="openFavouriteArtist()">
+          <img style="width: 25%; margin-top: 7px; margin-bottom: 7px;" src="{{this.favouriteArtist.image}}">
+          <ion-label class="artist">
+          {{this.favouriteArtist.name}}
+        </ion-label>
+        <ion-icon src="assets/spotify.svg" slot="end"></ion-icon>
+      </ion-item>
+    </ion-card>
 
 
-  </super-tabs>
 </ion-content>
+
+<ion-footer class="ion-no-border">
+  <div style="text-align: center; margin-bottom: 5%;">
+    <ion-button fill="outline" shape="round" class="logoutButton" (click)="logout()">
+      <ion-label>Cerrar sesión</ion-label> 
+    </ion-button>
+  </div>
+</ion-footer>

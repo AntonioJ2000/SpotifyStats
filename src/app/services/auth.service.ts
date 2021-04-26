@@ -52,11 +52,11 @@ export class AuthService implements CanActivate{
 
   public logout(){
     cordova.plugins.spotifyAuth.forget();
-    this.clientCredentials.logout();
+    this.clientCredentials.forgetToken();
 
-    if(this.clientCredentials.client.access_token = ''){
-      this.router.navigate(['/login'])
-    }
+    setTimeout(() => {
+        this.router.navigate(['/login'])
+      },1000);
   }
 
 }

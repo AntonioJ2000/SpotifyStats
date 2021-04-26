@@ -63,11 +63,39 @@ export class SpotifyApiService {
         this.http.get(endpoint,{},this.header)
         .then(d =>{
           if(d){
-            resolve(JSON.parse(d.data))
+            resolve(JSON.parse(d.data));
           }else{
             resolve(null);
           }
-        }).catch(err => reject(err))
+        }).catch(err => reject(err));
+      })
+    }
+
+    public getCurrentUserFavouriteArtist():Promise<any | null>{
+      return new Promise((resolve,reject)=>{
+        const endpoint = environment.currentUserTop + 'artists?' + 'time_range=long_term&limit=1';
+        this.http.get(endpoint,{},this.header)
+        .then(d =>{
+          if(d){
+            resolve(JSON.parse(d.data));
+          }else{
+            resolve(null);
+          }
+        }).catch(err => reject(err));
+      })
+    }
+
+    public getCurrentUserFavouriteSong():Promise<any | null>{
+      return new Promise((resolve,reject)=>{
+        const endpoint = environment.currentUserTop + 'tracks?' + 'time_range=long_term&limit=1';
+        this.http.get(endpoint,{},this.header)
+        .then(d =>{
+          if(d){
+            resolve(JSON.parse(d.data));
+          }else{
+            resolve(null);
+          }
+        }).catch(err => reject(err));
       })
     }
 

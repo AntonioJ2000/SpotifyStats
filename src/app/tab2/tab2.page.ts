@@ -52,11 +52,12 @@ export class Tab2Page {
       this.firtTime = false;
     }
     
-    setTimeout(async() => {
       await this.getUserSavedTracks().then(async()=>{
-        await this.loading.pararLoading();
+        setTimeout(async() => {
+          await this.loading.pararLoading();
+        }, 750);
+        
       });
-    }, 500); 
 
   }
   

@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { artist } from '../model/artist';
+import { track } from '../model/track';
 
 @Injectable({
   providedIn: 'root'
@@ -22,9 +24,10 @@ export class ClientcredentialsService {
     time_range: 'long_term'
   }
 
+
   constructor() { }
 
-  logout(){
+  forgetToken(){
     this.client.access_token = '';
   }
 }

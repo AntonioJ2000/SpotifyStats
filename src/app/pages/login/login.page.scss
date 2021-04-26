@@ -1,8 +1,14 @@
-.imgEdit{
-    align-items: center;
-    margin-top: 70px;
-    margin-left: auto;
-    margin-right: auto;
-    width: 500px;
-    height: 450px;
+.alignImage{
+    text-align: center;
+   
+    .imgEdit{
+        margin-top: 30%;
+             
+    }
+}
+
+.loginButton{
+    --border-color: #1DB954;
+    --color: #1DB954;
+    margin-top: -20px;
 }

@@ -1,27 +1,58 @@
 .titleTab3{
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    font-weight: bolder;
-    color: white;
-}
-
-.iconColor{
-    color: white;
-}
-
-.index{
     font-weight: bold;
+    color: white;
 }
 
-.songOrArtist{
-    margin-left: 10px;
+.imgEdit{
+    align-items: center;
+    margin-top: 10%;
+    margin-left: auto;
+    margin-right: auto;
+    width:100% !important;
+    height : 100% !important;
+    max-width: 100px !important;
+    max-height: 100px !important;
 }
 
-
-.songOrArtistItem{
-    --ion-item-background: rgb(59, 59, 59);
+.displayName{
+    text-align: center;
+    font-weight: bolder;
+    font-size: 30px;
+    color: white;
 }
 
-  .itemBackground{
+.profileButton{
+    --border-color: #1DB954;
+    --color: #1DB954;
+}
+
+.logoutButton{
+    --border-color: rgb(209, 0, 0);
+    --color: rgb(209, 0, 0);
+}
+
+.userId{
+    color: white;
+    margin-left: 10%;
+}
+
+.followers{
+    color: white;
+    margin-right: 10%;
+}
+
+.accountType{
+    position:relative; 
+    margin-top:50px; 
+    margin-left: 5%;
+
+    span{
+        font-weight: bold;
+    }
+}
+
+.itemBackground{
     --ion-item-background: rgb(59, 59, 59);
 }
 
@@ -30,12 +61,8 @@
     color: white
 }
 
-.dataTime{
-    color:white;
-    text-align: right;
-}
-
-.index{
+.artist{
     font-weight: bold;
+    color: white;
+    margin-left: 10%;
 }
-
