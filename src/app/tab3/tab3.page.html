@@ -44,7 +44,7 @@
   <h4 style="margin-left: 5%;margin-top: 9%; font-family: 'Poppins', sans-serif;">Tu canción más escuchada</h4>
 
     <ion-card style="width:90%; margin-left: auto; margin-right: auto; align-items: center;">
-      <ion-item lines="full" (click)="openFavouriteSong()">
+      <ion-item class="itemBackground" lines="full" (click)="openFavouriteSong()">
         <img *ngIf="specialInfoLoaded" slot="start" style="height: 20%; width: 20%; margin-top: 7px; margin-bottom: 7px;" src="{{this.favouriteSong.trackThumbnail}}">
         
         <ion-thumbnail style="width: 70px;height: 70px; margin-right: 30px; margin-top: 7px; margin-bottom: 7px;" *ngIf="!specialInfoLoaded">
@@ -64,7 +64,7 @@
 
     <h4 style="margin-left: 5%; font-family: 'Poppins', sans-serif;">Tu artista más escuchado</h4>
     <ion-card style="width:90%; margin-left: auto; margin-right: auto; align-items: center;">
-      <ion-item lines="full" (click)="openFavouriteArtist()">
+      <ion-item class="itemBackground" lines="full" (click)="openFavouriteArtist()">
           
           <img *ngIf="specialInfoLoaded" style="width: 25%; margin-top: 7px; margin-bottom: 7px;" src="{{this.favouriteArtist.image}}">
           
