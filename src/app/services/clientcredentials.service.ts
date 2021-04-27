@@ -16,7 +16,7 @@ export class ClientcredentialsService {
     external_urls: '',
     followers: 0,
     id:0,
-    image:'',
+    image:'assets/no_profile_image.jpg',
     type:''
   }
 

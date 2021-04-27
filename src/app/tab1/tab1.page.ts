@@ -49,19 +49,20 @@ export class Tab1Page {
               private clientCredentials:ClientcredentialsService,
               private loading:LoadingService) {}
 
-  async ionViewWillEnter(){
+  async ionViewDidEnter(){
     await this.loading.cargarLoading();
 
+    setTimeout(async() => {
       await this.getUserTopTracks().then(async()=>{
         await this.getUserTopArtists().then(async()=>{
           await this.getUserRecentlyPlayed().then(async()=>{
             setTimeout(async () => {
               await this.loading.pararLoading();
-            }, 1500); 
+            }, 750); 
           });
         })
       });
-    
+    }, 2000);  
   }
  
   async ionViewDidLeave(){
@@ -131,11 +132,13 @@ export class Tab1Page {
       await this.getUserTopTracks().then(async()=>{
         await this.getUserTopArtists().then(async()=>{
           await this.getUserRecentlyPlayed().then(async()=>{
-            await this.loading.pararLoading();
+            setTimeout(async() => {
+              await this.loading.pararLoading();  
+            }, 500);
           });
         })
       })
-    }, 2000);
+    }, 1250);
   }
 
 

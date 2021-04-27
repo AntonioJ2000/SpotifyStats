@@ -1,6 +1,6 @@
 
 <ion-header [translucent]="true">
-  <ion-toolbar mode="ios">
+  <ion-toolbar>
     <ion-title class="titleTab1">
        Tus Estadísticas ({{time_range}})
     </ion-title>
@@ -9,10 +9,12 @@
         <ion-button (click)="reloadStats()">
           <ion-icon class="iconColor" name="reload-outline"></ion-icon>
         </ion-button>
+<!--
         <ion-button (click)="presentActionSheet()" fill="clear">
           <ion-icon class="iconColor" icon="ellipsis-vertical"></ion-icon>
         </ion-button>
-    </ion-buttons>
+    -->
+      </ion-buttons>
 
     <ion-buttons slot="start">
       <ion-button (click)="timeLapseSheet()">
@@ -28,16 +30,16 @@
     <super-tabs-toolbar slot="top" style="background-color: rgb(59, 59, 59); color: white;">
       
       <super-tab-button>
-        <ion-label class="fontStyle">Canciones</ion-label>
+        <ion-label class="defaultFont" style="font-weight: bold;">Canciones</ion-label>
       </super-tab-button>  
 
       <super-tab-button>
-        <ion-label class="fontStyle">Artistas</ion-label>
+        <ion-label class="defaultFont" style="font-weight: bold;">Artistas</ion-label>
       </super-tab-button>  
 
 
       <super-tab-button>
-        <ion-label class="fontStyle">Recientes</ion-label>
+        <ion-label class="defaultFont" style="font-weight: bold;">Recientes</ion-label>
       </super-tab-button>  
   
     </super-tabs-toolbar>
@@ -45,7 +47,7 @@
     <super-tabs-container>
 
       <super-tab>
-        <ion-content class="fontStyle">
+        <ion-content>
           <div *ngIf="listaTopCanciones.length === 30">
           <ion-list>
             <ion-item lines="none" *ngFor = "let topTrack of listaTopCanciones; let i=index"> 
@@ -62,12 +64,12 @@
                     <p class="track">{{topTrack.trackName}}</p>
                    
                     <ion-label style="color:#9c9c9c" *ngFor = "let artist of this.topTrack.artists;">
-                      <p *ngIf="4 > this.topTrack.artists.length">{{artist.name}}</p>
+                      <p class="defaultFont" style="font-size: 13px;" *ngIf="4 > this.topTrack.artists.length">{{artist.name}}</p>
                     </ion-label>
         
                     <ion-label *ngFor = "let artist2 of this.topTrack.artists.slice(0,4); let o=index" >
-                      <p *ngIf="this.topTrack.artists.length >= 4">{{artist2.name}}</p>
-                      <p style="color:#bdbdbd" *ngIf="this.o === 3">Y más artistas</p>
+                      <p class="defaultFont" style="font-size: 13px;" *ngIf="this.topTrack.artists.length >= 4">{{artist2.name}}</p>
+                      <p class="defaultFont" style="color:#bdbdbd; font-size: 13px;" *ngIf="this.o === 3">Y más artistas</p>
                     </ion-label>                  
                   </ion-label>
                   
@@ -104,7 +106,7 @@
       </super-tab>
 
       <super-tab>
-        <ion-content class="fontStyle">
+        <ion-content>
           <div *ngIf="listaTopArtistas.length === 30">
           <ion-list>
             <ion-card *ngFor="let topArtist of listaTopArtistas; let i=index" style="--background: rgb(59, 59, 59); width:95%; margin-left: auto; margin-right: auto; align-items: center;">
@@ -123,17 +125,17 @@
                       </ion-buttons>
                   </ion-toolbar>
                  
-                <ion-card-title *ngIf="this.i > 2" style="font-weight: bold; margin-top: 15px; color:white;">{{i+1}}. {{topArtist.name}}</ion-card-title>
-                <ion-card-title *ngIf="this.i === 0" style="font-weight: bold; margin-top: 15px; color:gold">{{i+1}}. {{topArtist.name}}</ion-card-title>
-                <ion-card-title *ngIf="this.i === 1" style="font-weight: bold; margin-top: 15px; color:silver">{{i+1}}. {{topArtist.name}}</ion-card-title>
-                <ion-card-title *ngIf="this.i === 2" style="font-weight: bold; margin-top: 15px; color:#CD7F32">{{i+1}}. {{topArtist.name}}</ion-card-title>
+                <ion-card-title *ngIf="this.i > 2" style="font-family: 'Poppins', sans-serif; font-weight: bold; margin-top: 15px; color:white;">{{i+1}}. {{topArtist.name}}</ion-card-title>
+                <ion-card-title *ngIf="this.i === 0" style="font-family: 'Poppins', sans-serif; font-weight: bold; margin-top: 15px; color:gold">{{i+1}}. {{topArtist.name}}</ion-card-title>
+                <ion-card-title *ngIf="this.i === 1" style="font-family: 'Poppins', sans-serif; font-weight: bold; margin-top: 15px; color:silver">{{i+1}}. {{topArtist.name}}</ion-card-title>
+                <ion-card-title *ngIf="this.i === 2" style="font-family: 'Poppins', sans-serif; font-weight: bold; margin-top: 15px; color:#CD7F32">{{i+1}}. {{topArtist.name}}</ion-card-title>
 
                 <ion-toolbar style="--background: transparent">
                   <ion-chip slot="start" style="margin-top: 20px;">
                     <ion-icon name="people" style="color:white;"></ion-icon>
-                    <ion-label style="color:white;">Popularidad: {{topArtist.popularity}}</ion-label>
+                    <ion-label style="color:white; font-family: 'Poppins', sans-serif; font-size: 11px;">Popularidad: {{topArtist.popularity}}</ion-label>
                   </ion-chip>
-                    <p style="text-align: right; margin-bottom: -5px; margin-right: 3px;">{{topArtist.followers}} seguidores</p>
+                    <p style="font-family: 'Poppins', sans-serif; text-align: right; margin-bottom: -5px; margin-right: 3px;">{{topArtist.followers}} seguidores</p>
                 </ion-toolbar>
                 
               </ion-card-header>
@@ -169,7 +171,7 @@
       </super-tab>
 
       <super-tab>
-        <ion-content class="fontStyle">
+        <ion-content>
           <div *ngIf="listaEscuchadasRecientemente.length === 20">
           <ion-list>
             <ion-item lines="none" *ngFor = "let playedTrack of listaEscuchadasRecientemente"> 
@@ -180,12 +182,12 @@
                     <p class="track">{{playedTrack.trackName}}</p>
 
                       <ion-label style="color:#9c9c9c" *ngFor = "let artist of this.playedTrack.artists;">
-                        <p *ngIf="4 > this.playedTrack.artists.length">{{artist.name}}</p>
+                        <p class="defaultFont" *ngIf="4 > this.playedTrack.artists.length">{{artist.name}}</p>
                       </ion-label>
           
                       <ion-label *ngFor = "let artist2 of this.playedTrack.artists.slice(0,3); let o=index" >
-                        <p *ngIf="this.playedTrack.artists.length > 4">{{artist2.name}}</p>
-                        <p style="color:#bdbdbd" *ngIf="this.o === 3">Y más artistas</p>
+                        <p class="defaultFont" style="font-size: 13px;" *ngIf="this.playedTrack.artists.length > 4">{{artist2.name}}</p>
+                        <p class="defaultFont" style="color:#bdbdbd; font-size: 13px;" *ngIf="this.o === 3">Y más artistas</p>
                       </ion-label>
                     <p class="dataTime">{{(playedTrack.playedat)?.substring(0,10)}}</p>
                   </ion-label>

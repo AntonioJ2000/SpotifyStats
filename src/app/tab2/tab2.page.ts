@@ -46,19 +46,19 @@ export class Tab2Page {
               private loading:LoadingService,
               private inAppBrowser:InAppBrowser) {}
 
-  async ionViewWillEnter(){
+  async ionViewDidEnter(){
     if(!this.firtTime){
       await this.loading.cargarLoading();
       this.firtTime = false;
     }
     
+    setTimeout(async() => {
       await this.getUserSavedTracks().then(async()=>{
         setTimeout(async() => {
           await this.loading.pararLoading();
-        }, 750);
-        
+        }, 250);
       });
-
+    }, 1000);  
   }
   
   ionViewDidLeave(){
@@ -94,7 +94,9 @@ export class Tab2Page {
 
     setTimeout(async() => {
       await this.getUserSavedTracks().then(async()=>{
-        await this.loading.pararLoading();
+        setTimeout(async() => {
+          await this.loading.pararLoading();
+        }, 250);
       })
     }, 500);
    

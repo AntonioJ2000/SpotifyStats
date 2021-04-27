@@ -21,6 +21,7 @@ const MEDIA_FOLDER_NAME = "my_media";
 })
 export class Tab3Page implements OnInit{
 
+  specialInfoLoaded:boolean = false;
   loggedUser = this.clientCredentials.user;
   favouriteSong:track = {
     artists: [],
@@ -58,17 +59,20 @@ export class Tab3Page implements OnInit{
   async ngOnInit(){
     this.loading.cargarLoading();
 
+    setTimeout(async() => {
+      await this.getUserProfile().then(async()=>{
+        await this.getUserFavouriteSong().then(async()=>{
+          await this.getUserFavouriteArtist().then(async()=>{
+            setTimeout(async () => {
+              await this.loading.pararLoading();
+              this.specialInfoLoaded = true;
+            }, 250);
+          })
+        });     
+      });
+    }, 750);
+      
     
-
-    await this.getUserProfile().then(async()=>{
-      await this.getUserFavouriteSong().then(async()=>{
-        await this.getUserFavouriteArtist().then(async()=>{
-          setTimeout(async () => {
-            await this.loading.pararLoading();
-          }, 1000);
-        })
-      });     
-    });
     /*
     this.plt.ready().then(()=>{
       let path = this.file.externalRootDirectory;
@@ -87,12 +91,15 @@ export class Tab3Page implements OnInit{
   public async getUserProfile(){
     let u = await this.spotifyApi.getCurrentUserProfile();
 
-    this.clientCredentials.user.display_name = u.display_name;
-    this.clientCredentials.user.external_urls = u.external_urls.spotify;
-    this.clientCredentials.user.followers = u.followers.total;
-    this.clientCredentials.user.id = u.id;
-    this.clientCredentials.user.image = u.images[0].url;
-    this.clientCredentials.user.type=u.type;
+      this.clientCredentials.user.display_name = u.display_name;
+      this.clientCredentials.user.external_urls = u.external_urls.spotify;
+      this.clientCredentials.user.followers = u.followers.total;
+      this.clientCredentials.user.id = u.id;
+      if(u.images.length != 0){
+        this.clientCredentials.user.image = u.images[0].url;  
+      }
+      this.clientCredentials.user.type=u.type;
+    
   }
 
   public async getUserFavouriteSong(){
@@ -109,12 +116,13 @@ export class Tab3Page implements OnInit{
     let favArtist = await this.spotifyApi.getCurrentUserFavouriteArtist();
 
     this.favouriteArtist.name = favArtist.items[0].name;
-    this.favouriteArtist.image = favArtist.items[0].images[1].url;
+    if(favArtist.items[0].images.length != 0){
+      this.favouriteArtist.image = favArtist.items[0].images[1].url;
+    }
     this.favouriteArtist.popularity = favArtist.items[0].popularity;
     this.favouriteArtist.spotifyURL = favArtist.items[0].external_urls.spotify,
     this.favouriteArtist.followers = favArtist.items[0].followers.total
   
-    console.log(this.favouriteArtist)
   }
 
   public openUserProfile(){

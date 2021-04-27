@@ -1,5 +1,5 @@
 <ion-header [translucent]="true">
-  <ion-toolbar mode="ios">
+  <ion-toolbar>
     <ion-title class="titleTab2">
       Canciones que te gustan
     </ion-title>
@@ -29,12 +29,12 @@
             <p class="track">{{savedTrack.trackName}}</p>
            
             <ion-label style="color:#9c9c9c" *ngFor = "let artist of this.savedTrack.artists;">
-              <p *ngIf="4 > this.savedTrack.artists.length">{{artist.name}}</p>
+              <p class="defaultFont" style="font-size: 13px;" *ngIf="4 > this.savedTrack.artists.length">{{artist.name}}</p>
             </ion-label>
 
             <ion-label *ngFor = "let artist2 of this.savedTrack.artists.slice(0,3); let o=index" >
-              <p *ngIf="this.savedTrack.artists.length > 4">{{artist2.name}}</p>
-              <p style="color:#bdbdbd" *ngIf="this.o === 2">Y más artistas</p>
+              <p class="defaultFont" style="font-size: 13px;" *ngIf="this.savedTrack.artists.length > 4">{{artist2.name}}</p>
+              <p class="defaultFont" style="color:#bdbdbd; font-size: 13px;" *ngIf="this.o === 2">Y más artistas</p>
             </ion-label>
           
           </ion-label>

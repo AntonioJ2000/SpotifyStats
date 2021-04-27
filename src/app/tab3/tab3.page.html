@@ -1,12 +1,12 @@
 <ion-header [translucent]="true">
-  <ion-toolbar mode="ios">
+  <ion-toolbar>
     <ion-title class="titleTab3">
-      Tu perfil
+      Mi perfil
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="fontStyle">
+<ion-content [fullscreen]="true">
 
   <!------
   <ion-label>
@@ -19,33 +19,42 @@
 
   <ion-button (click)="recordAudio()">Media Capture</ion-button>
   --->
-  <ion-avatar class="imgEdit">
+  <ion-avatar *ngIf="specialInfoLoaded" class="imgEdit">
     <img src="{{loggedUser.image}}">
   </ion-avatar>
 
-  <p class="display Name">{{loggedUser.display_name}}</p>
+  <ion-avatar *ngIf="!specialInfoLoaded" class="imgEdit">
+    <ion-skeleton-text animated></ion-skeleton-text>
+  </ion-avatar>
+
+  <p class="displayName">{{loggedUser.display_name}}</p>
 
   <ion-toolbar lines="none" style="margin-top: -25px; --background: transparent;">
       <p slot="start" class="userId">ID: {{loggedUser.id}}</p>
       <p slot="end" class="followers">{{loggedUser.followers}} seguidores</p> 
   </ion-toolbar>
   
-  <div style="text-align: center; position:relative; margin-top: 3%;">
+  <div style="text-align: center;">
     <ion-button fill="outline" shape="round" class="profileButton" (click)="openUserProfile()">
       <ion-icon src="assets/spotify.svg" slot="start"></ion-icon>
-      <ion-label>Ver en Spotify</ion-label> 
+      <ion-label style="font-family: 'Poppins', sans-serif;">Ver en Spotify</ion-label> 
     </ion-button>
   </div>
 
-  <h4 style="margin-left: 5%;">Tu canción más escuchada</h4>
+  <h4 style="margin-left: 5%;margin-top: 9%; font-family: 'Poppins', sans-serif;">Tu canción más escuchada</h4>
 
     <ion-card style="width:90%; margin-left: auto; margin-right: auto; align-items: center;">
       <ion-item lines="full" (click)="openFavouriteSong()">
-        <img slot="start" style="height: 20%; width: 20%; margin-top: 7px; margin-bottom: 7px;" src="{{this.favouriteSong.trackThumbnail}}">
+        <img *ngIf="specialInfoLoaded" slot="start" style="height: 20%; width: 20%; margin-top: 7px; margin-bottom: 7px;" src="{{this.favouriteSong.trackThumbnail}}">
+        
+        <ion-thumbnail style="width: 70px;height: 70px; margin-right: 30px; margin-top: 7px; margin-bottom: 7px;" *ngIf="!specialInfoLoaded">
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-thumbnail>
+        
         <ion-label>
           <p class="track">{{this.favouriteSong.trackName}}</p>
         <ion-label *ngFor = "let artist of this.favouriteSong.artists">
-          <p>{{artist.name}}</p>
+          <p style="font-family: 'Poppins', sans-serif; font-size: 13px;">{{artist.name}}</p>
         </ion-label>
         
         </ion-label>
@@ -53,10 +62,16 @@
       </ion-item>
     </ion-card>  
 
-    <h4 style="margin-left: 5%;">Tu artista más escuchado</h4>
+    <h4 style="margin-left: 5%; font-family: 'Poppins', sans-serif;">Tu artista más escuchado</h4>
     <ion-card style="width:90%; margin-left: auto; margin-right: auto; align-items: center;">
       <ion-item lines="full" (click)="openFavouriteArtist()">
-          <img style="width: 25%; margin-top: 7px; margin-bottom: 7px;" src="{{this.favouriteArtist.image}}">
+          
+          <img *ngIf="specialInfoLoaded" style="width: 25%; margin-top: 7px; margin-bottom: 7px;" src="{{this.favouriteArtist.image}}">
+          
+          <ion-thumbnail style="width: 70px;height: 70px; margin-top: 7px; margin-bottom: 7px;" *ngIf="!specialInfoLoaded">
+            <ion-skeleton-text animated></ion-skeleton-text>
+          </ion-thumbnail>
+          
           <ion-label class="artist">
           {{this.favouriteArtist.name}}
         </ion-label>
@@ -70,7 +85,7 @@
 <ion-footer class="ion-no-border">
   <div style="text-align: center; margin-bottom: 5%;">
     <ion-button fill="outline" shape="round" class="logoutButton" (click)="logout()">
-      <ion-label>Cerrar sesión</ion-label> 
+      <ion-label style="font-family: 'Poppins', sans-serif;">Cerrar sesión</ion-label> 
     </ion-button>
   </div>
 </ion-footer>
