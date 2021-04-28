@@ -18,7 +18,6 @@ import { SuperTabsModule } from '@ionic-super-tabs/angular';
     ExploreContainerComponentModule,
     RouterModule.forChild([{ path: '', component: Tab3Page }]),
     Tab3PageRoutingModule,
-    SuperTabsModule
   ],
   declarations: [Tab3Page]
 })
