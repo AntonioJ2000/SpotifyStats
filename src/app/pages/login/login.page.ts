@@ -16,7 +16,6 @@ export class LoginPage {
               private loading:LoadingService,
               private router:Router) { }
 
-  comprobadorToken:any = '';  
 
   async login(){ 
     this.loading.cargarLoading();

@@ -9,8 +9,6 @@ declare var cordova: any;
 })
 export class AuthService implements CanActivate{
 
-  tokenForAuth:string='';
-
   constructor(private clientCredentials:ClientcredentialsService,
               private router:Router) { }
 
@@ -26,7 +24,6 @@ export class AuthService implements CanActivate{
     cordova.plugins.spotifyAuth.authorize(config)
     .then(({ accessToken, encryptedRefreshToken, expiresAt }) =>{
        //Sobreescribimos las variables del cliente
-      this.tokenForAuth = accessToken;
       this.clientCredentials.client.access_token = accessToken;
       
       if(this.clientCredentials.client.access_token != ''){
@@ -45,6 +42,7 @@ export class AuthService implements CanActivate{
   }
 
   canActivate(route: ActivatedRouteSnapshot): boolean {
+    console.log(this.clientCredentials.client.access_token)
     if(this.clientCredentials.client.access_token == ''){
       this.router.navigate(['/login']);
       return false;
