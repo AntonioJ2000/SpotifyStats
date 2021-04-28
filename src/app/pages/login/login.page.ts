@@ -12,9 +12,7 @@ import { LoadingService } from 'src/app/services/loading.service';
 export class LoginPage {
 
   constructor(private authService:AuthService,
-              private clientCredentials:ClientcredentialsService,
-              private loading:LoadingService,
-              private router:Router) { }
+              private loading:LoadingService) { }
 
 
   async login(){ 
