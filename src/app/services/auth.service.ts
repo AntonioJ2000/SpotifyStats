@@ -38,15 +38,16 @@ export class AuthService implements CanActivate{
 
     setTimeout(() => {
         this.router.navigate(['/login'])
+        
       },1000);
   }
 
   canActivate(route: ActivatedRouteSnapshot): boolean {
-    console.log(this.clientCredentials.client.access_token)
-    if(this.clientCredentials.client.access_token == ''){
-      this.router.navigate(['/login']);
-      return false;
+      if(this.clientCredentials.client.access_token == ''){
+        this.router.navigate(['/login']);
+        return false;
+      }
+        return true;
     }
-      return true;
-  }
+
 }

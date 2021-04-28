@@ -57,7 +57,7 @@ export class Tab3Page implements OnInit{
 
   
   async ngOnInit(){
-    this.loading.cargarLoading();
+    this.loading.cargarLoadingOscuro();
 
     setTimeout(async() => {
       await this.getUserProfile().then(async()=>{
@@ -144,12 +144,13 @@ export class Tab3Page implements OnInit{
   public openFavouriteArtist(){
     const options: InAppBrowserOptions = {
       toolbar: 'yes',
-      zoom: 'no'
+      zoom: 'no', 
     }
     const browser = this.inAppBrowser.create(this.favouriteArtist.spotifyURL, '_system', options)
   }
 
   public logout(){
+    this.loading.cargarLoading();
     this.authService.logout();
   }
 

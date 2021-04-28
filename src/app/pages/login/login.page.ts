@@ -24,9 +24,7 @@ export class LoginPage {
     }, 500);
   }
 
-  ionViewWillEnter(){
-    if(this.clientCredentials.client.access_token != ''){
-      this.router.navigate(['/'])
-    }
+  ionViewDidEnter(){
+    this.loading.pararLoading();
   }
 }
