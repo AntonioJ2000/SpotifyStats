@@ -21,7 +21,7 @@ export class LoginPage {
     this.loading.cargarLoading();
     setTimeout(() => {
       this.authService.login(); 
-    }, 500);
+    }, 250);
   }
 
   ionViewDidEnter(){
