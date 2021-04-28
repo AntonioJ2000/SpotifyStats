@@ -23,15 +23,11 @@ export class LoginPage {
     setTimeout(() => {
       this.authService.login(); 
     }, 500);
-      
-    //Debería de parar el bucle cuando el token fuese distinto de ''
-    /*
-    while(this.comprobadorToken == ''){
-      if(this.clientCredentials.client.access_token.length > 0){
-        this.comprobadorToken = this.clientCredentials.client.access_token;
-      }
+  }
+
+  ionViewWillEnter(){
+    if(this.clientCredentials.client.access_token != ''){
+      this.router.navigate(['/'])
     }
-    */
-    
   }
 }
