@@ -87,14 +87,19 @@
       "cordova-plugin-statusbar": {},
       "cordova-plugin-device": {},
       "cordova-plugin-splashscreen": {},
-      "cordova-plugin-ionic-webview": {},
+      "cordova-plugin-ionic-webview": {
+        "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+"
+      },
       "cordova-plugin-ionic-keyboard": {},
       "cordova-plugin-advanced-http": {},
       "cordova-plugin-media": {},
       "cordova-plugin-file": {},
       "cordova-spotify-oauth": {},
       "cordova-plugin-customurlscheme": {
-        "URL_SCHEME": "spotifystats"
+        "URL_SCHEME": "spotifystats",
+        "ANDROID_SCHEME": " ",
+        "ANDROID_HOST": " ",
+        "ANDROID_PATHPREFIX": "/"
       },
       "cordova-plugin-media-capture": {},
       "cordova-plugin-inappbrowser": {}

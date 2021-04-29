@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, AlertController } from '@ionic/angular';
 import { artist } from '../model/artist';
 import { track } from '../model/track';
 import { ClientcredentialsService } from '../services/clientcredentials.service';
@@ -15,6 +15,7 @@ import { SpotifyApiService } from '../services/spotify-api.service';
 })
 export class Tab1Page {
 
+  cargado:boolean = false;
 
   skeletonTrack: track = {
     id: '',
@@ -47,28 +48,32 @@ export class Tab1Page {
               private inAppBrowser: InAppBrowser,
               private actionSheetController: ActionSheetController,
               private clientCredentials:ClientcredentialsService,
-              private loading:LoadingService) {}
+              private loading:LoadingService,
+              private alertController: AlertController) {}
 
-  async ionViewDidEnter(){
-    await this.loading.cargarLoading();
+  
+    ionViewDidEnter(){
+      this.loading.cargarLoading();
 
     setTimeout(async() => {
       await this.getUserTopTracks().then(async()=>{
         await this.getUserTopArtists().then(async()=>{
-          await this.getUserRecentlyPlayed().then(async()=>{
-            setTimeout(async () => {
-              await this.loading.pararLoading();
-            }, 750); 
+          await this.getUserRecentlyPlayed().then(()=>{
+            setTimeout(() => {
+              this.cargado = true;
+              this.loading.pararLoading();
+            }, 500); 
           });
         })
       });
-    }, 2000);  
+    }, 1500);  
   }
  
-  async ionViewDidLeave(){
-    this.listaTopCanciones = [];
-    this.listaTopArtistas = [];
-    this.listaEscuchadasRecientemente = [];
+  async ionViewWillLeave(){
+      this.cargado = false;
+      this.listaTopCanciones.splice(0, this.listaTopCanciones.length);
+      this.listaTopArtistas.splice(0, this.listaTopArtistas.length);
+      this.listaEscuchadasRecientemente.splice(0, this.listaEscuchadasRecientemente.length);
   }
   
   public async getUserTopTracks(){
@@ -92,12 +97,13 @@ export class Tab1Page {
 
     for(let i=0; i < t.items.length; i++){
       let artistToView:artist = {
-        image: t.items[i].images[1].url,
+        image: t.items[i].images[2].url,
         name: t.items[i].name,
         popularity: t.items[i].popularity,
         spotifyURL: t.items[i].external_urls.spotify,
         followers: t.items[i].followers.total
       }
+      console.log(artistToView.image)
       this.listaTopArtistas.push(artistToView);
     }
   }
@@ -121,19 +127,21 @@ export class Tab1Page {
   }
 
   public async reloadStats(){
-    this.listaTopCanciones = [];
-    this.listaTopArtistas = [];
-    this.listaEscuchadasRecientemente = [];
+    this.cargado = false;
+    this.loading.cargarLoading();
 
-    await this.loading.cargarLoading();
+    this.listaTopCanciones.splice(0, this.listaTopCanciones.length);
+    this.listaTopArtistas.splice(0, this.listaTopArtistas.length);
+    this.listaEscuchadasRecientemente.splice(0, this.listaEscuchadasRecientemente.length);
 
     
     setTimeout(async() => {
       await this.getUserTopTracks().then(async()=>{
         await this.getUserTopArtists().then(async()=>{
-          await this.getUserRecentlyPlayed().then(async()=>{
-            setTimeout(async() => {
-              await this.loading.pararLoading();  
+          await this.getUserRecentlyPlayed().then(()=>{
+            setTimeout(() => {
+              this.loading.pararLoading(); 
+              this.cargado = true;
             }, 500);
           });
         })
@@ -150,21 +158,47 @@ export class Tab1Page {
     const browser = this.inAppBrowser.create(selectedArtist.spotifyURL, '_system', options);
   }
 
-  async presentActionSheet(){
-    const actionSheet = await this.actionSheetController.create({
-      header: 'Seleccione una opción',
-      cssClass: 'config-sheet',
-      buttons: [{
-        text: 'Este botón no hace nada',
-        icon: 'assets/spotify.svg',
-        handler: ()=>{
-          console.log('No hay nada')
+  /*
+  async HelpForSavedTracks() {
+    const alert = await this.alertController.create({
+      cssClass: 'myAlert',
+      header: 'Lapso de tiempo',
+      message: 'Selecciona el marco de tiempo en el que quieres ver tus estadísticas',
+      buttons: [
+        {
+          text: "Siempre",
+          role: 'cancel',
+          cssClass: 'alertOK',
+          handler: () => {
+            this.clientCredentials.config.time_range = 'long_term';
+            this.time_range = 'Siempre';
+            this.reloadStats();
+          }
+        },{
+          text: "6 Meses",
+          role: 'cancel',
+          cssClass: 'alertOK',
+          handler: () => {
+            this.clientCredentials.config.time_range = 'medium_term';
+            this.time_range = '6 Meses';
+            this.reloadStats();
+          }
+        },{
+          text: "4 Semanas",
+          role: 'cancel',
+          cssClass: 'alertOK',
+          handler: () => {
+            this.clientCredentials.config.time_range = 'short_term';
+            this.time_range = '4 Sem.';
+            this.reloadStats();
+          }
         }
-      }]
+      ]
     });
-    await actionSheet.present();
+      
+    await alert.present();
   }
-
+    */
   async timeLapseSheet(){
     const actionSheet = await this.actionSheetController.create({
       header: 'Lapso de tiempo',

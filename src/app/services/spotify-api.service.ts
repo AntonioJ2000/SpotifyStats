@@ -44,7 +44,7 @@ export class SpotifyApiService {
 
     public getCurrentUserTopTracks():Promise<any | null>{
       return new Promise((resolve,reject)=>{
-        const endpoint = environment.currentUserTop + 'tracks?' + 'time_range=' + this.clientCredentials.config.time_range + '&' + 'limit=' + '30';
+        const endpoint = environment.currentUserTop + 'tracks?' + 'time_range=' + this.clientCredentials.config.time_range;
         this.http.get(endpoint,{},this.header)
         .then(d =>{
           if(d){
@@ -58,7 +58,7 @@ export class SpotifyApiService {
 
     public getCurrentUserTopArtists():Promise<any | null>{
       return new Promise((resolve,reject)=>{
-        const endpoint = environment.currentUserTop + 'artists?' + 'time_range=' + this.clientCredentials.config.time_range + '&' + 'limit=' + '30';
+        const endpoint = environment.currentUserTop + 'artists?' + 'time_range=' + this.clientCredentials.config.time_range;
         this.http.get(endpoint,{},this.header)
         .then(d =>{
           if(d){
@@ -100,7 +100,7 @@ export class SpotifyApiService {
 
     public getCurrentUserRecentlyPlayed():Promise<any | null>{
       return new Promise((resolve,reject)=>{
-        const endpoint = environment.currentUserRecentlyPlayed;
+        const endpoint = environment.currentUserRecentlyPlayed+ '?' + 'limit=' + '10';
         this.http.get(endpoint,{},this.header)
         .then(d =>{
           if(d){

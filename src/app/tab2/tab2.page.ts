@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
-import { IonInfiniteScroll, LoadingController } from '@ionic/angular';
+import { AlertController, IonInfiniteScroll, LoadingController } from '@ionic/angular';
 import { artist } from '../model/artist';
 import { track } from '../model/track';
 import { LoadingService } from '../services/loading.service';
@@ -12,6 +12,7 @@ import { SpotifyApiService } from '../services/spotify-api.service';
   styleUrls: ['tab2.page.scss']
 })
 export class Tab2Page {
+
 
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
@@ -44,29 +45,29 @@ export class Tab2Page {
 
   constructor(private spotifyApi:SpotifyApiService,
               private loading:LoadingService,
-              private inAppBrowser:InAppBrowser) {}
+              private inAppBrowser:InAppBrowser,
+              private alertController: AlertController) {}
 
-  async ionViewDidEnter(){
+   ionViewDidEnter(){
     if(!this.firtTime){
-      await this.loading.cargarLoading();
+      this.loading.cargarLoading();
       this.firtTime = false;
     }
     
     setTimeout(async() => {
-      await this.getUserSavedTracks().then(async()=>{
-        setTimeout(async() => {
-          await this.loading.pararLoading();
+      await this.getUserSavedTracks().then(()=>{
+        setTimeout(() => {
+           this.loading.pararLoading();
         }, 250);
       });
     }, 1000);  
   }
   
-  ionViewDidLeave(){
-    this.listaCancionesGuardadas = [];
+  ionViewWillLeave(){
+    this.listaCancionesGuardadas.splice(0, this.listaCancionesGuardadas.length);
     this.offsetVar = 0;
   }
   
-
   public async getUserSavedTracks(){
     let t = await this.spotifyApi.getCurrentUserSavedTracks(this.offsetVar);
     
@@ -87,15 +88,15 @@ export class Tab2Page {
   }
 
   public async reloadSavedSongs(){
-    this.listaCancionesGuardadas = [];
-    this.offsetVar = 0;
+    this.loading.cargarLoading();
 
-    await this.loading.cargarLoading();
+    this.listaCancionesGuardadas.splice(0, this.listaCancionesGuardadas.length);
+    this.offsetVar = 0;
 
     setTimeout(async() => {
       await this.getUserSavedTracks().then(async()=>{
-        setTimeout(async() => {
-          await this.loading.pararLoading();
+        setTimeout(() => {
+          this.loading.pararLoading();
         }, 250);
       })
     }, 500);
@@ -127,5 +128,23 @@ export class Tab2Page {
     const browser = this.inAppBrowser.create(selectedTrack.spotifyURL, '_system', options);
   }
 
+  async HelpForSavedTracks() {
+    const alert = await this.alertController.create({
+      cssClass: 'myAlert',
+      header: 'Sobre tus canciones',
+      message: 'Estas son las canciones a las que has dado "Me Gusta" en Spotify, ten en cuenta que solo aparecen las 100 primeras.',
+      buttons: [
+        {
+          text: "Entendido",
+          role: 'cancel',
+          cssClass: 'alertOK',
+          handler: () => {
 
+          }
+        }
+      ]
+    });
+      
+    await alert.present();
+  }
 }

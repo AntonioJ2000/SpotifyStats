@@ -56,17 +56,17 @@ export class Tab3Page implements OnInit{
     private inAppBrowser:InAppBrowser) {}
 
   
-  async ngOnInit(){
+    ngOnInit(){
     this.loading.cargarLoadingOscuro();
 
     setTimeout(async() => {
       await this.getUserProfile().then(async()=>{
         await this.getUserFavouriteSong().then(async()=>{
-          await this.getUserFavouriteArtist().then(async()=>{
-            setTimeout(async () => {
-              await this.loading.pararLoading();
+          await this.getUserFavouriteArtist().then(()=>{
+            setTimeout(() => {
+              this.loading.pararLoading();
               this.specialInfoLoaded = true;
-            }, 250);
+            }, 350);
           })
         });     
       });
@@ -117,7 +117,7 @@ export class Tab3Page implements OnInit{
 
     this.favouriteArtist.name = favArtist.items[0].name;
     if(favArtist.items[0].images.length != 0){
-      this.favouriteArtist.image = favArtist.items[0].images[1].url;
+      this.favouriteArtist.image = favArtist.items[0].images[2].url;
     }
     this.favouriteArtist.popularity = favArtist.items[0].popularity;
     this.favouriteArtist.spotifyURL = favArtist.items[0].external_urls.spotify,
