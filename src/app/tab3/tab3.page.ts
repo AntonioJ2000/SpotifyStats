@@ -151,6 +151,9 @@ export class Tab3Page implements OnInit{
 
   public logout(){
     this.loading.cargarLoading();
+    setTimeout(() => {
+      this.loading.pararLoading();
+    }, 1000);
     this.authService.logout();
   }
 

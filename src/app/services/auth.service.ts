@@ -39,7 +39,7 @@ export class AuthService implements CanActivate{
     setTimeout(() => {
         this.router.navigate(['/login'])
         
-      },1000);
+      },750);
   }
 
   canActivate(route: ActivatedRouteSnapshot): boolean {

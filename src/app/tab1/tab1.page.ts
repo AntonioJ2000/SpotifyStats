@@ -103,7 +103,6 @@ export class Tab1Page {
         spotifyURL: t.items[i].external_urls.spotify,
         followers: t.items[i].followers.total
       }
-      console.log(artistToView.image)
       this.listaTopArtistas.push(artistToView);
     }
   }
