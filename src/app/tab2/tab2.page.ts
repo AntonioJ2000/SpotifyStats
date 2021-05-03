@@ -12,9 +12,9 @@ import { SpotifyApiService } from '../services/spotify-api.service';
   styleUrls: ['tab2.page.scss']
 })
 export class Tab2Page {
-
-
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
+
+  cargado:boolean = false;
 
   skeletonTrack: track = {
     id: '',
@@ -58,12 +58,14 @@ export class Tab2Page {
       await this.getUserSavedTracks().then(()=>{
         setTimeout(() => {
            this.loading.pararLoading();
+           this.cargado = true;
         }, 250);
       });
     }, 1000);  
   }
   
   ionViewWillLeave(){
+    this.cargado = false;
     this.listaCancionesGuardadas.splice(0, this.listaCancionesGuardadas.length);
     this.offsetVar = 0;
   }
@@ -88,6 +90,7 @@ export class Tab2Page {
   }
 
   public async reloadSavedSongs(){
+    this.cargado = false;
     this.loading.cargarLoading();
 
     this.listaCancionesGuardadas.splice(0, this.listaCancionesGuardadas.length);
@@ -96,6 +99,7 @@ export class Tab2Page {
     setTimeout(async() => {
       await this.getUserSavedTracks().then(async()=>{
         setTimeout(() => {
+          this.cargado = true;
           this.loading.pararLoading();
         }, 250);
       })

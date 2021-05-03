@@ -4,13 +4,13 @@
       Canciones que te gustan
     </ion-title>
     <ion-buttons slot="start">   
-        <ion-button (click)="HelpForSavedTracks()">
-          <ion-icon class="iconStyle" name="help-circle-outline"></ion-icon>
+        <ion-button (click)="HelpForSavedTracks()" size="large">
+          <ion-icon slot="icon-only" class="iconStyle" name="help-circle-outline"></ion-icon>
         </ion-button>
       </ion-buttons>
       <ion-buttons slot="end">
-        <ion-button (click)="reloadSavedSongs()">
-          <ion-icon class="iconStyle" name="reload-outline"></ion-icon>
+        <ion-button (click)="reloadSavedSongs()" size="large">
+          <ion-icon slot="icon-only" class="iconStyle" name="reload-outline"></ion-icon>
         </ion-button>
       </ion-buttons>
   </ion-toolbar>
@@ -18,9 +18,9 @@
 
 
 <ion-content [fullscreen]="true" class="fontStyle">
-  <div *ngIf="listaCancionesGuardadas.length >= 20">
+  <div *ngIf="this.cargado">
   <ion-list>
-    <ion-item lines="none" *ngFor = "let savedTrack of listaCancionesGuardadas; let i=index"> 
+    <ion-item lines="none" style="margin-top: -7px;" *ngFor = "let savedTrack of listaCancionesGuardadas; let i=index"> 
       <ion-card style="width:100%; margin-left: auto; margin-right: auto; align-items: center;">
         <ion-item lines="full" class="itemBackground" (click)="openSongInSpotify(savedTrack)">
           <p slot="start" class="index">{{i+1}}.</p>
@@ -28,15 +28,11 @@
           <ion-label>
             <p class="track">{{savedTrack.trackName}}</p>
            
-            <ion-label style="color:#9c9c9c" *ngFor = "let artist of this.savedTrack.artists;">
-              <p class="defaultFont" style="font-size: 13px;" *ngIf="4 > this.savedTrack.artists.length">{{artist.name}}</p>
+            <ion-label *ngFor = "let artist of this.savedTrack.artists; let o=index">
+              <p *ngIf="2 >= this.o" class="defaultFont" style="font-size: 13px;">{{artist.name}}</p>
+              <p *ngIf="this.savedTrack.artists.length > 3 && this.o === 3" class="defaultFont" style="color:#bdbdbd; font-size: 13px;">Y más artistas</p>
             </ion-label>
 
-            <ion-label *ngFor = "let artist2 of this.savedTrack.artists.slice(0,3); let o=index" >
-              <p class="defaultFont" style="font-size: 13px;" *ngIf="this.savedTrack.artists.length > 4">{{artist2.name}}</p>
-              <p class="defaultFont" style="color:#bdbdbd; font-size: 13px;" *ngIf="this.o === 2">Y más artistas</p>
-            </ion-label>
-          
           </ion-label>
           <ion-icon class="playStyle" name="play-outline" slot="end"></ion-icon>
           </ion-item>
@@ -51,7 +47,7 @@
   </ion-list>
   </div>
 
-  <div *ngIf="20 > listaCancionesGuardadas.length">
+  <div *ngIf="!this.cargado">
     <ion-list>
     <ion-item lines="none" *ngFor="let skeletonTrack of skeletonList;">
       <ion-card style="width:100%; margin-left: auto; margin-right: auto; align-items: center;">
