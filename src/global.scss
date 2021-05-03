@@ -43,6 +43,8 @@
     .alertOK{
         font-family: 'Poppins', sans-serif;
         color:#1DB954;
+        margin-right: auto;
+        margin-left: auto;
     }  
 }
 
@@ -50,4 +52,8 @@
     font-family: 'Poppins', sans-serif;
     color:white;
     --color:white;
+}
+
+.custom-popover{
+    --background: #222222;
 }

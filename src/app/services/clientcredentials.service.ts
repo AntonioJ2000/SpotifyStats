@@ -9,6 +9,7 @@ export class ClientcredentialsService {
 
   client = {
     access_token: '',
+    refresh_token: ''
   }
 
   user = {

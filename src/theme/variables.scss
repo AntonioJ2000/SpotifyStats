@@ -3,6 +3,35 @@
 
 /** Ionic CSS Variables **/
 :root {
+
+  .alert-title.sc-ion-alert-md {
+    color: var(--ion-text-color, #000);
+    font-size: 22px;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .alert-button-inner.sc-ion-alert-md {
+    display: flex;
+    flex-flow: row nowrap;
+    flex-shrink: 0;
+    align-items: center;
+    width: 100%;
+    font-weight: bold;
+    height: 100%;
+}
+
+  .alert-message.sc-ion-alert-md {
+    max-height: 240px;
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .alert-message.sc-ion-alert-md, .alert-input-group.sc-ion-alert-md {
+    padding-bottom: 15px;
+    color: #949494;
+  }
+
   .sc-ion-action-sheet-md-h{
     --button-color:white;
   }

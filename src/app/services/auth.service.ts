@@ -25,6 +25,7 @@ export class AuthService implements CanActivate{
     .then(({ accessToken, encryptedRefreshToken, expiresAt }) =>{
        //Sobreescribimos las variables del cliente
       this.clientCredentials.client.access_token = accessToken;
+      this.clientCredentials.client.refresh_token = encryptedRefreshToken;
       
       if(this.clientCredentials.client.access_token != ''){
         this.router.navigate(['/']);
