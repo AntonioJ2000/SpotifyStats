@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { artist } from '../model/artist';
 import { track } from '../model/track';
 
@@ -26,9 +27,12 @@ export class ClientcredentialsService {
   }
 
 
-  constructor() { }
+  constructor(private storage:NativeStorage) { }
 
   forgetToken(){
     this.client.access_token = '';
+    this.client.refresh_token = '';
+
+    this.storage.remove('refreshToken');
   }
 }

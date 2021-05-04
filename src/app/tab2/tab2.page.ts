@@ -3,6 +3,7 @@ import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/
 import { AlertController, IonInfiniteScroll, LoadingController } from '@ionic/angular';
 import { artist } from '../model/artist';
 import { track } from '../model/track';
+import { ClientcredentialsService } from '../services/clientcredentials.service';
 import { LoadingService } from '../services/loading.service';
 import { SpotifyApiService } from '../services/spotify-api.service';
 
@@ -40,7 +41,6 @@ export class Tab2Page {
   listaCancionesGuardadas: track[] = [];
 
   offsetVar:number = 0;
-  firtTime:boolean = false;
 
 
   constructor(private spotifyApi:SpotifyApiService,
@@ -49,14 +49,10 @@ export class Tab2Page {
               private alertController: AlertController) {}
 
    ionViewDidEnter(){
-    if(!this.firtTime){
-      this.loading.cargarLoading();
-      this.firtTime = false;
-    }
-    
+    this.loading.cargarLoading();
     setTimeout(async() => {
       await this.getUserSavedTracks().then(()=>{
-        setTimeout(() => {
+        setTimeout(async() => {
            this.loading.pararLoading();
            this.cargado = true;
         }, 250);
@@ -101,7 +97,7 @@ export class Tab2Page {
         setTimeout(() => {
           this.cargado = true;
           this.loading.pararLoading();
-        }, 250);
+        }, 350);
       })
     }, 500);
    
