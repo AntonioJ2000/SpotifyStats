@@ -46,18 +46,18 @@ export class Tab2Page {
   constructor(private spotifyApi:SpotifyApiService,
               private loading:LoadingService,
               private inAppBrowser:InAppBrowser,
-              private alertController: AlertController) {}
+              private alertController: AlertController) {}  
 
    ionViewDidEnter(){
     this.loading.cargarLoading();
-    setTimeout(async() => {
-      await this.getUserSavedTracks().then(()=>{
-        setTimeout(async() => {
-           this.loading.pararLoading();
-           this.cargado = true;
-        }, 250);
-      });
-    }, 1000);  
+      setTimeout(async() => {
+        await this.getUserSavedTracks().then(()=>{
+          this.cargado = true;
+          setTimeout(async() => {
+            this.loading.pararLoading();
+          }, 250);
+        });
+      }, 750);  
   }
   
   ionViewWillLeave(){

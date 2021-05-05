@@ -21,25 +21,26 @@ export class LoginPage {
               private storage:NativeStorage) { }
 
   async ngOnInit(){
+    try{
     await this.storage.getItem('refreshToken').then(
       async(data)=>{
-        try{
+        
           this.clientCredentials.client.refresh_token = data.encryptedRefreshToken;
 
           let refreshedToken = await this.spotifyApi.getRefreshedToken();
           this.clientCredentials.client.access_token = refreshedToken.access_token;
-                     
-          this.authService.loginNative();        
+                  
+          this.authService.loginNative();         
+      })
+      
         }catch(err){
           console.log('Storage Error')
         }
-    })
   }
 
   async login(){ 
-    setTimeout(() => {
-      this.authService.login(); 
-    }, 250);
+    this.loading.cargarLoading();
+    this.authService.login(); 
   }
 
 
