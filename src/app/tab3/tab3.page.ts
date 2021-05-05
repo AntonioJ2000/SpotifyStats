@@ -20,8 +20,9 @@ const MEDIA_FOLDER_NAME = "my_media";
   templateUrl: 'tab3.page.html',
   styleUrls: ['tab3.page.scss']
 })
-export class Tab3Page implements OnInit{
+export class Tab3Page{
 
+  firstTime:boolean = false;
   specialInfoLoaded:boolean = false;
   loggedUser = this.clientCredentials.user;
   favouriteSong:track = {
@@ -58,23 +59,25 @@ export class Tab3Page implements OnInit{
     public popoverController: PopoverController) {}
 
   
-    ngOnInit(){
-    this.loading.cargarLoadingOscuro();
+    ionViewDidEnter(){
+      if(!this.firstTime){
+        this.loading.cargarLoadingOscuro();
 
-    setTimeout(async() => {
-      await this.getUserProfile().then(async()=>{
-        await this.getUserFavouriteSong().then(async()=>{
-          await this.getUserFavouriteArtist().then(()=>{
-            setTimeout(() => {
-              this.loading.pararLoading();
-              this.specialInfoLoaded = true;
-            }, 350);
-          })
-        });     
-      });
-    }, 750);
-      
-    
+        setTimeout(async() => {
+          await this.getUserProfile().then(async()=>{
+            await this.getUserFavouriteSong().then(async()=>{
+              await this.getUserFavouriteArtist().then(()=>{
+                setTimeout(() => {
+                  this.loading.pararLoading();
+                  this.firstTime = true;
+                  this.specialInfoLoaded = true;
+                }, 350);
+              })
+            });     
+          });
+        }, 750);
+      }
+
     /*
     this.plt.ready().then(()=>{
       let path = this.file.externalRootDirectory;
