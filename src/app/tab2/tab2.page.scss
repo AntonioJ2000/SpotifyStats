@@ -22,9 +22,14 @@
     font-family: 'Poppins', sans-serif;
     font-size: 14px;
     font-weight: bold;
-    color: white
+    color: white !important;
 }
 
 .index{
     font-weight: bold;
+}
+
+.goToSpotify{
+    --border-color: #1DB954;
+    --color: #1DB954;
 }

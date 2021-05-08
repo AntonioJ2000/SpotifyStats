@@ -7,7 +7,7 @@
 
     <ion-buttons slot="end">   
         <ion-button (click)="reloadStats()">
-          <ion-icon class="iconColor" name="reload-outline"></ion-icon>
+          <ion-icon slot="icon-only" class="iconColor" name="reload-outline"></ion-icon>
         </ion-button>
 <!--
         <ion-button (click)="presentActionSheet()" fill="clear">
@@ -18,7 +18,7 @@
 
     <ion-buttons slot="start">
       <ion-button (click)="timeLapseSheet()">
-        <ion-icon class="iconColor" name="time-outline"></ion-icon>
+        <ion-icon slot="icon-only" class="iconColor" name="time-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
     
@@ -50,7 +50,7 @@
         <ion-content>
           <div *ngIf="this.cargado">
           <ion-list>
-            <ion-item lines="none" *ngFor = "let topTrack of listaTopCanciones; let i=index"> 
+            <ion-item lines="none" style="margin-top: -7px;" *ngFor = "let topTrack of listaTopCanciones; let i=index"> 
               <ion-card class="cardBackground" style="width:100%; margin-left: auto; margin-right: auto; align-items: center;">
                 <ion-item lines="full" class="itemBackground">
                   
@@ -63,16 +63,16 @@
                   <ion-label>
                     <p class="track">{{topTrack.trackName}}</p>
                    
-                    <ion-label style="color:#9c9c9c" *ngFor = "let artist of this.topTrack.artists;">
-                      <p class="defaultFont" style="font-size: 13px;" *ngIf="4 > this.topTrack.artists.length">{{artist.name}}</p>
+                    <ion-label *ngFor = "let artist of this.topTrack.artists; let o=index">
+                      <p *ngIf="2 >= this.o" class="defaultFont" style="font-size: 13px;">{{artist.name}}</p>
+                      <p *ngIf="this.topTrack.artists.length > 3 && this.o === 3" class="defaultFont" style="color:#bdbdbd; font-size: 13px;">Y más artistas</p>
                     </ion-label>
-        
-                    <ion-label *ngFor = "let artist2 of this.topTrack.artists.slice(0,4); let o=index" >
-                      <p class="defaultFont" style="font-size: 13px;" *ngIf="this.topTrack.artists.length >= 4">{{artist2.name}}</p>
-                      <p class="defaultFont" style="color:#bdbdbd; font-size: 13px;" *ngIf="this.o === 3">Y más artistas</p>
-                    </ion-label>                  
                   </ion-label>
-                  
+
+                  <ion-icon *ngIf="this.i === 0" size="small" src="assets/goldmedal.svg" slot="end"></ion-icon>
+                  <ion-icon *ngIf="this.i === 1" size="small" src="assets/silvermedal.svg" slot="end"></ion-icon>
+                  <ion-icon *ngIf="this.i === 2" size="small" src="assets/bronzemedal.svg" slot="end"></ion-icon>
+
                   </ion-item>
               </ion-card>
             </ion-item>
@@ -116,9 +116,9 @@
                       <img src="{{topArtist.image}}">
                     </ion-avatar>
                     <ion-buttons slot="end">
-                        <ion-icon *ngIf="this.i === 0" size="large" src="assets/trophy.svg"></ion-icon>
-                        <ion-icon *ngIf="this.topArtist.popularity > 80" size="large" src="assets/popularity.svg" style="margin-left: 8px;"></ion-icon>
-                        <ion-icon *ngIf="this.topArtist.followers > 1000000" size="large" src="assets/million.svg" style="margin-left: 8px;"></ion-icon>
+                        <ion-icon *ngIf="this.i === 0" size="large" src="assets/trophy.svg" (click)="presentToast(1)"></ion-icon>
+                        <ion-icon *ngIf="this.topArtist.popularity > 80" size="large" src="assets/popularity.svg" (click)="presentToast(2)" style="margin-left: 8px;"></ion-icon>
+                        <ion-icon *ngIf="this.topArtist.followers > 1000000" size="large" src="assets/million.svg" (click)="presentToast(3)" style="margin-left: 8px;"></ion-icon>
                       
                       <ion-icon size="large" (click)="this.openArtistProfile(topArtist)" style="margin-left: 8px;" src="assets/spotify.svg"></ion-icon>
                     
@@ -174,20 +174,16 @@
         <ion-content>
           <div *ngIf="this.cargado">
           <ion-list>
-            <ion-item lines="none" *ngFor = "let playedTrack of listaEscuchadasRecientemente"> 
+            <ion-item lines="none" style="margin-top: -7px;" *ngFor = "let playedTrack of listaEscuchadasRecientemente"> 
               <ion-card style="width:100%; margin-left: auto; margin-right: auto; align-items: center;">
                 <ion-item lines="full" class="itemBackground">
                       <img slot="start" style="height: 20%; width: 20%; margin-top: 7px; margin-bottom: 7px;" src="{{playedTrack.trackThumbnail}}">          
                     <ion-label>
                     <p class="track">{{playedTrack.trackName}}</p>
 
-                      <ion-label style="color:#9c9c9c" *ngFor = "let artist of this.playedTrack.artists;">
-                        <p class="defaultFont" *ngIf="4 > this.playedTrack.artists.length">{{artist.name}}</p>
-                      </ion-label>
-          
-                      <ion-label *ngFor = "let artist2 of this.playedTrack.artists.slice(0,3); let o=index" >
-                        <p class="defaultFont" style="font-size: 13px;" *ngIf="this.playedTrack.artists.length > 4">{{artist2.name}}</p>
-                        <p class="defaultFont" style="color:#bdbdbd; font-size: 13px;" *ngIf="this.o === 3">Y más artistas</p>
+                      <ion-label *ngFor = "let artist of this.playedTrack.artists; let o=index">
+                        <p *ngIf="2 >= this.o" class="defaultFont" style="font-size: 13px;">{{artist.name}}</p>
+                        <p *ngIf="this.playedTrack.artists.length > 3 && this.o === 3" class="defaultFont" style="color:#bdbdbd; font-size: 13px;">Y más artistas</p>
                       </ion-label>
                     <p class="dataTime">{{(playedTrack.playedat)?.substring(0,10)}}</p>
                   </ion-label>

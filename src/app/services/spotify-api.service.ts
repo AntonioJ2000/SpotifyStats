@@ -3,12 +3,11 @@ import { HTTP } from '@ionic-native/http/ngx';
 import { environment } from 'src/environments/environment';
 import { ClientcredentialsService } from './clientcredentials.service';
 
+
 @Injectable({
   providedIn: 'root'
 })
-export class SpotifyApiService {
-
-  token:any = this.clientCredentials.client.access_token; 
+export class SpotifyApiService { 
 
   constructor(private clientCredentials:ClientcredentialsService,
               private http:HTTP) { }
@@ -124,4 +123,30 @@ export class SpotifyApiService {
       return 'Bearer ' + this.clientCredentials.client.access_token
     }
 
+    public getRefreshedToken():Promise<any | null>{
+      return new Promise((resolve,reject)=>{
+        const endpoint=environment.getNewToken;
+        this.http.post(endpoint, this.refreshBody, this.refreshHeader)
+        .then((d)=>{
+          if(d){
+            resolve(JSON.parse(d.data))
+          }else{
+            resolve(null)
+          }
+        }).catch(err=> reject(err));
+      })
+    }
+
+    private get refreshBody(){
+      return {
+        'grant_type' : 'refresh_token',
+        'refresh_token' : this.clientCredentials.client.refresh_token,
+      }
+    }
+
+    private get refreshHeader():any{
+      return {
+        'Authorization': 'Basic ' + btoa(environment.clientID + ':' + environment.clientSecret)  
+      } 
+    }
 }

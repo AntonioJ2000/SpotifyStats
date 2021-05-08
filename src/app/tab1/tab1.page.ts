@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
-import { ActionSheetController, AlertController } from '@ionic/angular';
+import { ActionSheetController, AlertController, ToastController } from '@ionic/angular';
 import { artist } from '../model/artist';
 import { track } from '../model/track';
 import { ClientcredentialsService } from '../services/clientcredentials.service';
@@ -49,7 +49,7 @@ export class Tab1Page {
               private actionSheetController: ActionSheetController,
               private clientCredentials:ClientcredentialsService,
               private loading:LoadingService,
-              private alertController: AlertController) {}
+              private toastController:ToastController) {}
 
   
     ionViewDidEnter(){
@@ -59,10 +59,10 @@ export class Tab1Page {
       await this.getUserTopTracks().then(async()=>{
         await this.getUserTopArtists().then(async()=>{
           await this.getUserRecentlyPlayed().then(()=>{
+            this.cargado = true;
             setTimeout(() => {
-              this.cargado = true;
-              this.loading.pararLoading();
-            }, 500); 
+              this.loading.pararLoading();  
+            }, 650); 
           });
         })
       });
@@ -70,10 +70,13 @@ export class Tab1Page {
   }
  
   async ionViewWillLeave(){
+    if(this.listaTopCanciones.length != 0 && this.listaTopArtistas.length != 0 && this.listaEscuchadasRecientemente.length != 0){
       this.cargado = false;
       this.listaTopCanciones.splice(0, this.listaTopCanciones.length);
       this.listaTopArtistas.splice(0, this.listaTopArtistas.length);
       this.listaEscuchadasRecientemente.splice(0, this.listaEscuchadasRecientemente.length);
+  
+    }
   }
   
   public async getUserTopTracks(){
@@ -157,47 +160,6 @@ export class Tab1Page {
     const browser = this.inAppBrowser.create(selectedArtist.spotifyURL, '_system', options);
   }
 
-  /*
-  async HelpForSavedTracks() {
-    const alert = await this.alertController.create({
-      cssClass: 'myAlert',
-      header: 'Lapso de tiempo',
-      message: 'Selecciona el marco de tiempo en el que quieres ver tus estadísticas',
-      buttons: [
-        {
-          text: "Siempre",
-          role: 'cancel',
-          cssClass: 'alertOK',
-          handler: () => {
-            this.clientCredentials.config.time_range = 'long_term';
-            this.time_range = 'Siempre';
-            this.reloadStats();
-          }
-        },{
-          text: "6 Meses",
-          role: 'cancel',
-          cssClass: 'alertOK',
-          handler: () => {
-            this.clientCredentials.config.time_range = 'medium_term';
-            this.time_range = '6 Meses';
-            this.reloadStats();
-          }
-        },{
-          text: "4 Semanas",
-          role: 'cancel',
-          cssClass: 'alertOK',
-          handler: () => {
-            this.clientCredentials.config.time_range = 'short_term';
-            this.time_range = '4 Sem.';
-            this.reloadStats();
-          }
-        }
-      ]
-    });
-      
-    await alert.present();
-  }
-    */
   async timeLapseSheet(){
     const actionSheet = await this.actionSheetController.create({
       header: 'Lapso de tiempo',
@@ -206,31 +168,57 @@ export class Tab1Page {
           text: 'Desde que se creó la cuenta',
           icon: 'chevron-forward-outline',
           handler: ()=>{
-            this.clientCredentials.config.time_range = 'long_term';
-            this.reloadStats();
-            this.time_range = 'Siempre'
+            if(this.clientCredentials.config.time_range != 'long_term'){
+              this.clientCredentials.config.time_range = 'long_term';
+              this.reloadStats();
+              this.time_range = 'Siempre'
+            }
         }
       },
         {
           text: 'Los últimos 6 meses',
           icon: 'chevron-forward-outline',
           handler: ()=>{
-            this.clientCredentials.config.time_range = 'medium_term';
-            this.reloadStats();
-            this.time_range = '6 Meses'
+            if(this.clientCredentials.config.time_range != 'medium_term'){
+              this.clientCredentials.config.time_range = 'medium_term';
+              this.reloadStats();
+              this.time_range = '6 Meses'
+            }
         }
       },
         {
           text: 'Las útimas 4 semanas',
           icon: 'chevron-forward-outline',
           handler: ()=>{
-            this.clientCredentials.config.time_range = 'short_term';
-            this.reloadStats();
-            this.time_range = '4 Sem.'
+            if(this.clientCredentials.config.time_range != 'short_term'){
+              this.clientCredentials.config.time_range = 'short_term';
+              this.reloadStats();
+              this.time_range = '4 Sem.'
+            }
         }
       }]
   });
   await actionSheet.present();
+  }
+  
+  async presentToast(tN:number) {
+    let msg:string = '';
+
+    if(tN == 1){
+      msg = "Este es tu artista más escuchado en el lapso de tiempo indicado."
+    }else if(tN == 2){
+      msg = "¡Este artista es muy popular! (+80)"
+    }else if(tN == 3){
+      msg = "Este artista ha superado el millón de seguidores."
+    }
+
+    const toast = await this.toastController.create({
+      cssClass: 'myToast',
+      message: msg,
+      duration: 1500,
+      position:"bottom"
+    });
+    toast.present();
   }
   
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { File } from '@ionic-native/file/ngx';
 import { Media, MediaObject } from '@ionic-native/media/ngx';
-import { NavController, Platform } from '@ionic/angular';
+import { NavController, Platform, PopoverController } from '@ionic/angular';
 import { MediaCapture, MediaFile, CaptureError, CaptureImageOptions } from '@ionic-native/media-capture/ngx';
 import { ClientcredentialsService } from '../services/clientcredentials.service';
 import { SpotifyApiService } from '../services/spotify-api.service';
@@ -10,6 +10,7 @@ import { AuthService } from '../services/auth.service';
 import { track } from '../model/track';
 import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
 import { artist } from '../model/artist';
+import { ProfilepopoverComponent } from '../components/profilepopover/profilepopover.component';
 
 
 const MEDIA_FOLDER_NAME = "my_media";
@@ -19,8 +20,9 @@ const MEDIA_FOLDER_NAME = "my_media";
   templateUrl: 'tab3.page.html',
   styleUrls: ['tab3.page.scss']
 })
-export class Tab3Page implements OnInit{
+export class Tab3Page{
 
+  firstTime:boolean = false;
   specialInfoLoaded:boolean = false;
   loggedUser = this.clientCredentials.user;
   favouriteSong:track = {
@@ -53,26 +55,29 @@ export class Tab3Page implements OnInit{
     private clientCredentials:ClientcredentialsService,
     private spotifyApi:SpotifyApiService,
     private authService:AuthService,
-    private inAppBrowser:InAppBrowser) {}
+    private inAppBrowser:InAppBrowser,
+    public popoverController: PopoverController) {}
 
   
-    ngOnInit(){
-    this.loading.cargarLoadingOscuro();
+    ionViewDidEnter(){
+      if(!this.firstTime){
+        this.loading.cargarLoadingOscuro();
 
-    setTimeout(async() => {
-      await this.getUserProfile().then(async()=>{
-        await this.getUserFavouriteSong().then(async()=>{
-          await this.getUserFavouriteArtist().then(()=>{
-            setTimeout(() => {
-              this.loading.pararLoading();
-              this.specialInfoLoaded = true;
-            }, 350);
-          })
-        });     
-      });
-    }, 750);
-      
-    
+        setTimeout(async() => {
+          await this.getUserProfile().then(async()=>{
+            await this.getUserFavouriteSong().then(async()=>{
+              await this.getUserFavouriteArtist().then(()=>{
+                setTimeout(() => {
+                  this.loading.pararLoading();
+                  this.firstTime = true;
+                  this.specialInfoLoaded = true;
+                }, 350);
+              })
+            });     
+          });
+        }, 750);
+      }
+
     /*
     this.plt.ready().then(()=>{
       let path = this.file.externalRootDirectory;
@@ -123,6 +128,16 @@ export class Tab3Page implements OnInit{
     this.favouriteArtist.spotifyURL = favArtist.items[0].external_urls.spotify,
     this.favouriteArtist.followers = favArtist.items[0].followers.total
   
+  }
+
+  async presentPopover(ev: any) {
+    const popover = await this.popoverController.create({
+      component: ProfilepopoverComponent,
+      cssClass: 'custom-popover',
+      event: ev,
+      translucent: true
+    });
+    await popover.present();
   }
 
   public openUserProfile(){

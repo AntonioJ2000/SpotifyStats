@@ -4,6 +4,7 @@
     font-weight: bold;
     color: white;
     text-align: center;
+    margin-left: 15%;
 }
 
 .imgEdit{
@@ -51,14 +52,14 @@
 
 
 .itemBackground{
-    --ion-item-background: rgb(59, 59, 59);
+    --ion-item-background: #3b3b3b;
 }
 
 .track{
     font-family: 'Poppins', sans-serif;
     font-size: 14px;
     font-weight: bold;
-    color: white
+    color: white !important;
 }
 
 .artist{

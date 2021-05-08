@@ -17,6 +17,7 @@ import { SpotifyAuth } from '@ionic-native/spotify-auth/ngx';
 import { MediaCapture } from '@ionic-native/media-capture/ngx';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { AuthService } from './services/auth.service';
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -31,6 +32,7 @@ import { AuthService } from './services/auth.service';
     SpotifyAuth,
     AuthService,
     InAppBrowser,
+    NativeStorage,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent],
