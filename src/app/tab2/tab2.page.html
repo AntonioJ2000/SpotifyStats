@@ -18,7 +18,7 @@
 
 
 <ion-content [fullscreen]="true" class="fontStyle">
-  <div *ngIf="this.cargado">
+  <div *ngIf="this.cargado && !this.emptyList">
   <ion-list>
     <ion-item lines="none" style="margin-top: -7px;" *ngFor = "let savedTrack of listaCancionesGuardadas; let i=index"> 
       <ion-card style="width:100%; margin-left: auto; margin-right: auto; align-items: center;">
@@ -47,7 +47,17 @@
   </ion-list>
   </div>
 
-  <div *ngIf="!this.cargado">
+  <div *ngIf="this.cargado && this.emptyList" style="text-align: center;">
+    <img src="assets/spotifypng.png" style="margin-top: 40%; width: 40%;">
+    <p style="font-family: 'Poppins', sans-serif; width: 90%; text-align: center; margin-left: auto; margin-right: auto; color: white;">Aún no tienes ninguna canción guardada, ¡guárdalas en Spotify y aparecerán aquí!</p>
+        
+        <ion-button size="large" shape="round" class="goToSpotify" slots="icon-only" fill="outline" (click)="goToSpotify()">    
+            <ion-label style="font-size: 14px; font-family: 'Poppins', sans-serif; font-weight: bold;">Ir a Spotify</ion-label>
+        </ion-button>
+
+  </div>
+
+  <div *ngIf="!this.cargado && !this.emptyList">
     <ion-list>
     <ion-item lines="none" *ngFor="let skeletonTrack of skeletonList;">
       <ion-card style="width:100%; margin-left: auto; margin-right: auto; align-items: center;">

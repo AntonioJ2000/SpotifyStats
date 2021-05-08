@@ -1,9 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
-import { AlertController, IonInfiniteScroll, LoadingController } from '@ionic/angular';
-import { artist } from '../model/artist';
+import { AlertController, IonInfiniteScroll } from '@ionic/angular';
 import { track } from '../model/track';
-import { ClientcredentialsService } from '../services/clientcredentials.service';
 import { LoadingService } from '../services/loading.service';
 import { SpotifyApiService } from '../services/spotify-api.service';
 
@@ -16,6 +14,7 @@ export class Tab2Page {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
   cargado:boolean = false;
+  emptyList:boolean = false;
 
   skeletonTrack: track = {
     id: '',
@@ -49,27 +48,37 @@ export class Tab2Page {
               private alertController: AlertController) {}  
 
    ionViewDidEnter(){
-    this.loading.cargarLoading();
+    if(!this.emptyList){
+      this.loading.cargarLoading();
       setTimeout(async() => {
         await this.getUserSavedTracks().then(()=>{
+          if(this.listaCancionesGuardadas.length == 0){
+            this.emptyList = true;
+          }else{
+            this.emptyList = false;
+          }
           this.cargado = true;
           setTimeout(async() => {
             this.loading.pararLoading();
           }, 250);
         });
-      }, 750);  
+      }, 750); 
+    }else{
+      this.cargado = true;
+    }
   }
   
   ionViewWillLeave(){
     this.cargado = false;
-    this.listaCancionesGuardadas.splice(0, this.listaCancionesGuardadas.length);
+    if(this.listaCancionesGuardadas.length != 0){
+      this.listaCancionesGuardadas.splice(0, this.listaCancionesGuardadas.length);
+    }
     this.offsetVar = 0;
   }
   
   public async getUserSavedTracks(){
     let t = await this.spotifyApi.getCurrentUserSavedTracks(this.offsetVar);
     
-
     for(let i=0; i < t.items.length; i++){
       let trackToView:track = {
         id: t.items[i].track.id,
@@ -86,8 +95,9 @@ export class Tab2Page {
   }
 
   public async reloadSavedSongs(){
-    this.cargado = false;
     this.loading.cargarLoading();
+    this.cargado = false;
+    this.emptyList = false;
 
     this.listaCancionesGuardadas.splice(0, this.listaCancionesGuardadas.length);
     this.offsetVar = 0;
@@ -95,6 +105,12 @@ export class Tab2Page {
     setTimeout(async() => {
       await this.getUserSavedTracks().then(async()=>{
         setTimeout(() => {
+          if(this.listaCancionesGuardadas.length == 0){
+            this.emptyList = true;
+            this.cargado = true;
+          }else{
+            this.emptyList = false;
+          }
           this.cargado = true;
           this.loading.pararLoading();
         }, 350);
@@ -125,7 +141,16 @@ export class Tab2Page {
       toolbar: 'yes',
       zoom: 'no'
     }
+    console.log(selectedTrack.spotifyURL)
     const browser = this.inAppBrowser.create(selectedTrack.spotifyURL, '_system', options);
+  }
+
+  public goToSpotify(){
+    const options: InAppBrowserOptions = {
+      toolbar: 'yes',
+      zoom: 'no'
+    }
+    const browser = this.inAppBrowser.create('https://open.spotify.com/collection/tracks','_system', options);
   }
 
   async HelpForSavedTracks() {

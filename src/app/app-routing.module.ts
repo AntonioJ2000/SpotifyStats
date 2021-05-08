@@ -14,6 +14,10 @@ const routes: Routes = [
   },  {
     path: 'about',
     loadChildren: () => import('./pages/about/about.module').then( m => m.AboutPageModule)
+  },
+  {
+    path: 'social',
+    loadChildren: () => import('./pages/social/social.module').then( m => m.SocialPageModule)
   }
 
 ];

@@ -70,10 +70,13 @@ export class Tab1Page {
   }
  
   async ionViewWillLeave(){
+    if(this.listaTopCanciones.length != 0 && this.listaTopArtistas.length != 0 && this.listaEscuchadasRecientemente.length != 0){
       this.cargado = false;
       this.listaTopCanciones.splice(0, this.listaTopCanciones.length);
       this.listaTopArtistas.splice(0, this.listaTopArtistas.length);
       this.listaEscuchadasRecientemente.splice(0, this.listaEscuchadasRecientemente.length);
+  
+    }
   }
   
   public async getUserTopTracks(){
