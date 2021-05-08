@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HTTP } from '@ionic-native/http/ngx';
 import { environment } from 'src/environments/environment';
+import { user } from '../model/user';
 import { ClientcredentialsService } from './clientcredentials.service';
 
 
@@ -148,5 +149,28 @@ export class SpotifyApiService {
       return {
         'Authorization': 'Basic ' + btoa(environment.clientID + ':' + environment.clientSecret)  
       } 
+    }
+
+    public getAllUsers():Promise<user[] | null>{
+      return new Promise((resolve, reject) => {
+        const endpoint = environment.endpoint + environment.apiUser; //http://localhost:8080/user/
+        this.http.get(endpoint, {}, this.header24)
+        .then(d=>{
+          if(d){
+            console.log(JSON.parse(d.data))
+            resolve(JSON.parse(d.data));
+          }else{
+            resolve(null);
+          }
+        })
+        .catch(err=>reject(err))
+      })
+    }
+
+    private get header24():any{
+      return {
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/json"
+      }
     }
 }

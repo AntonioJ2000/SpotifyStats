@@ -130,6 +130,10 @@ export class Tab3Page{
   
   }
 
+  public async getUsersfromDatabase(){
+    await this.spotifyApi.getAllUsers();
+  }
+
   async presentPopover(ev: any) {
     const popover = await this.popoverController.create({
       component: ProfilepopoverComponent,
