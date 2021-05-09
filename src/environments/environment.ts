@@ -7,7 +7,7 @@ export const environment = {
   currentUserTop: 'https://api.spotify.com/v1/me/top/',
   currentUserRecentlyPlayed: 'https://api.spotify.com/v1/me/player/recently-played',
   getNewToken: 'https://accounts.spotify.com/api/token',
-  endpoint: 'http://212.225.241.31:8080/',
+  endpoint: 'https://212.225.241.31:8443/',
   apiUser: 'user/',
   apiArtist: 'artist/',
   apiSong: 'song/',
