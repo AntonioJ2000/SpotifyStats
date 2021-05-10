@@ -157,7 +157,7 @@ export class Tab1Page {
       toolbar: 'yes',
       zoom: 'no'
     }
-    const browser = this.inAppBrowser.create(selectedArtist.spotifyURL, '_system', options);
+    this.inAppBrowser.create(selectedArtist.spotifyURL, '_system', options);
   }
 
   async timeLapseSheet(){

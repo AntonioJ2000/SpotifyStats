@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
 import { ModalController } from '@ionic/angular';
+import { user } from 'src/app/model/user';
 
 @Component({
   selector: 'app-social',
@@ -8,7 +10,11 @@ import { ModalController } from '@ionic/angular';
 })
 export class SocialPage {
 
-  constructor(public modalController: ModalController) { }
+  listaUsuarios:user[] = [];
+  listaUsuariosSeguidos:user[] = [];
+
+  constructor(public modalController: ModalController,
+              public inAppBrowser:InAppBrowser) { }
 
   closeSocialPage(){
     this.modalController.dismiss();
@@ -17,4 +23,21 @@ export class SocialPage {
   reloadSocial(){
     
   }
+
+  public async getUsuariosSeguidos(){
+
+  }
+
+  public async getUsuarios(){
+
+  }
+
+  public openUserProfile(selectedUser:user){
+    const options: InAppBrowserOptions = {
+      toolbar: 'yes',
+      zoom: 'no'
+    }
+    const browser = this.inAppBrowser.create(selectedUser.spotifyURL,'_system', options);
+  }
+
 }

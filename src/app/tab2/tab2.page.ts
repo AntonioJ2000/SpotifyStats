@@ -142,7 +142,7 @@ export class Tab2Page {
       zoom: 'no'
     }
     console.log(selectedTrack.spotifyURL)
-    const browser = this.inAppBrowser.create(selectedTrack.spotifyURL, '_system', options);
+    this.inAppBrowser.create(selectedTrack.spotifyURL, '_system', options);
   }
 
   public goToSpotify(){
@@ -150,7 +150,7 @@ export class Tab2Page {
       toolbar: 'yes',
       zoom: 'no'
     }
-    const browser = this.inAppBrowser.create('https://open.spotify.com/collection/tracks','_system', options);
+    this.inAppBrowser.create('https://open.spotify.com/collection/tracks','_system', options);
   }
 
   async HelpForSavedTracks() {
