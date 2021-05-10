@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { File } from '@ionic-native/file/ngx';
 import { Media, MediaObject } from '@ionic-native/media/ngx';
-import { NavController, Platform, PopoverController } from '@ionic/angular';
+import { ModalController, NavController, Platform, PopoverController } from '@ionic/angular';
 import { MediaCapture, MediaFile, CaptureError, CaptureImageOptions } from '@ionic-native/media-capture/ngx';
 import { ClientcredentialsService } from '../services/clientcredentials.service';
 import { SpotifyApiService } from '../services/spotify-api.service';
@@ -11,6 +11,7 @@ import { track } from '../model/track';
 import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
 import { artist } from '../model/artist';
 import { ProfilepopoverComponent } from '../components/profilepopover/profilepopover.component';
+import { SocialPage } from '../pages/social/social.page';
 
 
 const MEDIA_FOLDER_NAME = "my_media";
@@ -56,7 +57,8 @@ export class Tab3Page{
     private spotifyApi:SpotifyApiService,
     private authService:AuthService,
     private inAppBrowser:InAppBrowser,
-    public popoverController: PopoverController) {}
+    public popoverController: PopoverController,
+    private modalController: ModalController) {}
 
   
     ionViewDidEnter(){
@@ -132,6 +134,15 @@ export class Tab3Page{
 
   public async getUsersfromDatabase(){
     await this.spotifyApi.getAllUsers();
+  }
+
+  async openFriendsPage(){
+    this.popoverController.dismiss();
+    const modal = await this.modalController.create({
+      component: SocialPage,
+      cssClass: 'my-custom-class',
+    });
+    modal.present();
   }
 
   async presentPopover(ev: any) {

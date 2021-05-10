@@ -1,15 +1,20 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-social',
   templateUrl: './social.page.html',
   styleUrls: ['./social.page.scss'],
 })
-export class SocialPage implements OnInit {
+export class SocialPage {
 
-  constructor() { }
+  constructor(public modalController: ModalController) { }
 
-  ngOnInit() {
+  closeSocialPage(){
+    this.modalController.dismiss();
   }
 
+  reloadSocial(){
+    
+  }
 }

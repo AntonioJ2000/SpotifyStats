@@ -32,10 +32,6 @@
     color: #949494;
   }
 
-  .sc-ion-action-sheet-md-h{
-    --button-color:white;
-  }
-
   .sc-ion-label-md-s>p {
     color: #8a8a8a;
   }
@@ -51,9 +47,22 @@
 
   .config-sheet{
     font-family: 'Poppins', sans-serif;
-    color:white;
+    --background: #222222; 
     --color:white;
-}
+    color: white;
+  }
+
+  .action-sheet-button.sc-ion-action-sheet-md {
+    display: block;
+    position: relative;
+    width: 100%;
+    border: 0;
+    outline: none;
+    background: var(--button-background);
+    color: white;
+    font-family: inherit;
+    overflow: hidden;
+  }
 
  /** my-app-theming **/
   --ion-text-color:white;

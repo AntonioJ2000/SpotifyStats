@@ -3,6 +3,12 @@
     <ion-title class="titleTab3">
       Mi perfil
     </ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="openFriendsPage()">
+        <ion-icon slot="icon-only" name="people"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
     <ion-buttons slot="end">
       <ion-button (click)="presentPopover($event)">
         <ion-icon slot="icon-only" name="ellipsis-vertical"></ion-icon>
@@ -37,7 +43,7 @@
 
   <ion-toolbar lines="none" style="margin-top: -25px; --background: transparent;">
       <p slot="start" class="userId">ID: {{loggedUser.id}}</p>
-      <p slot="end" class="followers">{{loggedUser.followers}} seguidores</p> 
+      <p slot="end" class="followers">{{loggedUser.followers}} <span *ngIf="this.loggedUser.followers > 1">seguidores</span><span *ngIf="this.loggedUser.followers == 1">seguidor</span></p> 
   </ion-toolbar>
   
   <div style="text-align: center;">

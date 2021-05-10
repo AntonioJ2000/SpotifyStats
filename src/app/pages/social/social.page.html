@@ -1,9 +1,102 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>social</ion-title>
+    <ion-title class="socialTitle">Social</ion-title>
+    <ion-buttons slot="start">   
+      <ion-button size="large" (click)="this.closeSocialPage()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button size="large" (click)="this.reloadSocial()">
+        <ion-icon slot="icon-only" class="iconStyle" name="reload-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
+
+  
 </ion-header>
 
 <ion-content>
+  <super-tabs style="--st-indicator-color: #1DB954;">
+    <super-tabs-toolbar slot="top" style="background-color: rgb(59, 59, 59); color: white;">
+      
+      <super-tab-button>
+        <ion-label class="defaultFont" style="font-weight: bold;">Seguidos</ion-label>
+      </super-tab-button>  
 
+      <super-tab-button>
+        <ion-label class="defaultFont" style="font-weight: bold;">Buscar usuarios</ion-label>
+      </super-tab-button>  
+  
+    </super-tabs-toolbar>
+
+    <super-tabs-container>
+        <super-tab>
+          <ion-content>
+              <ion-list> 
+                <!-- <ion-item *ngFor="let followedUser of this.listaUsuariosSeguidos"> -->
+                  <ion-card class="cardBackground" style="width:95%; margin-left: auto; margin-right: auto; align-items: center; margin-top: -1px;">
+                    <ion-item lines="full" class="itemBackground">
+                      <ion-avatar slot="start" class="imgEdit">
+                        <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y"> 
+                      </ion-avatar>
+                                 
+                      <ion-label style="padding-bottom: 7px; padding-top: 7px;">
+                        <!------ Nombre de usuario a mostrar (displayName) -->
+                        <p class="userName">Anto</p>
+                      
+                        <!------ Seguidores del usuario -->
+                        <ion-label>
+                          <p class="defaultFont" style="font-size: 13px;">1 seguidor</p>
+                        </ion-label>
+                      </ion-label>
+                      <!--- Cuando se haga click en el botón, preguntar con un alert si está seguro de dejar de seguir al usuario -->
+                      <ion-buttons slot="end">
+                        <ion-button size="large">
+                          <ion-icon slot="icon-only" name="person-remove" style="color:white;"></ion-icon>
+                        </ion-button>
+                      </ion-buttons> 
+
+                      </ion-item>
+                  </ion-card>
+                  <!-- </ion-item> -->
+              </ion-list>
+          </ion-content>
+        </super-tab>
+        <super-tab>
+          <ion-content>
+            <ion-list> 
+              <!-- <ion-item *ngFor="let user of this.listaUsuarios"> -->
+              <ion-card class="cardBackground" style="width:95%; margin-left: auto; margin-right: auto; margin-top: -1px; align-items: center;">
+                <ion-item lines="full" class="itemBackground">
+                  <ion-avatar slot="start" class="imgEdit">
+                    <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y"> 
+                  </ion-avatar>
+                             
+                  <ion-label style="padding-bottom: 7px; padding-top: 7px;">
+                    <!------ Nombre de usuario a mostrar (displayName) -->
+                    <p class="userName">Ciscu24</p>
+                  
+                    <!------ Seguidores del usuario -->
+                    <ion-label>
+                      <p class="defaultFont" style="font-size: 13px;">291823 seguidores</p>
+                    </ion-label>
+                  </ion-label>
+                  <!--- Cuando se haga click en el botón, seguir al usuario y eliminarlo de esta misma lista (o no) -->
+                  <ion-buttons slot="end">
+                    <ion-button size="large">
+                      <ion-icon slot="icon-only" name="person-add" style="color:white;"></ion-icon>
+                    </ion-button>
+                  </ion-buttons> 
+
+                  </ion-item>
+              </ion-card>
+              <!-- </ion-item> -->
+          </ion-list>
+          </ion-content>
+        </super-tab>
+
+      </super-tabs-container>
+
+  </super-tabs>
 </ion-content>

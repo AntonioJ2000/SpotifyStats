@@ -76,7 +76,7 @@ export class Tab2Page {
     this.offsetVar = 0;
   }
   
-  public async getUserSavedTracks(){
+  private async getUserSavedTracks(){
     let t = await this.spotifyApi.getCurrentUserSavedTracks(this.offsetVar);
     
     for(let i=0; i < t.items.length; i++){
@@ -94,7 +94,7 @@ export class Tab2Page {
     }
   }
 
-  public async reloadSavedSongs(){
+  private async reloadSavedSongs(){
     this.loading.cargarLoading();
     this.cargado = false;
     this.emptyList = false;
