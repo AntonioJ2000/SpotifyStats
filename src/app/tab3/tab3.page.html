@@ -39,12 +39,15 @@
     <ion-skeleton-text animated></ion-skeleton-text>
   </ion-avatar>
 
-  <p class="displayName">{{loggedUser.display_name}}</p>
+  <p class="displayName" *ngIf="specialInfoLoaded">{{loggedUser.display_name}}</p>
+  <p *ngIf="!specialInfoLoaded">
+    <ion-skeleton-text animated style="width: 40%; margin-left: auto; margin-right: auto; margin-top: 35px;"></ion-skeleton-text>
+  </p>
 
   <ion-toolbar lines="none" style="margin-top: -25px; --background: transparent;">
-      <p slot="start" class="userId">ID: {{loggedUser.id}}</p>
-      <p slot="end" class="followers">{{loggedUser.followers}} <span *ngIf="this.loggedUser.followers > 1">seguidores</span><span *ngIf="this.loggedUser.followers == 1">seguidor</span></p> 
-  </ion-toolbar>
+      <p slot="start" class="userId" *ngIf="specialInfoLoaded">ID: {{loggedUser.id}}</p>
+      <p slot="end" class="followers" *ngIf="specialInfoLoaded">{{loggedUser.followers}} <span *ngIf="this.loggedUser.followers > 1">seguidores</span><span *ngIf="this.loggedUser.followers == 1">seguidor</span></p> 
+    </ion-toolbar>
   
   <div style="text-align: center;">
     <ion-button fill="outline" shape="round" class="profileButton" (click)="openUserProfile()">
