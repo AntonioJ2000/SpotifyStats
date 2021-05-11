@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
-import { ModalController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { user } from 'src/app/model/user';
 import { FriendprofilePage } from '../friendprofile/friendprofile.page';
 
@@ -17,7 +17,8 @@ export class SocialPage {
 
   constructor(public modalController: ModalController,
               public inAppBrowser:InAppBrowser,
-              private router:Router) { }
+              private router:Router,
+              private alertController:AlertController) { }
 
   ionViewWillEnter(){
     let exampleUser:user = {
@@ -34,7 +35,7 @@ export class SocialPage {
     this.router.navigate(['/tabs/tab3'])
   }
 
-  reloadSocial(){
+  public async reloadSocial(){
     
   }
 
@@ -73,6 +74,33 @@ export class SocialPage {
       }
     });
     modal.present();
+  }
+
+  async alertUnfollow(selectedUser:user, slot:number) {
+    const alert = await this.alertController.create({
+      cssClass: 'myAlert',
+      header: '¿Dejar de seguir?',
+      message: 'Estás a punto de dejar de seguir a este usuario, ¿estás seguro/a?',
+      buttons: [
+        {
+          text: "Cancelar",
+          role: 'nothing',
+          cssClass: 'alertOK',
+          handler: () => {
+            //Dismissed
+          }
+        },{
+          text: "Aceptar",
+          role: 'unfollow',
+          cssClass: 'alertDELETE',
+          handler: () => {
+            this.unfollowUser(selectedUser, slot);
+          }
+        }
+      ]
+    });
+      
+    await alert.present();
   }
 
 }
