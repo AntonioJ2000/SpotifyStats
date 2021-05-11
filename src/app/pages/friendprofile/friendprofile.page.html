@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="titleFriendProfilePage">Perfil de {{this.selectedUser.displayName}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-avatar class="imgEdit">
+    <img src="{{selectedUser.image}}">
+  </ion-avatar>
+
+  
+  <p class="displayName">{{this.selectedUser.displayName}}</p>
+
+  <p class="followers">{{this.selectedUser.followers}} <span *ngIf="this.selectedUser.followers > 1">seguidores</span><span *ngIf="this.selectedUser.followers == 1">seguidor</span></p> 
+  
+  <div style="text-align: center;">
+    <ion-button fill="outline" shape="round" class="profileButton" (click)="openFriendSpotifyProfile()">
+      <ion-icon src="assets/spotify.svg" slot="start"></ion-icon>
+      <ion-label style="font-family: 'Poppins', sans-serif;">Ver en Spotify</ion-label> 
+    </ion-button>
+  </div>
+
+</ion-content>
+
+<ion-footer class="ion-no-border">
+  <div style="text-align: center;">
+    <ion-button fill="outline" shape="round" class="closeButton" (click)="closeFriendProfilePage()">
+      <ion-label style="font-family: 'Poppins', sans-serif;">Salir</ion-label> 
+    </ion-button>
+  </div>
+</ion-footer>

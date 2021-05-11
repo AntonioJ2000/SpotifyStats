@@ -18,6 +18,10 @@ const routes: Routes = [
   {
     path: 'social',
     loadChildren: () => import('./pages/social/social.module').then( m => m.SocialPageModule)
+  },
+  {
+    path: 'friendprofile',
+    loadChildren: () => import('./pages/friendprofile/friendprofile.module').then( m => m.FriendprofilePageModule)
   }
 
 ];

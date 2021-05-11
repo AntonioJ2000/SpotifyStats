@@ -12,6 +12,8 @@ import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/
 import { artist } from '../model/artist';
 import { ProfilepopoverComponent } from '../components/profilepopover/profilepopover.component';
 import { SocialPage } from '../pages/social/social.page';
+import { Animation, AnimationController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 
 const MEDIA_FOLDER_NAME = "my_media";
@@ -58,7 +60,8 @@ export class Tab3Page{
     private authService:AuthService,
     private inAppBrowser:InAppBrowser,
     public popoverController: PopoverController,
-    private modalController: ModalController) {}
+    private modalController: ModalController,
+    private router:Router) {}
 
   
     ionViewDidEnter(){
@@ -137,12 +140,7 @@ export class Tab3Page{
   }
 
   async openFriendsPage(){
-    this.popoverController.dismiss();
-    const modal = await this.modalController.create({
-      component: SocialPage,
-      cssClass: 'my-custom-class',
-    });
-    modal.present();
+    this.router.navigate(['/social']);
   }
 
   async presentPopover(ev: any) {

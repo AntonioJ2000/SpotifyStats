@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-title class="socialTitle">Social</ion-title>
-    <ion-buttons slot="start">   
+    <ion-buttons slot="start">
       <ion-button size="large" (click)="this.closeSocialPage()">
         <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
       </ion-button>
@@ -34,32 +34,32 @@
         <super-tab>
           <ion-content>
               <ion-list> 
-                <!-- <ion-item *ngFor="let followedUser of this.listaUsuariosSeguidos"> -->
-                  <ion-card class="cardBackground" style="width:95%; margin-left: auto; margin-right: auto; align-items: center; margin-top: -1px;">
-                    <ion-item lines="full" class="itemBackground">
-                      <ion-avatar slot="start" class="imgEdit">
-                        <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y"> 
-                      </ion-avatar>
-                                 
-                      <ion-label style="padding-bottom: 7px; padding-top: 7px;">
-                        <!------ Nombre de usuario a mostrar (displayName) -->
-                        <p class="userName">Anto</p>
-                      
-                        <!------ Seguidores del usuario -->
-                        <ion-label>
-                          <p class="defaultFont" style="font-size: 13px;">1 seguidor</p>
+                <!-- Se recorre la lista de usuarios seguidos -->
+                 <ion-item lines="none" *ngFor="let followedUser of this.listaUsuariosSeguidos">
+                    <ion-card class="cardBackground" style="width: 100%; margin-left: auto; margin-right: auto; align-items: center; margin-top: -1px;">
+                      <ion-item lines="full" class="itemBackground">
+                        <ion-avatar slot="start" class="imgEdit" (click)="openUserProfile(this.followedUser)">
+                          <img src="{{this.followedUser.image}}"> 
+                        </ion-avatar>
+                                  
+                        <ion-label style="padding-bottom: 7px; padding-top: 7px;">
+                          <!------ Nombre de usuario a mostrar (displayName) -->
+                          <p class="userName">{{this.followedUser.displayName}}</p>
+                        
+                          <!------ Seguidores del usuario -->
+                          <ion-label>
+                            <p class="defaultFont" style="font-size: 13px;">{{this.followedUser.followers}} <span *ngIf="this.followedUser.followers > 1">seguidores</span><span *ngIf="this.followedUser.followers == 1">seguidor</span></p>
+                          </ion-label>
                         </ion-label>
-                      </ion-label>
-                      <!--- Cuando se haga click en el botón, preguntar con un alert si está seguro de dejar de seguir al usuario -->
-                      <ion-buttons slot="end">
-                        <ion-button size="large">
-                          <ion-icon slot="icon-only" name="person-remove" style="color:white;"></ion-icon>
-                        </ion-button>
-                      </ion-buttons> 
-
+                        <!--- Cuando se haga click en el botón, preguntar con un alert si está seguro de dejar de seguir al usuario -->
+                        <ion-buttons slot="end">
+                          <ion-button size="large">
+                            <ion-icon slot="icon-only" name="person-remove" style="color:white;"></ion-icon>
+                          </ion-button>
+                        </ion-buttons> 
                       </ion-item>
-                  </ion-card>
-                  <!-- </ion-item> -->
+                    </ion-card>
+                  </ion-item> 
               </ion-list>
           </ion-content>
         </super-tab>
@@ -67,20 +67,21 @@
           <ion-content>
             <ion-searchbar class="searchBar" #search placeholder="Buscar usuario"></ion-searchbar>
             <ion-list> 
-              <!-- <ion-item *ngFor="let user of this.listaUsuarios"> -->
-              <ion-card class="cardBackground" style="width:95%; margin-left: auto; margin-right: auto; margin-top: -1px; align-items: center;">
+              <!-- Se recorre la lista de usuarios de la base de datos, si el usuario es el logueado que no aparezca -->
+              <ion-item lines="none" *ngFor="let user of this.listaUsuarios">
+              <ion-card class="cardBackground" style="width: 100%; margin-left: auto; margin-right: auto; margin-top: -1px; align-items: center;">
                 <ion-item lines="full" class="itemBackground">
-                  <ion-avatar slot="start" class="imgEdit">
-                    <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y"> 
+                  <ion-avatar slot="start" class="imgEdit" (click)="openUserProfile(this.user)">
+                    <img src="{{this.user.image}}"> 
                   </ion-avatar>
                              
                   <ion-label style="padding-bottom: 7px; padding-top: 7px;">
                     <!------ Nombre de usuario a mostrar (displayName) -->
-                    <p class="userName">Ciscu24</p>
+                    <p class="userName">{{this.user.displayName}}</p>
                   
                     <!------ Seguidores del usuario -->
                     <ion-label>
-                      <p class="defaultFont" style="font-size: 13px;">291823 seguidores</p>
+                      <p class="defaultFont" style="font-size: 13px;">{{this.user.followers}} <span *ngIf="this.user.followers > 1">seguidores</span><span *ngIf="this.user.followers == 1">seguidor</span></p>
                     </ion-label>
                   </ion-label>
                   <!--- Cuando se haga click en el botón, seguir al usuario y eliminarlo de esta misma lista (o no) -->
@@ -92,7 +93,7 @@
 
                   </ion-item>
               </ion-card>
-              <!-- </ion-item> -->
+             </ion-item>
           </ion-list>
           </ion-content>
         </super-tab>
