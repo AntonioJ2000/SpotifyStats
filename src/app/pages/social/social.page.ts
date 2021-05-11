@@ -27,9 +27,7 @@ export class SocialPage {
       image: 'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y',
       spotifyURL: 'https://google.es'
     }
-
     this.listaUsuarios.push(exampleUser);
-    this.listaUsuariosSeguidos.push(exampleUser);
   }
 
   closeSocialPage(){
@@ -46,6 +44,16 @@ export class SocialPage {
 
   public async getUsuarios(){
 
+  }
+
+  public unfollowUser(selectedUser:user, slot:number){
+    this.listaUsuarios.push(selectedUser)
+    this.listaUsuariosSeguidos.splice(slot, 1);
+  }
+
+  public followUser(selectedUser:user, slot:number){
+    this.listaUsuariosSeguidos.push(selectedUser);
+    this.listaUsuarios.splice(slot, 1)
   }
 
   public openUserProfileInSpotify(selectedUser:user){

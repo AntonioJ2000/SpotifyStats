@@ -78,7 +78,6 @@ export class Tab2Page {
   
   private async getUserSavedTracks(){
     let t = await this.spotifyApi.getCurrentUserSavedTracks(this.offsetVar);
-    
     for(let i=0; i < t.items.length; i++){
       let trackToView:track = {
         id: t.items[i].track.id,
@@ -89,12 +88,13 @@ export class Tab2Page {
         trackThumbnail: t.items[i].track.album.images[1].url
     
       }
+      
       this.offsetVar++;  
       this.listaCancionesGuardadas.push(trackToView);      
     }
   }
 
-  private async reloadSavedSongs(){
+  public async reloadSavedSongs(){
     this.loading.cargarLoading();
     this.cargado = false;
     this.emptyList = false;

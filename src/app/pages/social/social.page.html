@@ -34,8 +34,9 @@
         <super-tab>
           <ion-content>
               <ion-list> 
+                <div *ngIf="this.listaUsuariosSeguidos.length != 0">
                 <!-- Se recorre la lista de usuarios seguidos -->
-                 <ion-item lines="none" *ngFor="let followedUser of this.listaUsuariosSeguidos">
+                 <ion-item lines="none" *ngFor="let followedUser of this.listaUsuariosSeguidos; let i=index">
                     <ion-card class="cardBackground" style="width: 100%; margin-left: auto; margin-right: auto; align-items: center; margin-top: -1px;">
                       <ion-item lines="full" class="itemBackground">
                         <ion-avatar slot="start" class="imgEdit" (click)="openUserProfile(this.followedUser)">
@@ -53,14 +54,21 @@
                         </ion-label>
                         <!--- Cuando se haga click en el botón, preguntar con un alert si está seguro de dejar de seguir al usuario -->
                         <ion-buttons slot="end">
-                          <ion-button size="large">
+                          <ion-button size="large" (click)="unfollowUser(this.followedUser, this.i)">
                             <ion-icon slot="icon-only" name="person-remove" style="color:white;"></ion-icon>
                           </ion-button>
                         </ion-buttons> 
                       </ion-item>
                     </ion-card>
                   </ion-item> 
+                </div>
               </ion-list>
+
+              <div *ngIf="this.listaUsuariosSeguidos.length == 0" style="text-align: center;">
+                <ion-icon src="assets/high_five.svg" style="width:70%; font-size: 512px; color:#1DB954;"></ion-icon>
+                <p style="font-family: 'Poppins', sans-serif; width: 90%; text-align: center;margin-top: -20%; margin-left: auto; margin-right: auto; color: white;">Aún no sigues a nadie, ¡házlo y comienza a ver sus estadísticas!</p>
+              </div>
+
           </ion-content>
         </super-tab>
         <super-tab>
@@ -68,10 +76,10 @@
             <ion-searchbar class="searchBar" #search placeholder="Buscar usuario"></ion-searchbar>
             <ion-list> 
               <!-- Se recorre la lista de usuarios de la base de datos, si el usuario es el logueado que no aparezca -->
-              <ion-item lines="none" *ngFor="let user of this.listaUsuarios">
+              <ion-item lines="none" *ngFor="let user of this.listaUsuarios; let i=index">
               <ion-card class="cardBackground" style="width: 100%; margin-left: auto; margin-right: auto; margin-top: -1px; align-items: center;">
                 <ion-item lines="full" class="itemBackground">
-                  <ion-avatar slot="start" class="imgEdit" (click)="openUserProfile(this.user)">
+                  <ion-avatar slot="start" class="imgEdit">
                     <img src="{{this.user.image}}"> 
                   </ion-avatar>
                              
@@ -86,7 +94,7 @@
                   </ion-label>
                   <!--- Cuando se haga click en el botón, seguir al usuario y eliminarlo de esta misma lista (o no) -->
                   <ion-buttons slot="end">
-                    <ion-button size="large">
+                    <ion-button size="large" (click)="followUser(this.user, this.i)">
                       <ion-icon slot="icon-only" name="person-add" style="color:white;"></ion-icon>
                     </ion-button>
                   </ion-buttons> 
