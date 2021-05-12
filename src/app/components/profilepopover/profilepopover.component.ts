@@ -16,6 +16,9 @@ export class ProfilepopoverComponent {
     this.popoverController.dismiss();
   }
 
+  /**
+   * Opens the About Page in a modal.
+   */
   async openAboutPage(){
     this.popoverController.dismiss();
     const modal = await this.modalController.create({

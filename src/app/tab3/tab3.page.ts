@@ -64,6 +64,10 @@ export class Tab3Page{
     private router:Router) {}
 
   
+    /**
+     * If its the first time the user enters the view, load al his profile obtined via requests.
+       (Not ngOnInit used due to performance issues)
+    */
     ionViewDidEnter(){
       if(!this.firstTime){
         this.loading.cargarLoadingOscuro();
@@ -97,7 +101,9 @@ export class Tab3Page{
     */
   }
 
-
+  /**
+   * Get the signed in user profile
+   */
   public async getUserProfile(){
     let u = await this.spotifyApi.getCurrentUserProfile();
 
@@ -112,6 +118,9 @@ export class Tab3Page{
     
   }
 
+  /**
+   * Get the signed in user's most played track
+   */
   public async getUserFavouriteSong(){
     let favSong = await this.spotifyApi.getCurrentUserFavouriteSong();
     this.favouriteSong.id = favSong.items[0].id;
@@ -122,6 +131,9 @@ export class Tab3Page{
 
   }
 
+  /**
+   * Get the signed in user's most played artist
+   */
   public async getUserFavouriteArtist(){
     let favArtist = await this.spotifyApi.getCurrentUserFavouriteArtist();
 
@@ -139,10 +151,17 @@ export class Tab3Page{
     await this.spotifyApi.getAllUsers();
   }
 
+  /**
+   * Opens the social page
+   */
   async openFriendsPage(){
     this.router.navigate(['/social']);
   }
 
+  /**
+   * Popover with various options
+   * @param ev popover event
+   */
   async presentPopover(ev: any) {
     const popover = await this.popoverController.create({
       component: ProfilepopoverComponent,
@@ -153,6 +172,9 @@ export class Tab3Page{
     await popover.present();
   }
 
+  /**
+   * Opens the client own profile in the Spotify App, if not installed, it can be opened in the browser instead 
+   */
   public openUserProfile(){
     const options: InAppBrowserOptions = {
       toolbar: 'yes',
@@ -161,6 +183,9 @@ export class Tab3Page{
     const browser = this.inAppBrowser.create(this.loggedUser.external_urls, '_system', options);
   }
 
+  /**
+   * Opens the client's most played track in the Spotify App, if not installed, it can be opened in the browser instead  
+   */
   public openFavouriteSong(){
     const options: InAppBrowserOptions = {
       toolbar: 'yes',
@@ -169,6 +194,9 @@ export class Tab3Page{
     const browser = this.inAppBrowser.create(this.favouriteSong.spotifyURL, '_system', options)
   }
 
+  /**
+   * Opens the client's most played artist in the Spotify App, if not installed, it can be opened in the browser instead 
+   */
   public openFavouriteArtist(){
     const options: InAppBrowserOptions = {
       toolbar: 'yes',
@@ -177,6 +205,9 @@ export class Tab3Page{
     const browser = this.inAppBrowser.create(this.favouriteArtist.spotifyURL, '_system', options)
   }
 
+  /**
+   * Allows the current client sign out from the app.
+   */
   public logout(){
     this.loading.cargarLoading();
     setTimeout(() => {

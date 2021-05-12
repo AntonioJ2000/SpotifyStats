@@ -20,6 +20,10 @@ export class LoginPage {
               private spotifyApi:SpotifyApiService,
               private storage:NativeStorage) { }
 
+  /**
+   * If a user signed in before this, refreshToken should be taken to an instant sign in to the app
+   * without giving credentials again to the server.
+   */
   async ngOnInit(){
     try{
     await this.storage.getItem('refreshToken').then(
@@ -38,6 +42,9 @@ export class LoginPage {
         }
   }
 
+  /**
+   * Log in the user to the app. If all works good, this should be used only one time.
+   */
   async login(){ 
     this.loading.cargarLoading();
     this.authService.login(); 

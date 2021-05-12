@@ -11,7 +11,7 @@ export class LoadingService {
   constructor(public loadingController: LoadingController) { }
 
   /**
-   * Funcion que ejecuta el Loading
+   * Function that represent the loading with a custom git
    */
   public async cargarLoading() {
     if(!this.loadingActivo){
@@ -26,13 +26,16 @@ export class LoadingService {
   }
 
   /**
-   * Funcion que detiene el Loading
+   * Function that stop the loading previously created
    */
   public async pararLoading(){
     await this.loadingController.dismiss();
     this.loadingActivo = false;
   }
 
+  /**
+   * Function that loads a normal backdrop loading. Used only in the profile (Tab3).
+   */
   public async cargarLoadingOscuro(){
     if(!this.loadingActivo){
       const loading = await this.loadingController.create({

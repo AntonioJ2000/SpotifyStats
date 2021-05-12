@@ -11,7 +11,8 @@ export class ApiUserService {
   constructor(private http:HTTP) { }
 
   /**
-   * Método que devuelve todos los usuarios de la base de datos
+   * HTTP request that obtain all users from the database
+   * @returns users (Array)
    */
   public getAllUsers():Promise<user[] | null>{
     return new Promise((resolve, reject) => {
@@ -29,8 +30,8 @@ export class ApiUserService {
   }
 
   /**
-   * Método que crea un usuario
-   * @param user el usuario a crear
+   * HTTP request that creates a new user in the database
+   * @param user the user to create
    */
   public createUser(user:user): Promise<void>{
     const endpoint = environment.endpoint + environment.apiUser;
@@ -44,14 +45,14 @@ export class ApiUserService {
           })
           .catch(err => reject(err));
       } else{
-        reject("User no exists");
+        reject("User does not exists");
       }
     })
   }
 
   /**
-   * Método que devuelve un usuario en específico
-   * @param id el id del usuario
+   * HTTP request that gets a user
+   * @param id id of the user to obtain
    */
   public getUser(id?:number | string): Promise<user | null>{
     return new Promise((resolve, reject) => {
@@ -73,8 +74,8 @@ export class ApiUserService {
   }
  
   /**
-   * Método que borra un usuario en especifíco
-   * @param user el usuario a borrar
+   * HTTP request that removes a user from the database
+   * @param user the user to delete
    */
   public removeUser(user:user): Promise<void> {
     const id:any = user.id ? user.id : user;
@@ -90,8 +91,8 @@ export class ApiUserService {
   }
 
   /**
-   * Método que modifica un usuario en específico
-   * @param user usuario a modificar
+   * HTTP request that updates a user 
+   * @param user the user you want to update
    */
   public updateUser(user: user): Promise<void> {
     const endpoint = environment.endpoint + environment.apiUser;
@@ -105,7 +106,7 @@ export class ApiUserService {
           })
           .catch(err => reject(err));
       }else{
-        reject("User no exists");
+        reject("User does not exists");
       }
     })
   }

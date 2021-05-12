@@ -47,6 +47,10 @@ export class Tab2Page {
               private inAppBrowser:InAppBrowser,
               private alertController: AlertController) {}  
 
+  /**
+   * Everytime the view is created, gets the saved tracks of the current user, if there are
+   * no tracks, appears another view (thats emptyList).
+   */
    ionViewDidEnter(){
     if(!this.emptyList){
       this.loading.cargarLoading();
@@ -68,6 +72,10 @@ export class Tab2Page {
     }
   }
   
+   /**
+   * Removes all items from the list to make the aplication work out fast.
+   * offsetVar must be set to 0 due to the successful result of the next requests
+   */
   ionViewWillLeave(){
     this.cargado = false;
     if(this.listaCancionesGuardadas.length != 0){
@@ -76,6 +84,9 @@ export class Tab2Page {
     this.offsetVar = 0;
   }
   
+  /**
+   * Get client saved tracks via HTTP request to the Spotify API
+   */
   private async getUserSavedTracks(){
     let t = await this.spotifyApi.getCurrentUserSavedTracks(this.offsetVar);
     for(let i=0; i < t.items.length; i++){
@@ -94,6 +105,9 @@ export class Tab2Page {
     }
   }
 
+  /**
+   * Remove all elements from the lists and then reloads them via requests to the Spotify API.
+   */
   public async reloadSavedSongs(){
     this.loading.cargarLoading();
     this.cargado = false;
@@ -120,6 +134,10 @@ export class Tab2Page {
       
   }
 
+  /**
+   * Get another 20 saved tracks. It is limited to 100 due to performance issues.
+   * @param event ion-infinite element event
+   */
   loadData(event) {
     setTimeout(async () => {
         if (this.listaCancionesGuardadas.length == 100) {
@@ -132,10 +150,17 @@ export class Tab2Page {
     }, 1000);
   }
 
+  /**
+   * Disables infinite scroll when the length of the array reaches 100.
+   */
   toggleInfiniteScroll() {
     this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
   }
 
+  /**
+   * Opens and plays a track in Spotify
+   * @param selectedTrack selected track to play and open in Spotify.
+   */
   public openSongInSpotify(selectedTrack:track){
     const options: InAppBrowserOptions = {
       toolbar: 'yes',
@@ -145,6 +170,10 @@ export class Tab2Page {
     this.inAppBrowser.create(selectedTrack.spotifyURL, '_system', options);
   }
 
+  /**
+   * If the current user has 0 saved songs, a button appears that allows him to
+   * go to his saved tracks in the Spotify App to add some.
+   */
   public goToSpotify(){
     const options: InAppBrowserOptions = {
       toolbar: 'yes',
@@ -153,6 +182,9 @@ export class Tab2Page {
     this.inAppBrowser.create('https://open.spotify.com/collection/tracks','_system', options);
   }
 
+  /**
+   * Alert that helps the user to understand what's the function (or how works) of the Tab2 Page.
+   */
   async HelpForSavedTracks() {
     const alert = await this.alertController.create({
       cssClass: 'myAlert',
@@ -162,10 +194,7 @@ export class Tab2Page {
         {
           text: "Entendido",
           role: 'cancel',
-          cssClass: 'alertOK',
-          handler: () => {
-
-          }
+          cssClass: 'alertOK'
         }
       ]
     });

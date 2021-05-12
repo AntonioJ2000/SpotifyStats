@@ -14,6 +14,10 @@ export class SpotifyApiService {
               private http:HTTP) { }
 
 
+    /**
+     * HTTP request that gets the signed in client profile. 
+     * @returns The parameters of the profile, image, displayName, and more.
+     */
     public getCurrentUserProfile():Promise<any | null>{
       return new Promise((resolve, reject)=>{
         const endpoint = environment.currentUserEndpoint;
@@ -28,6 +32,11 @@ export class SpotifyApiService {
       })
     }
 
+    /**
+     * HTTP request that gets the signed client saved tracks in Spotify (liked songs).
+     * @param offsetVar Variable that helps out giving next 20 songs from the API.
+     * @returns Array with the last 20 saved client tracks.
+     */
     public getCurrentUserSavedTracks(offsetVar:number):Promise<any | null>{
       return new Promise((resolve, reject)=>{
         const endpoint = environment.currentUserSavedTracks + '?offset=' + offsetVar;
@@ -42,6 +51,13 @@ export class SpotifyApiService {
       })
     }
 
+    /**
+     * HTTP request that gets the current client most played tracks in a selected time range, this parameter can be:
+       - short_term: 4 weeks. 
+       - medium_term: 6 months.
+       - long_term: since the account was created.
+     * @returns 20 most played tracks of the current client.
+     */
     public getCurrentUserTopTracks():Promise<any | null>{
       return new Promise((resolve,reject)=>{
         const endpoint = environment.currentUserTop + 'tracks?' + 'time_range=' + this.clientCredentials.config.time_range;
@@ -56,6 +72,10 @@ export class SpotifyApiService {
       })
     }
 
+    /**
+     * HTTP request that gets the current client most listened artists in a selected time range. 
+     * @returns 20 most listened artists of the current client
+     */
     public getCurrentUserTopArtists():Promise<any | null>{
       return new Promise((resolve,reject)=>{
         const endpoint = environment.currentUserTop + 'artists?' + 'time_range=' + this.clientCredentials.config.time_range;
@@ -70,6 +90,10 @@ export class SpotifyApiService {
       })
     }
 
+    /**
+     * HTTP request that gets the current client most listened artist
+     * @returns The artist
+     */
     public getCurrentUserFavouriteArtist():Promise<any | null>{
       return new Promise((resolve,reject)=>{
         const endpoint = environment.currentUserTop + 'artists?' + 'time_range=long_term&limit=1';
@@ -84,6 +108,10 @@ export class SpotifyApiService {
       })
     }
 
+    /**
+     * HTTP request that gets the current clent most played track
+     * @returns The track
+     */
     public getCurrentUserFavouriteSong():Promise<any | null>{
       return new Promise((resolve,reject)=>{
         const endpoint = environment.currentUserTop + 'tracks?' + 'time_range=long_term&limit=1';
@@ -98,6 +126,10 @@ export class SpotifyApiService {
       })
     }
 
+    /**
+     * HTTP request that gets the current client recently played tracks.
+     * @returns 10 last played tracks.
+     */
     public getCurrentUserRecentlyPlayed():Promise<any | null>{
       return new Promise((resolve,reject)=>{
         const endpoint = environment.currentUserRecentlyPlayed+ '?' + 'limit=' + '10';
@@ -118,12 +150,14 @@ export class SpotifyApiService {
       }
     }
 
-
-
     private getToken():string{
       return 'Bearer ' + this.clientCredentials.client.access_token
     }
 
+    /**
+     * Uses the client refreshToken to get back a new accessToken
+     * @returns new accessToken
+     */
     public getRefreshedToken():Promise<any | null>{
       return new Promise((resolve,reject)=>{
         const endpoint=environment.getNewToken;

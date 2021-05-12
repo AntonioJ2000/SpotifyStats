@@ -52,23 +52,29 @@ export class Tab1Page {
               private toastController:ToastController) {}
 
   
-    ionViewDidEnter(){
-      this.loading.cargarLoading();
+  /**
+  * Get or update the client statistics every time the view is displayed
+  */
+  ionViewDidEnter(){
+    this.loading.cargarLoading();
 
-    setTimeout(async() => {
-      await this.getUserTopTracks().then(async()=>{
-        await this.getUserTopArtists().then(async()=>{
-          await this.getUserRecentlyPlayed().then(()=>{
-            this.cargado = true;
-            setTimeout(() => {
-              this.loading.pararLoading();  
-            }, 650); 
-          });
-        })
-      });
-    }, 1500);  
-  }
+  setTimeout(async() => {
+    await this.getUserTopTracks().then(async()=>{
+      await this.getUserTopArtists().then(async()=>{
+        await this.getUserRecentlyPlayed().then(()=>{
+          this.cargado = true;
+          setTimeout(() => {
+            this.loading.pararLoading();  
+          }, 650); 
+        });
+      })
+    });
+  }, 1500);  
+}
  
+  /**
+   * Removes all items from the lists to make the aplication work out fast.
+   */
   async ionViewWillLeave(){
     if(this.listaTopCanciones.length != 0 && this.listaTopArtistas.length != 0 && this.listaEscuchadasRecientemente.length != 0){
       this.cargado = false;
@@ -79,6 +85,9 @@ export class Tab1Page {
     }
   }
   
+  /**
+   * Get client top tracks via HTTP request to the Spotify API
+   */
   public async getUserTopTracks(){
     let t = await this.spotifyApi.getCurrentUserTopTracks();
     
@@ -95,6 +104,9 @@ export class Tab1Page {
     }
   }
 
+  /**
+   * Get client top artists via HTTP request to the Spotify API
+   */
   public async getUserTopArtists(){
     let t = await this.spotifyApi.getCurrentUserTopArtists();
 
@@ -110,6 +122,9 @@ export class Tab1Page {
     }
   }
 
+  /**
+   * Get client recently played tracks via HTTP request to the Spotify API.
+   */
   public async getUserRecentlyPlayed(){
     let t = await this.spotifyApi.getCurrentUserRecentlyPlayed();
 
@@ -128,6 +143,9 @@ export class Tab1Page {
     }
   }
 
+  /**
+   * Remove all elements from the lists and then reloads them via requests to the Spotify API.
+   */
   public async reloadStats(){
     this.cargado = false;
     this.loading.cargarLoading();
@@ -151,7 +169,10 @@ export class Tab1Page {
     }, 1250);
   }
 
-
+  /**
+   * Opens a selected artist profile in the Spotify App, if not installed, opens it with a browser.
+   * @param selectedArtist artist to open. 
+   */
   public openArtistProfile(selectedArtist:artist){
     const options: InAppBrowserOptions = {
       toolbar: 'yes',
@@ -160,6 +181,10 @@ export class Tab1Page {
     this.inAppBrowser.create(selectedArtist.spotifyURL, '_system', options);
   }
 
+  /**
+   * Allows the client to change the time lapse of his statistics between 4 weeks, 6 months and since 
+   * the creation of the account.
+   */
   async timeLapseSheet(){
     const actionSheet = await this.actionSheetController.create({
       header: 'Lapso de tiempo',
@@ -201,6 +226,10 @@ export class Tab1Page {
   await actionSheet.present();
   }
   
+  /**
+   * Shows a toast with the meaning of the icons
+   * @param tN slot of the icon pressed
+   */
   async presentToast(tN:number) {
     let msg:string = '';
 

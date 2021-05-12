@@ -6,12 +6,13 @@ import { track } from '../model/track';
 @Injectable({
   providedIn: 'root'
 })
-export class ApiSongService {
+export class ApiTrackService {
 
   constructor(private http:HTTP) { }
 
   /**
-   * Método que devuelve todos las canciones de la base de datos
+   * HTTP request that get all saved tracks in the database
+   * @returns saved tracks (Array)
    */
    public getAllTracks():Promise<track[] | null>{
     return new Promise((resolve, reject) => {
@@ -29,8 +30,8 @@ export class ApiSongService {
   }
 
   /**
-   * Método que crea una cancion
-   * @param track la cancion a crear
+   * HTTP request that creates a new track in the database
+   * @param track track to save
    */
   public createTrack(track:track): Promise<void>{
     const endpoint = environment.endpoint + environment.apiTrack;
@@ -44,14 +45,15 @@ export class ApiSongService {
           })
           .catch(err => reject(err));
       } else{
-        reject("User no exists");
+        reject("Track does not exists");
       }
     })
   }
 
   /**
-   * Método que devuelve una cancion en específico
-   * @param track el id de la cancion
+   * HTTP request that get a track with a selected id
+   * @param id id of the track we want to get
+   * @returns 
    */
   public getTrack(id?:number | string): Promise<track | null>{
     return new Promise((resolve, reject) => {
@@ -73,8 +75,8 @@ export class ApiSongService {
   }
  
   /**
-   * Método que borra una cancion en especifíco
-   * @param track la cancion a borrar
+   * HTTP request that removes a track from the database
+   * @param track selected track to remove
    */
   public removeTrack(track:track): Promise<void> {
     const id:any = track.id ? track.id : track;
@@ -90,8 +92,8 @@ export class ApiSongService {
   }
 
   /**
-   * Método que modifica una cancion en específico
-   * @param track cancion a modificar
+   * HTTP request that update a track from the database
+   * @param track selected track to update
    */
   public updateTrack(track: track): Promise<void> {
     const endpoint = environment.endpoint + environment.apiTrack;
@@ -105,7 +107,7 @@ export class ApiSongService {
           })
           .catch(err => reject(err));
       }else{
-        reject("User no exists");
+        reject("Track does not exists");
       }
     })
   }

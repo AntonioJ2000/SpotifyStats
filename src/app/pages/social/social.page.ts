@@ -31,32 +31,58 @@ export class SocialPage {
     this.listaUsuarios.push(exampleUser);
   }
 
+  /**
+   * Returns the client to the normal tabs routing.
+   */
   closeSocialPage(){
     this.router.navigate(['/tabs/tab3'])
   }
 
+  /**
+   * Function that reloads the social page if any problem was encountered.
+   */
   public async reloadSocial(){
     
   }
-
+  
+  /**
+   * Function that gets all the followed users from the database.
+   */
   public async getUsuariosSeguidos(){
 
   }
 
+  /**
+   * Function that gets all the users from the database excepts for the current loged in one.
+   */
   public async getUsuarios(){
 
   }
 
+  /**
+   * Function that allows the client to unfollow a user.
+   * @param selectedUser The selected user that the client wants to unfollow.
+   * @param slot The slot to remove it from the followed user Array.
+   */
   public unfollowUser(selectedUser:user, slot:number){
     this.listaUsuarios.push(selectedUser)
     this.listaUsuariosSeguidos.splice(slot, 1);
   }
 
+  /**
+   * Function that allows the client to follow a user.
+   * @param selectedUser The selected user that the client wants to follow.
+   * @param slot The slot to remove it from the non-followed user Array
+   */
   public followUser(selectedUser:user, slot:number){
     this.listaUsuariosSeguidos.push(selectedUser);
     this.listaUsuarios.splice(slot, 1)
   }
 
+  /**
+   * Function that opens a user profile in the Spotify App.
+   * @param selectedUser The selected profile to open.
+   */
   public openUserProfileInSpotify(selectedUser:user){
     const options: InAppBrowserOptions = {
       toolbar: 'yes',
@@ -65,6 +91,10 @@ export class SocialPage {
     const browser = this.inAppBrowser.create(selectedUser.spotifyURL,'_system', options);
   }
 
+  /**
+   * Function that opens a user profile in a modal to show some statistics.
+   * @param selectedUser The selected user profile to open.
+   */
   public async openUserProfile(selectedUser:user){
     const modal = await this.modalController.create({
       component: FriendprofilePage,
@@ -76,6 +106,11 @@ export class SocialPage {
     modal.present();
   }
 
+  /**
+   * Alert that shows when the unfollow button is pressed.
+   * @param selectedUser Selected user to remove.
+   * @param slot Slot of the user in the array that the client wants to remove.
+   */
   async alertUnfollow(selectedUser:user, slot:number) {
     const alert = await this.alertController.create({
       cssClass: 'myAlert',

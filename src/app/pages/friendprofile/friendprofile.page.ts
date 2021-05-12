@@ -23,6 +23,9 @@ export class FriendprofilePage {
     this.modalController.dismiss();
   }
 
+  /**
+   * Opens the selected friend Spotify Profile in the Spotify App, if not installed, normal browser opens it instead.
+   */
   openFriendSpotifyProfile(){
     const options: InAppBrowserOptions = {
       toolbar: 'yes',
