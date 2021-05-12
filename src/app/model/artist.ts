@@ -1,7 +1,7 @@
 import { user } from "./user";
 
 export interface artist{
-    id?:any,
+    id?:string,
     usersArtists?: Array<user>;
     image: any,
     name:any,

@@ -15,6 +15,7 @@ import { SocialPage } from '../pages/social/social.page';
 import { Animation, AnimationController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { user } from '../model/user';
+import { ApiUserService } from '../services/api-user.service';
 
 
 const MEDIA_FOLDER_NAME = "my_media";
@@ -62,6 +63,7 @@ export class Tab3Page{
     private inAppBrowser:InAppBrowser,
     public popoverController: PopoverController,
     private modalController: ModalController,
+    private apiUser: ApiUserService,
     private router:Router) {}
 
   
@@ -77,11 +79,13 @@ export class Tab3Page{
           await this.getUserProfile().then(async()=>{
             await this.getUserFavourite3Songs().then(async()=>{
               await this.getUserFavourite3Artists().then(()=>{
-                setTimeout(() => {
+                setTimeout(async() => {
                   console.log(this.loggedUser)
-                  this.loading.pararLoading();
-                  this.firstTime = true;
-                  this.specialInfoLoaded = true;
+                  await this.addUserToBBDD().then(()=>{
+                    this.loading.pararLoading();
+                    this.firstTime = true;
+                    this.specialInfoLoaded = true;
+                  });
                 }, 350);
               })
             });     
@@ -101,6 +105,27 @@ export class Tab3Page{
       console.log("hola");
     })
     */
+  }
+
+  public async addUserToBBDD(){
+    try{
+      try{
+        if(await this.apiUser.getUser(this.loggedUser.id)){
+          await this.apiUser.removeAllForUser(this.loggedUser).then(async()=>{
+            await this.apiUser.createUser(this.loggedUser).then(()=>{
+              console.log("He borrado y agreado al usuario");
+            });
+          });
+        }
+      }catch(err){
+        console.log("He creado el usuario");
+        await this.apiUser.createUser(this.loggedUser);
+      }
+
+    }catch(err){
+      console.log("No se ha podido crear el usuario");
+      console.log(err);
+    }
   }
 
   /**

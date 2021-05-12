@@ -1,7 +1,7 @@
 import { user } from "./user";
 
 export interface track{
-    id?:any, //track.id
+    id?:string, //track.id
     trackThumbnail:any, //track.album.images (array)
     trackName:any, //track.name
     artists:any[], //track.artists (array)

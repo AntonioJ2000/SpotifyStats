@@ -30,6 +30,25 @@ export class ApiUserService {
   }
 
   /**
+   * HTTP request that obtain all users from the database without one user
+   * @returns users (Array)
+   */
+   public getUsersWithoutUser(id:string):Promise<user[] | null>{
+    return new Promise((resolve, reject) => {
+      const endpoint = environment.endpoint + environment.apiUser + "without/" + id;
+      this.http.get(endpoint, {}, this.header)
+      .then(d=>{
+        if(d){
+          resolve(JSON.parse(d.data));
+        }else{
+          resolve(null);
+        }
+      })
+      .catch(err=>reject(err))
+    })
+  }
+
+  /**
    * HTTP request that creates a new user in the database
    * @param user the user to create
    */
@@ -80,6 +99,23 @@ export class ApiUserService {
   public removeUser(user:user): Promise<void> {
     const id:any = user.id ? user.id : user;
     const endpoint = environment.endpoint + environment.apiUser + id;
+    return new Promise((resolve, reject) => {
+      this.http
+        .delete(endpoint, {}, this.header)
+        .then(d => {
+          resolve();
+        })
+        .catch(err => reject(err));
+    })
+  }
+
+  /**
+   * HTTP request that removes a user from the database
+   * @param user the user to delete
+   */
+   public removeAllForUser(user:user): Promise<void> {
+    const id:any = user.id ? user.id : user;
+    const endpoint = environment.endpoint + environment.apiUser + "all/" + id;
     return new Promise((resolve, reject) => {
       this.http
         .delete(endpoint, {}, this.header)
