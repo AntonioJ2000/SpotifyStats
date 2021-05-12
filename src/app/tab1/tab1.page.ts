@@ -90,9 +90,9 @@ export class Tab1Page {
    */
   public async getUserTopTracks(){
     let t = await this.spotifyApi.getCurrentUserTopTracks();
-    
+    let trackToView: track;
     for(let i=0; i < t.items.length; i++){
-      let trackToView:track = {
+        trackToView = {
         id: t.items[i].id,
         trackName: t.items[i].name,
         spotifyURL: t.items[i].external_urls.spotify,
@@ -109,9 +109,9 @@ export class Tab1Page {
    */
   public async getUserTopArtists(){
     let t = await this.spotifyApi.getCurrentUserTopArtists();
-
+    let artistToView: artist;
     for(let i=0; i < t.items.length; i++){
-      let artistToView:artist = {
+        artistToView = {
         image: t.items[i].images[2].url,
         name: t.items[i].name,
         popularity: t.items[i].popularity,
@@ -127,9 +127,9 @@ export class Tab1Page {
    */
   public async getUserRecentlyPlayed(){
     let t = await this.spotifyApi.getCurrentUserRecentlyPlayed();
-
+    let trackToView:track
     for(let i=0; i < t.items.length; i++){
-      let trackToView:track = {
+        trackToView = {
         id: t.items[i].track.id,
         trackName: t.items[i].track.name,
         spotifyURL: t.items[i].track.external_urls.spotify,

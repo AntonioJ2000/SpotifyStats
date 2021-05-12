@@ -1,7 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
 import { ModalController } from '@ionic/angular';
+import { artist } from 'src/app/model/artist';
+import { track } from 'src/app/model/track';
 import { user } from 'src/app/model/user';
+import { ClientcredentialsService } from 'src/app/services/clientcredentials.service';
 
 @Component({
   selector: 'app-friendprofile',
@@ -12,11 +15,21 @@ export class FriendprofilePage {
 
   @Input('selectedUser') selectedUser:user;
 
+  top3tracksExample:track[] = [];
+  top3artistsExample:artist[] = [];
+
   constructor(private modalController:ModalController,
-              private inAppBrowser:InAppBrowser) { }
+              private inAppBrowser:InAppBrowser,
+              private clientCredentials:ClientcredentialsService) { }
 
   ionViewWillEnter(){
-    console.log(this.selectedUser)
+    this.top3tracksExample.push(this.clientCredentials.exampleTrack)
+    this.top3tracksExample.push(this.clientCredentials.exampleTrack)
+    this.top3tracksExample.push(this.clientCredentials.exampleTrack)
+
+    this.top3artistsExample.push(this.clientCredentials.exampleArtist)
+    this.top3artistsExample.push(this.clientCredentials.exampleArtist)
+    this.top3artistsExample.push(this.clientCredentials.exampleArtist)
   }
 
   closeFriendProfilePage(){
@@ -32,7 +45,15 @@ export class FriendprofilePage {
       zoom: 'no', 
     }
     const browser = this.inAppBrowser.create(this.selectedUser.spotifyURL, '_system', options)
-  
+  }
+
+  public openSongOrArtistInSpotify(selectedItem:track | artist){
+    const options: InAppBrowserOptions = {
+      toolbar: 'yes',
+      zoom: 'no'
+    }
+    console.log(selectedItem.spotifyURL)
+    this.inAppBrowser.create(selectedItem.spotifyURL, '_system', options);
   }
 
 }

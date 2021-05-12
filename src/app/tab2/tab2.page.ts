@@ -89,8 +89,9 @@ export class Tab2Page {
    */
   private async getUserSavedTracks(){
     let t = await this.spotifyApi.getCurrentUserSavedTracks(this.offsetVar);
+    let trackToView: track;
     for(let i=0; i < t.items.length; i++){
-      let trackToView:track = {
+        trackToView = {
         id: t.items[i].track.id,
         trackName: t.items[i].track.name,
         spotifyURL: t.items[i].track.external_urls.spotify,

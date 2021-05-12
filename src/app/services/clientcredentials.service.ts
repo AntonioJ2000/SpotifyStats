@@ -1,9 +1,15 @@
 import { Injectable } from '@angular/core';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
+import { artist } from '../model/artist';
+import { track } from '../model/track';
+import { user } from '../model/user';
 @Injectable({
   providedIn: 'root'
 })
 export class ClientcredentialsService {
+
+  exampleTrack:track;
+  exampleArtist:artist;
 
   /**
    * Used just to work with both tokens in the entire App.
@@ -16,13 +22,14 @@ export class ClientcredentialsService {
   /**
    * Used to save the registered client basic info for the Profile Page (Tab 3).
    */
-  user = {
-    display_name: '',
-    external_urls: '',
+  user:user = {
+    displayName: '',
+    spotifyURL: '',
     followers: 0,
     id:0,
     image:'assets/no_profile_image.jpg',
-    type:''
+    artists: [],
+    tracks: []
   }
 
   /**

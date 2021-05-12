@@ -22,10 +22,41 @@
     </ion-button>
   </div>
 
+ 
+    <h4 style="margin-left: 5%;margin-top: 5%; font-family: 'Poppins', sans-serif;">Sus canciones más escuchadas</h4>
+      <ion-item style="margin-top: -7px;" lines="none" *ngFor="let exampleTrack of this.top3tracksExample; let i=index">
+            <ion-card style="width:100%; margin-left: auto; margin-right: auto; align-items: center;">
+              <ion-item lines="full" class="itemBackground" (click)="openSongOrArtistInSpotify(this.exampleTrack)">
+                  <img slot ="start" style="width: 20%; margin-top: 7px; margin-bottom: 7px;" src="{{this.exampleTrack.trackThumbnail}}">          
+                <ion-label>
+                  <p class="track">{{this.exampleTrack.trackName}}</p>
+                
+                  <ion-label *ngFor = "let artist of this.exampleTrack.artists; let o=index">
+                    <p *ngIf="2 >= this.o" class="defaultFont" style="font-size: 13px;">{{artist.name}}</p>
+                    <p *ngIf="this.exampleTrack.artists.length > 3 && this.o === 3" class="defaultFont" style="color:#bdbdbd; font-size: 13px;">Y más artistas</p>
+                  </ion-label>
+      
+                </ion-label>
+              </ion-item>
+            </ion-card>
+        </ion-item>
+
+        <h4 style="margin-left: 5%;margin-top: 5%; font-family: 'Poppins', sans-serif;">Sus artistas más escuchados</h4>
+        <ion-item style="margin-top: -7px;" lines="none" *ngFor="let exampleArtist of this.top3artistsExample; let i=index;">
+            <ion-card style="width:100%; margin-left: auto; margin-right: auto; align-items: center;">
+              <ion-item class="itemBackground" lines="full" (click)="openSongOrArtistInSpotify(this.exampleArtist)">
+                  <img style="width: 20%; margin-top: 7px; margin-bottom: 7px;" src="{{this.exampleArtist.image}}">
+                  <ion-label class="artist">
+                  {{this.exampleArtist.name}}
+                </ion-label>
+              </ion-item>
+            </ion-card>
+      </ion-item>
+
 </ion-content>
 
 <ion-footer class="ion-no-border">
-  <div style="text-align: center;">
+  <div style="text-align: center; padding-top: 10px;">
     <ion-button fill="outline" shape="round" class="closeButton" (click)="closeFriendProfilePage()">
       <ion-label style="font-family: 'Poppins', sans-serif;">Salir</ion-label> 
     </ion-button>

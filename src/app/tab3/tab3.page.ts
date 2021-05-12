@@ -14,6 +14,7 @@ import { ProfilepopoverComponent } from '../components/profilepopover/profilepop
 import { SocialPage } from '../pages/social/social.page';
 import { Animation, AnimationController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { user } from '../model/user';
 
 
 const MEDIA_FOLDER_NAME = "my_media";
@@ -27,7 +28,7 @@ export class Tab3Page{
 
   firstTime:boolean = false;
   specialInfoLoaded:boolean = false;
-  loggedUser = this.clientCredentials.user;
+  loggedUser:user = this.clientCredentials.user;
   favouriteSong:track = {
     artists: [],
     id: '',
@@ -74,9 +75,10 @@ export class Tab3Page{
 
         setTimeout(async() => {
           await this.getUserProfile().then(async()=>{
-            await this.getUserFavouriteSong().then(async()=>{
-              await this.getUserFavouriteArtist().then(()=>{
+            await this.getUserFavourite3Songs().then(async()=>{
+              await this.getUserFavourite3Artists().then(()=>{
                 setTimeout(() => {
+                  console.log(this.loggedUser)
                   this.loading.pararLoading();
                   this.firstTime = true;
                   this.specialInfoLoaded = true;
@@ -107,35 +109,78 @@ export class Tab3Page{
   public async getUserProfile(){
     let u = await this.spotifyApi.getCurrentUserProfile();
 
-      this.clientCredentials.user.display_name = u.display_name;
-      this.clientCredentials.user.external_urls = u.external_urls.spotify;
+      this.clientCredentials.user.displayName = u.display_name;
+      this.clientCredentials.user.spotifyURL = u.external_urls.spotify;
       this.clientCredentials.user.followers = u.followers.total;
       this.clientCredentials.user.id = u.id;
       if(u.images.length != 0){
         this.clientCredentials.user.image = u.images[0].url;  
       }
-      this.clientCredentials.user.type=u.type;
-    
+  
   }
 
   /**
    * Get the signed in user's most played track
    */
-  public async getUserFavouriteSong(){
-    let favSong = await this.spotifyApi.getCurrentUserFavouriteSong();
+  public async getUserFavourite3Songs(){
+    let favSong = await this.spotifyApi.getCurrentUserTop3Songs();
+    
+    let userTrack:track;
+    for(let i=0; i < favSong.items.length; i++){
+        userTrack = {
+        id: favSong.items[i].id,
+        trackName: favSong.items[i].name,
+        spotifyURL: favSong.items[i].external_urls.spotify,
+        artists: favSong.items[i].artists,
+        trackThumbnail: favSong.items[i].album.images[1].url,
+      }
+      this.loggedUser.tracks.push(userTrack);
+    }
+
+    //NO SIRVE PARA NADA SOLO PARA LA VISTA DE LOS AMIGOS
+    let trackForFriendExample: track = {
+      id: favSong.items[0].id,
+      trackName: favSong.items[0].name,
+      spotifyURL: favSong.items[0].external_urls.spotify,
+      artists: favSong.items[0].artists,
+      trackThumbnail: favSong.items[0].album.images[1].url,
+    }
+
     this.favouriteSong.id = favSong.items[0].id;
     this.favouriteSong.trackName = favSong.items[0].name;
     this.favouriteSong.spotifyURL = favSong.items[0].external_urls.spotify;
     this.favouriteSong.artists = favSong.items[0].artists;
     this.favouriteSong.trackThumbnail = favSong.items[0].album.images[1].url;
 
+    this.clientCredentials.exampleTrack = trackForFriendExample;
   }
 
   /**
    * Get the signed in user's most played artist
    */
-  public async getUserFavouriteArtist(){
-    let favArtist = await this.spotifyApi.getCurrentUserFavouriteArtist();
+  public async getUserFavourite3Artists(){
+    let favArtist = await this.spotifyApi.getCurrentUserTop3Artist();
+
+    let userArtist:artist;
+    for(let i=0; i < favArtist.items.length; i++){
+      userArtist = {
+        name: favArtist.items[i].name, 
+        image: favArtist.items[i].images[2].url,
+        popularity: favArtist.items[i].popularity,
+        spotifyURL: favArtist.items[i].external_urls.spotify,
+        followers: favArtist.items[i].followers.total
+      }
+      this.loggedUser.artists.push(userArtist);
+    }
+
+    //NO SIRVE PARA NADA SOLO PARA LA VISTA DE LOS AMIGOS
+    let artistForFriendExample: artist = {
+      name: favArtist.items[0].name, 
+      image: favArtist.items[0].images[2].url,
+      popularity: favArtist.items[0].popularity,
+      spotifyURL: favArtist.items[0].external_urls.spotify,
+      followers: favArtist.items[0].followers.total
+    }
 
     this.favouriteArtist.name = favArtist.items[0].name;
     if(favArtist.items[0].images.length != 0){
@@ -145,6 +190,7 @@ export class Tab3Page{
     this.favouriteArtist.spotifyURL = favArtist.items[0].external_urls.spotify,
     this.favouriteArtist.followers = favArtist.items[0].followers.total
   
+    this.clientCredentials.exampleArtist = artistForFriendExample;
   }
 
   public async getUsersfromDatabase(){
@@ -180,7 +226,7 @@ export class Tab3Page{
       toolbar: 'yes',
       zoom: 'no'
     }
-    const browser = this.inAppBrowser.create(this.loggedUser.external_urls, '_system', options);
+    const browser = this.inAppBrowser.create(this.loggedUser.spotifyURL, '_system', options);
   }
 
   /**

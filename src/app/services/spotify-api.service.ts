@@ -91,12 +91,12 @@ export class SpotifyApiService {
     }
 
     /**
-     * HTTP request that gets the current client most listened artist
+     * HTTP request that gets the current client top 3 artists since the creation of the acount
      * @returns The artist
      */
-    public getCurrentUserFavouriteArtist():Promise<any | null>{
+    public getCurrentUserTop3Artist():Promise<any | null>{
       return new Promise((resolve,reject)=>{
-        const endpoint = environment.currentUserTop + 'artists?' + 'time_range=long_term&limit=1';
+        const endpoint = environment.currentUserTop + 'artists?' + 'time_range=long_term&limit=3';
         this.http.get(endpoint,{},this.header)
         .then(d =>{
           if(d){
@@ -109,12 +109,12 @@ export class SpotifyApiService {
     }
 
     /**
-     * HTTP request that gets the current clent most played track
+     * HTTP request that gets the current clent top 3 tracks since the creation of the account
      * @returns The track
      */
-    public getCurrentUserFavouriteSong():Promise<any | null>{
+    public getCurrentUserTop3Songs():Promise<any | null>{
       return new Promise((resolve,reject)=>{
-        const endpoint = environment.currentUserTop + 'tracks?' + 'time_range=long_term&limit=1';
+        const endpoint = environment.currentUserTop + 'tracks?' + 'time_range=long_term&limit=3';
         this.http.get(endpoint,{},this.header)
         .then(d =>{
           if(d){
