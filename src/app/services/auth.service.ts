@@ -23,7 +23,7 @@ export class AuthService implements CanActivate{
    * This function requires some parameters, as the documentation explains, these parameters are:
      - clientId: ClientID (Developer client ID) that Spotify gives you when the app is created in the Dashboard.
      - redirectUrl: When used CustomURL Schema, where is the info going to be returned when the login is success or failure.
-     - scopes: Security scopes just to notify the user what the devs are able to do with his information
+     - scopes: Security scopes just to notify the user what the application is able to do with his information
      - tokenExchangeUrl: The Ionic app comunicates with the Heroku created server side (Node App) where the endpoint /exchange, gets
        a token to work and make request to the Spotify API.
      - tokenRefreshUrl: Same as the /exchange endpoint but this time, /refresh does provide a new token via refreshToken (Not working in the flow) 

@@ -36,7 +36,7 @@ export class Tab3Page{
     previewURL: '',
     spotifyURL: '',
     trackName: '',
-    trackThumbnail: '',
+    trackThumbnail: ''
   };
 
   favouriteArtist:artist = {
@@ -62,7 +62,6 @@ export class Tab3Page{
     private authService:AuthService,
     private inAppBrowser:InAppBrowser,
     public popoverController: PopoverController,
-    private modalController: ModalController,
     private apiUser: ApiUserService,
     private router:Router) {}
 
@@ -80,12 +79,11 @@ export class Tab3Page{
             await this.getUserFavourite3Songs().then(async()=>{
               await this.getUserFavourite3Artists().then(()=>{
                 setTimeout(async() => {
-                  console.log(this.loggedUser)
-                  await this.addUserToBBDD().then(()=>{
+                    await this.addUserToBBDD().then(()=>{});
                     this.loading.pararLoading();
                     this.firstTime = true;
                     this.specialInfoLoaded = true;
-                  });
+                  
                 }, 350);
               })
             });     
@@ -111,10 +109,8 @@ export class Tab3Page{
     try{
       try{
         if(await this.apiUser.getUser(this.loggedUser.id)){
-          await this.apiUser.removeAllForUser(this.loggedUser).then(async()=>{
-            await this.apiUser.createUser(this.loggedUser).then(()=>{
-              console.log("He borrado y agreado al usuario");
-            });
+          await this.apiUser.updateUser(this.loggedUser).then(async()=>{
+              console.log("He actualizado el usuario");
           });
         }
       }catch(err){
@@ -169,6 +165,7 @@ export class Tab3Page{
       spotifyURL: favSong.items[0].external_urls.spotify,
       artists: favSong.items[0].artists,
       trackThumbnail: favSong.items[0].album.images[1].url,
+      top: 0
     }
 
     this.favouriteSong.id = favSong.items[0].id;
@@ -193,7 +190,8 @@ export class Tab3Page{
         image: favArtist.items[i].images[2].url,
         popularity: favArtist.items[i].popularity,
         spotifyURL: favArtist.items[i].external_urls.spotify,
-        followers: favArtist.items[i].followers.total
+        followers: favArtist.items[i].followers.total,
+        top: 0
       }
       this.loggedUser.artists.push(userArtist);
     }
@@ -217,11 +215,6 @@ export class Tab3Page{
   
     this.clientCredentials.exampleArtist = artistForFriendExample;
   }
-
-  public async getUsersfromDatabase(){
-    await this.spotifyApi.getAllUsers();
-  }
-
   /**
    * Opens the social page
    */
@@ -233,6 +226,7 @@ export class Tab3Page{
    * Popover with various options
    * @param ev popover event
    */
+  
   async presentPopover(ev: any) {
     const popover = await this.popoverController.create({
       component: ProfilepopoverComponent,

@@ -15,21 +15,12 @@ export class FriendprofilePage {
 
   @Input('selectedUser') selectedUser:user;
 
-  top3tracksExample:track[] = [];
-  top3artistsExample:artist[] = [];
-
   constructor(private modalController:ModalController,
               private inAppBrowser:InAppBrowser,
               private clientCredentials:ClientcredentialsService) { }
 
-  ionViewWillEnter(){
-    this.top3tracksExample.push(this.clientCredentials.exampleTrack)
-    this.top3tracksExample.push(this.clientCredentials.exampleTrack)
-    this.top3tracksExample.push(this.clientCredentials.exampleTrack)
-
-    this.top3artistsExample.push(this.clientCredentials.exampleArtist)
-    this.top3artistsExample.push(this.clientCredentials.exampleArtist)
-    this.top3artistsExample.push(this.clientCredentials.exampleArtist)
+  ionViewWillEnter(){   
+    
   }
 
   closeFriendProfilePage(){

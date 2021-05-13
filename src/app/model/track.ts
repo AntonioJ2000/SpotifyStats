@@ -9,4 +9,5 @@ export interface track{
     previewURL?:any //track.preview_url
     playedat?:any;
     usersSong?: Array<user>;
+    top?:number;
 }

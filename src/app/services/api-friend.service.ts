@@ -113,7 +113,7 @@ export class ApiFriendService {
     })
   }
 
-  public getFriendByUser(id?:number | string): Promise<user | null>{
+  public getFriendsByUser(id?:number | string): Promise<user[] | null>{
     return new Promise((resolve, reject) => {
       let endpoint = environment.endpoint + environment.apiFriend + environment.apiUser;
       if(id){

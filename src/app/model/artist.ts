@@ -8,4 +8,5 @@ export interface artist{
     popularity:any,
     spotifyURL:any,
     followers:number,
+    top?:number;
 }

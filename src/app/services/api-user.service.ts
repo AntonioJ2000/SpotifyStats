@@ -33,7 +33,7 @@ export class ApiUserService {
    * HTTP request that obtain all users from the database without one user
    * @returns users (Array)
    */
-   public getUsersWithoutUser(id:string):Promise<user[] | null>{
+   public getUsersWithoutCurrentClient(id:string):Promise<user[] | null>{
     return new Promise((resolve, reject) => {
       const endpoint = environment.endpoint + environment.apiUser + "without/" + id;
       this.http.get(endpoint, {}, this.header)
@@ -96,8 +96,7 @@ export class ApiUserService {
    * HTTP request that removes a user from the database
    * @param user the user to delete
    */
-  public removeUser(user:user): Promise<void> {
-    const id:any = user.id ? user.id : user;
+  public removeUser(id:string): Promise<void> {
     const endpoint = environment.endpoint + environment.apiUser + id;
     return new Promise((resolve, reject) => {
       this.http
