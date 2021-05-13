@@ -62,14 +62,14 @@ export class Tab1Page {
     await this.getUserTopTracks().then(async()=>{
       await this.getUserTopArtists().then(async()=>{
         await this.getUserRecentlyPlayed().then(()=>{
-          this.cargado = true;
           setTimeout(() => {
+            this.cargado = true;
             this.loading.pararLoading();  
           }, 650); 
         });
       })
     });
-  }, 1500);  
+  }, 1000);  
 }
  
   /**
@@ -166,7 +166,7 @@ export class Tab1Page {
           });
         })
       })
-    }, 1250);
+    }, 1000);
   }
 
   /**

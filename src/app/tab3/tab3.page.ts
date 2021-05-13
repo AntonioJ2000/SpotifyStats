@@ -77,14 +77,12 @@ export class Tab3Page{
         setTimeout(async() => {
           await this.getUserProfile().then(async()=>{
             await this.getUserFavourite3Songs().then(async()=>{
-              await this.getUserFavourite3Artists().then(()=>{
-                setTimeout(async() => {
-                    await this.addUserToBBDD().then(()=>{});
-                    this.loading.pararLoading();
+              await this.getUserFavourite3Artists().then(async()=>{
+                  await this.addUserToBBDD().then(()=>{
                     this.firstTime = true;
-                    this.specialInfoLoaded = true;
-                  
-                }, 350);
+                    this.specialInfoLoaded = true;  
+                    this.loading.pararLoading();
+                });
               })
             });     
           });

@@ -185,26 +185,4 @@ export class SpotifyApiService {
       } 
     }
 
-    public getAllUsers():Promise<user[] | null>{
-      return new Promise((resolve, reject) => {
-        const endpoint = environment.endpoint + environment.apiUser; //http://localhost:8080/user/
-        this.http.get(endpoint, {}, this.header24)
-        .then(d=>{
-          if(d){
-            console.log(JSON.parse(d.data))
-            resolve(JSON.parse(d.data));
-          }else{
-            resolve(null);
-          }
-        })
-        .catch(err=>reject(err))
-      })
-    }
-
-    private get header24():any{
-      return {
-        "Access-Control-Allow-Origin": "*",
-        "Content-Type": "application/json"
-      }
-    }
 }
