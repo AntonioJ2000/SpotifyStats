@@ -92,6 +92,18 @@ export class ApiFriendService {
     })
   }
 
+  public deleteByUsersPS(friend:friend): Promise<void> {
+    const endpoint = environment.endpoint + environment.apiFriend;
+    return new Promise((resolve, reject) => {
+      this.http
+        .delete(endpoint, friend, this.header)
+        .then(d => {
+          resolve();
+        })
+        .catch(err => reject(err));
+    })
+  }
+
   /**
    * HTTP request that updates a friend 
    * @param friend the friend you want to update

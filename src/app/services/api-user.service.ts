@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HTTP } from '@ionic-native/http/ngx';
 import { environment } from 'src/environments/environment';
+import { aux_user_filter } from '../model/aux_user_filter';
 import { user } from '../model/user';
 
 @Injectable({
@@ -36,6 +37,37 @@ export class ApiUserService {
    public getUsersWithoutCurrentClient(id:string):Promise<user[] | null>{
     return new Promise((resolve, reject) => {
       const endpoint = environment.endpoint + environment.apiUser + "without/" + id;
+      this.http.get(endpoint, {}, this.header)
+      .then(d=>{
+        if(d){
+          resolve(JSON.parse(d.data));
+        }else{
+          resolve(null);
+        }
+      })
+      .catch(err=>reject(err))
+    })
+  }
+
+
+  public getAllUnfollowedUsers(id:string):Promise<user[] | null>{
+    return new Promise((resolve, reject) => {
+      const endpoint = environment.endpoint + environment.apiUser + "unfollowed/" + id;
+      this.http.get(endpoint, {}, this.header)
+      .then(d=>{
+        if(d){
+          resolve(JSON.parse(d.data));
+        }else{
+          resolve(null);
+        }
+      })
+      .catch(err=>reject(err))
+    })
+  }
+
+  public getUnfollowedUsersByFilter(filter:aux_user_filter):Promise<user[] | null>{
+    return new Promise((resolve, reject) => {
+      const endpoint = environment.endpoint + environment.apiUser + "filter";
       this.http.get(endpoint, {}, this.header)
       .then(d=>{
         if(d){
