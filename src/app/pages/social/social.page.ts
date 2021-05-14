@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
 import { AlertController, LoadingController, ModalController, ToastController } from '@ionic/angular';
+import { aux_user_filter } from 'src/app/model/aux_user_filter';
 import { friend } from 'src/app/model/friend';
 import { user } from 'src/app/model/user';
 import { ApiFriendService } from 'src/app/services/api-friend.service';
@@ -16,6 +17,8 @@ import { FriendprofilePage } from '../friendprofile/friendprofile.page';
   styleUrls: ['./social.page.scss'],
 })
 export class SocialPage {
+
+  filter:aux_user_filter;
 
   listaUsuarios:user[] = [];
   listaUsuariosSeguidos:user[] = [];
@@ -35,39 +38,28 @@ export class SocialPage {
   async ionViewWillEnter(){
     this.loadingController.cargarLoading();
     await this.getFollowedUsers().then(async ()=>{
-      let t = await this.apiUser.getUsersWithoutCurrentClient(this.clientCredentials.user.id);
-
-        let userToView:user;
-        for(let i=0; i < t.length; i++){
-            userToView = {
-              id: t[i].id,
-              displayName: t[i].displayName,
-              image: t[i].image,
-              followers: t[i].followers,
-              spotifyURL: t[i].spotifyURL,
-              artists: t[i].artists,
-              tracks: t[i].tracks
-            }
-        this.listaUsuarios.push(userToView);
-      }
+      await this.getUnfowedUsers();
     });
-
     this.isLoaded = true;
     setTimeout(async() => {
       this.loadingController.pararLoading();      
     }, 300);
 
-    /** 
-    let exampleUser:user = {
-      id: 'antoniojl11',
-      displayName: 'Antonio11',
-      followers: 19,
-      image: 'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y',
-      spotifyURL: 'https://google.es'
-    }
-    this.listaUsuarios.push(exampleUser);
-    */
   }
+
+  /**
+ * Allows user to search a user in the database
+ */
+public async searchUser(ev:any){
+  let val = ev.target.value;
+  
+  this.filter = {
+    id: this.clientCredentials.user.id,
+    id_filter: val
+  }
+
+  await this.getUsersFiltered(this.filter);
+}
 
   /**
    * Returns the client to the normal tabs routing.
@@ -80,7 +72,18 @@ export class SocialPage {
    * Function that reloads the social page if any problem was encountered.
    */
   public async reloadSocial(){
+    this.isLoaded = false;
+    this.loadingController.cargarLoading();
     
+    this.listaUsuarios.splice(0, this.listaUsuarios.length);
+    this.listaUsuariosSeguidos.splice(0, this.listaUsuariosSeguidos.length);
+    
+    await this.getFollowedUsers().then(async()=>{
+      await this.getUnfowedUsers().then(()=>{
+        this.isLoaded = true;
+        this.loadingController.pararLoading();
+      });
+    })
   }
   
   /**
@@ -88,24 +91,38 @@ export class SocialPage {
    */
   public async getFollowedUsers(){
     this.listaUsuariosSeguidos = await this.apiFriend.getFriendsByUser(this.clientCredentials.user.id);
-    
-    
   } 
 
   /**
-   * Function that gets all the users from the database excepts for the current loged in one and unfollowed.
+   * Function that allows the user to find a friend from the database (if not followed)
+   * @param filter Two parameters, *id* of the current client just to make sure he does
+   * not appear in the list, and *id_filter*, the text from the input
    */
-  public async getUnfollowedUsers(){
+  public async getUsersFiltered(filter:aux_user_filter){
+    this.listaUsuarios = await this.apiUser.getUnfollowedUsersByFilter(filter);
+  }
 
+  /**
+   * Function that gets all the unfollowed users from the database. (Current not included)
+   */
+  public async getUnfowedUsers(){
+    this.listaUsuarios = await this.apiUser.getAllUnfollowedUsers(this.clientCredentials.user.id);
   }
 
   /**
    * Function that allows the client to unfollow a user.
    * @param selectedUser The selected user that the client wants to unfollow.
    */
-  public unfollowUser(selectedUser:user){
-    
+  public async unfollowUser(selectedUser:user){
+    let unfriend:friend;
+    unfriend = {
+      user_primary: this.clientCredentials.user.id,
+      user_secondary: selectedUser.id
+    }
 
+    await this.apiFriend.deleteByUsersPS(unfriend).then(()=>{
+      this.reloadSocial();
+    });
   }
 
   /**
@@ -119,6 +136,7 @@ export class SocialPage {
       user_secondary: selectedUser.id
     }
     await this.apiFriend.createFriend(friend).then(()=>{
+      this.reloadSocial();
       this.followedUserToast(selectedUser);
     });
   }
@@ -156,18 +174,18 @@ export class SocialPage {
    * @param selectedUser Selected user to remove.
    * @param slot Slot of the user in the array that the client wants to remove.
    */
-  async alertUnfollow(selectedUser:user, slot:number) {
+  async alertUnfollow(selectedUser:user) {
     const alert = await this.alertController.create({
       cssClass: 'myAlert',
       header: '¿Dejar de seguir?',
-      message: 'Estás a punto de dejar de seguir a este usuario, ¿estás seguro/a?',
+      message: 'Estás a punto de dejar de seguir a ' + selectedUser.displayName +', ¿estás seguro/a?',
       buttons: [
         {
           text: "Cancelar",
           role: 'nothing',
           cssClass: 'alertOK',
           handler: () => {
-            //Dismissed
+            //Dismissed, no hacemos nada
           }
         },{
           text: "Aceptar",
@@ -185,7 +203,7 @@ export class SocialPage {
 
   public async followedUserToast(selectedUser:user){
     const toast = await this.toastController.create({
-      cssClass: 'myToast',
+      cssClass: 'myToastv2',
       message: "Ahora sigues a "+selectedUser.displayName,
       duration: 1200,
       position:"bottom"

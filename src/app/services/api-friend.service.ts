@@ -92,11 +92,16 @@ export class ApiFriendService {
     })
   }
 
+  /**
+   * HTTP request that allows the user to unfollow another user.
+   * @param friend The asociation of both users.
+   */
   public deleteByUsersPS(friend:friend): Promise<void> {
-    const endpoint = environment.endpoint + environment.apiFriend;
+    const endpoint = environment.endpoint + environment.apiFriend + "delete_friend";
     return new Promise((resolve, reject) => {
+      this.http.setDataSerializer('json');
       this.http
-        .delete(endpoint, friend, this.header)
+        .put(endpoint, friend, this.header)
         .then(d => {
           resolve();
         })

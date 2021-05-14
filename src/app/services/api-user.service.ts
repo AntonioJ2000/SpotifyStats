@@ -31,7 +31,7 @@ export class ApiUserService {
   }
 
   /**
-   * HTTP request that obtain all users from the database without one user
+   * HTTP request that obtain all users from the database without current user
    * @returns users (Array)
    */
    public getUsersWithoutCurrentClient(id:string):Promise<user[] | null>{
@@ -49,7 +49,10 @@ export class ApiUserService {
     })
   }
 
-
+  /**
+   * HTTP request that obtain all unfollowed users from the database.
+   * @returns users (Array)
+   */
   public getAllUnfollowedUsers(id:string):Promise<user[] | null>{
     return new Promise((resolve, reject) => {
       const endpoint = environment.endpoint + environment.apiUser + "unfollowed/" + id;
@@ -65,10 +68,16 @@ export class ApiUserService {
     })
   }
 
+  /**
+   * HTTP request that allows the user to find a friend from the database (if not followed)
+   * @param filter Two parameters, *id* of the current client just to make sure he does
+   * not appear in the list, and *id_filter*, the text from the input
+   */
   public getUnfollowedUsersByFilter(filter:aux_user_filter):Promise<user[] | null>{
     return new Promise((resolve, reject) => {
       const endpoint = environment.endpoint + environment.apiUser + "filter";
-      this.http.get(endpoint, {}, this.header)
+      this.http.setDataSerializer('json');
+      this.http.put(endpoint, filter, this.header)
       .then(d=>{
         if(d){
           resolve(JSON.parse(d.data));

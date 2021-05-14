@@ -65,7 +65,7 @@ export class Tab1Page {
           setTimeout(() => {
             this.cargado = true;
             this.loading.pararLoading();  
-          }, 650); 
+          }, 1000); 
         });
       })
     });

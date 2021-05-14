@@ -54,7 +54,7 @@
                         </ion-label>
                         <!--- Cuando se haga click en el botón, preguntar con un alert si está seguro de dejar de seguir al usuario -->
                         <ion-buttons slot="end">
-                          <ion-button size="large" (click)="alertUnfollow(this.followedUser, this.i)">
+                          <ion-button size="large" (click)="alertUnfollow(this.followedUser)">
                             <ion-icon slot="icon-only" name="person-remove" style="color:white;"></ion-icon>
                           </ion-button>
                         </ion-buttons> 
@@ -73,7 +73,7 @@
         </super-tab>
         <super-tab>
           <ion-content>
-            <ion-searchbar class="searchBar" #search placeholder="Buscar usuario"></ion-searchbar>
+            <ion-searchbar class="searchBar" #search placeholder="Buscar usuario" (ionChange)="searchUser($event)"></ion-searchbar>
             <ion-list> 
               <!-- Se recorre la lista de usuarios de la base de datos, si el usuario es el logueado que no aparezca -->
               <ion-item lines="none" *ngFor="let user of this.listaUsuarios; let i=index">
