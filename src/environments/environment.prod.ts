@@ -10,6 +10,6 @@ export const environment = {
   endpoint: 'http://212.225.241.31:24244/',
   apiUser: 'user/',
   apiArtist: 'artist/',
-  apiSong: 'song/',
+  apiTrack: 'song/',
   apiFriend: 'friend/'
 };

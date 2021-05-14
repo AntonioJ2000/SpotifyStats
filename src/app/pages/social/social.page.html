@@ -53,12 +53,16 @@
                           </ion-label>
                         </ion-label>
                         <!--- Cuando se haga click en el botón, preguntar con un alert si está seguro de dejar de seguir al usuario -->
-                        <ion-buttons slot="end">
-                          <ion-button size="large" (click)="alertUnfollow(this.followedUser)">
-                            <ion-icon slot="icon-only" name="person-remove" style="color:white;"></ion-icon>
+                        <ion-buttons>
+                          <ion-button fill="none" size="medium" (click)="openUserProfile(this.followedUser)">
+                            <ion-icon slot="icon-only" src="assets/open_profile.svg" style="color: #1DB954;"></ion-icon>
                           </ion-button>
-                        </ion-buttons> 
-                      </ion-item>
+                          
+                          <ion-button size="medium" fill="none" (click)="alertUnfollow(this.followedUser)"> 
+                            <ion-icon slot="icon-only" name="person-remove" style="color:white;"></ion-icon>
+                          </ion-button> 
+                        </ion-buttons>
+                        </ion-item>
                     </ion-card>
                   </ion-item> 
                 </div>

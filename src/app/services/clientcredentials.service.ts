@@ -26,7 +26,7 @@ export class ClientcredentialsService {
     displayName: '',
     spotifyURL: '',
     followers: 0,
-    id:"hola",
+    id:'',
     image:'assets/no_profile_image.jpg',
     artists: [],
     tracks: []

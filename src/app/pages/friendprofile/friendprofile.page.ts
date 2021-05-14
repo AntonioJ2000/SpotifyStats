@@ -1,10 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
 import { ModalController } from '@ionic/angular';
 import { artist } from 'src/app/model/artist';
 import { track } from 'src/app/model/track';
 import { user } from 'src/app/model/user';
-import { ClientcredentialsService } from 'src/app/services/clientcredentials.service';
 
 @Component({
   selector: 'app-friendprofile',
@@ -16,12 +15,8 @@ export class FriendprofilePage {
   @Input('selectedUser') selectedUser:user;
 
   constructor(private modalController:ModalController,
-              private inAppBrowser:InAppBrowser,
-              private clientCredentials:ClientcredentialsService) { }
+              private inAppBrowser:InAppBrowser) { }
 
-  ionViewWillEnter(){   
-    
-  }
 
   closeFriendProfilePage(){
     this.modalController.dismiss();

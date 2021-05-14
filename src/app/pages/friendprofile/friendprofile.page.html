@@ -27,7 +27,10 @@
       <ion-item style="margin-top: -7px;" lines="none" *ngFor="let track of this.selectedUser.tracks; let i=index">
             <ion-card style="width:100%; margin-left: auto; margin-right: auto; align-items: center;">
               <ion-item lines="full" class="itemBackground" (click)="openSongOrArtistInSpotify(this.track)">
-                  <img slot ="start" style="width: 20%; margin-top: 7px; margin-bottom: 7px;" src="{{this.track.trackThumbnail}}">          
+                <p *ngIf="this.i === 0" slot="start" style="color:gold" class="index">{{i+1}}.</p>
+                <p *ngIf="this.i === 1" slot="start" style="color:silver" class="index">{{i+1}}.</p>
+                <p *ngIf="this.i === 2" slot="start" style="color:#CD7F32" class="index">{{i+1}}.</p>
+                  <img slot ="start" style="width: 20%; margin-top: 7px; margin-bottom: 7px; margin-left: -13px;" src="{{this.track.trackThumbnail}}">          
                 <ion-label>
                   <p class="track">{{this.track.trackName}}</p>
                 
@@ -37,22 +40,27 @@
                   </ion-label>
       
                 </ion-label>
+                <ion-icon src="assets/spotify.svg" slot="end"></ion-icon>
               </ion-item>
             </ion-card>
         </ion-item>
 
         <h4 style="margin-left: 5%;margin-top: 5%; font-family: 'Poppins', sans-serif;">Sus artistas más escuchados</h4>
         <ion-item style="margin-top: -7px;" lines="none" *ngFor="let artist of this.selectedUser.artists; let i=index;">
-            <ion-card style="width:100%; margin-left: auto; margin-right: auto; align-items: center;">
-              <ion-item class="itemBackground" lines="full" (click)="openSongOrArtistInSpotify(this.artist)">
-                <ion-thumbnail style="width: 70px;height: 70px; margin-top: 7px; margin-bottom: 7px;">
-                  <img src="{{this.artist.image}}">
-                </ion-thumbnail>
-                  <ion-label class="artist">
-                  {{this.artist.name}}
-                </ion-label>
-              </ion-item>
-            </ion-card>
+          <ion-card style="width:100%; margin-left: auto; margin-right: auto; align-items: center;">
+            <ion-item class="itemBackground" lines="full" (click)="openSongOrArtistInSpotify(this.artist)">
+                <p *ngIf="this.i === 0" slot="start" style="color:gold;" class="index">{{i+1}}.</p>
+                <p *ngIf="this.i === 1" slot="start" style="color:silver;" class="index">{{i+1}}.</p>
+                <p *ngIf="this.i === 2" slot="start" style="color:#CD7F32;" class="index">{{i+1}}.</p>
+              <ion-thumbnail slot="start" style="width: 70px;height: 70px; margin-top: 7px; margin-bottom: 7px; margin-left: -9px;">
+                <img src="{{this.artist.image}}">
+              </ion-thumbnail>
+                <ion-label class="artist">
+                {{this.artist.name}}
+              </ion-label>
+              <ion-icon src="assets/spotify.svg" slot="end"></ion-icon>
+            </ion-item>
+          </ion-card>
       </ion-item>
 
 </ion-content>
