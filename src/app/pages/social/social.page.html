@@ -17,7 +17,20 @@
 </ion-header>
 
 <ion-content>
-  <super-tabs style="--st-indicator-color: #1DB954;">
+
+  <div *ngIf="this.serverError" style="text-align: center;">
+    <ion-icon src="assets/error_server.svg" style="width:70%; margin-top: -50px; font-size: 512px; color:#1DB954;"></ion-icon>
+    <p style="font-family: 'Poppins', sans-serif; width: 90%; text-align: center;font-weight: bold; margin-left: auto; margin-right: auto; margin-top:-110px; color: white;">
+      Error del servidor</p>
+      <p style="font-family: 'Poppins', sans-serif; width: 90%; text-align: center; margin-left: auto; margin-right: auto; color: white;">
+      Este servicio no está disponible actualmente o no tienes conexión a Internet.
+      </p>    
+        <ion-button size="large" shape="round" class="reloadAuxiliar" slots="icon-only" fill="outline" (click)="reloadSocial()">    
+            <ion-label style="font-size: 14px; font-family: 'Poppins', sans-serif; font-weight: bold;">Intentar de nuevo</ion-label>
+        </ion-button>
+  </div>
+
+  <super-tabs *ngIf="!this.serverError" style="--st-indicator-color: #1DB954;">
     <super-tabs-toolbar slot="top" style="background-color: rgb(59, 59, 59);">
       
       <super-tab-button>

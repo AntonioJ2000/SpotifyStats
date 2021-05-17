@@ -18,6 +18,7 @@ import { FriendprofilePage } from '../friendprofile/friendprofile.page';
 })
 export class SocialPage {
 
+  serverError:boolean = false;
   filter:aux_user_filter;
 
   listaUsuarios:user[] = [];
@@ -37,6 +38,7 @@ export class SocialPage {
 
   async ionViewWillEnter(){
     this.loadingController.cargarLoading();
+    try{
     await this.getFollowedUsers().then(async ()=>{
       await this.getUnfowedUsers();
     });
@@ -44,9 +46,17 @@ export class SocialPage {
     setTimeout(async() => {
       this.loadingController.pararLoading();      
     }, 300);
-
+    }catch{
+        this.serverError = true;
+        setTimeout(() => {
+        this.loadingController.pararLoading();
+      }, 500);
+    }
   }
 
+  ionViewWillLeave(){
+    this.serverError = false;
+  }
   /**
  * Allows user to search a user in the database
  */
@@ -72,18 +82,24 @@ public async searchUser(ev:any){
    * Function that reloads the social page if any problem was encountered.
    */
   public async reloadSocial(){
+    this.serverError = false;
     this.isLoaded = false;
     this.loadingController.cargarLoading();
     
     this.listaUsuarios.splice(0, this.listaUsuarios.length);
     this.listaUsuariosSeguidos.splice(0, this.listaUsuariosSeguidos.length);
     
+    try{
     await this.getFollowedUsers().then(async()=>{
       await this.getUnfowedUsers().then(()=>{
         this.isLoaded = true;
         this.loadingController.pararLoading();
       });
     })
+      }catch{
+        this.serverError = true;
+        this.loadingController.pararLoading();
+      }
   }
   
   /**

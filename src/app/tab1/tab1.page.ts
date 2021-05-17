@@ -16,6 +16,9 @@ import { SpotifyApiService } from '../services/spotify-api.service';
 export class Tab1Page {
 
   cargado:boolean = false;
+  errorPresentedTracks:boolean = false;
+  errorPresentedArtists:boolean = false;
+  errorPresentedRecentlyPlayed:boolean = false;
 
   skeletonTrack: track = {
     id: '',
@@ -55,27 +58,40 @@ export class Tab1Page {
   /**
   * Get or update the client statistics every time the view is displayed
   */
-  ionViewDidEnter(){
-    this.loading.cargarLoading();
+    ionViewDidEnter(){
+      this.loading.cargarLoading();
 
-  setTimeout(async() => {
-    await this.getUserTopTracks().then(async()=>{
-      await this.getUserTopArtists().then(async()=>{
-        await this.getUserRecentlyPlayed().then(()=>{
-          setTimeout(() => {
-            this.cargado = true;
-            this.loading.pararLoading();  
-          }, 1000); 
-        });
-      })
-    });
-  }, 1000);  
-}
+      setTimeout(async() => {
+      try{
+        await this.getUserTopTracks();
+      }catch{
+        this.errorPresentedTracks = true;
+      }
+      
+      try{
+        await this.getUserTopArtists();
+      }catch{
+        this.errorPresentedArtists = true;
+      }
+
+      try{
+        await this.getUserRecentlyPlayed();
+      }catch{
+        this.errorPresentedRecentlyPlayed = true;
+      }
+
+      this.cargado = true;
+      this.loading.pararLoading();  
+      }, 1000);
+  }
  
   /**
    * Removes all items from the lists to make the aplication work out fast.
    */
   async ionViewWillLeave(){
+    this.errorPresentedTracks = false;
+    this.errorPresentedArtists = false;
+    this.errorPresentedRecentlyPlayed = false;
     if(this.listaTopCanciones.length != 0 && this.listaTopArtistas.length != 0 && this.listaEscuchadasRecientemente.length != 0){
       this.cargado = false;
       this.listaTopCanciones.splice(0, this.listaTopCanciones.length);
@@ -147,26 +163,39 @@ export class Tab1Page {
    * Remove all elements from the lists and then reloads them via requests to the Spotify API.
    */
   public async reloadStats(){
+    this.errorPresentedTracks = false;
+    this.errorPresentedArtists = false;
+    this.errorPresentedRecentlyPlayed = false;;
     this.cargado = false;
     this.loading.cargarLoading();
 
     this.listaTopCanciones.splice(0, this.listaTopCanciones.length);
     this.listaTopArtistas.splice(0, this.listaTopArtistas.length);
     this.listaEscuchadasRecientemente.splice(0, this.listaEscuchadasRecientemente.length);
-
     
     setTimeout(async() => {
-      await this.getUserTopTracks().then(async()=>{
-        await this.getUserTopArtists().then(async()=>{
-          await this.getUserRecentlyPlayed().then(()=>{
-            setTimeout(() => {
-              this.loading.pararLoading(); 
-              this.cargado = true;
-            }, 500);
-          });
-        })
-      })
-    }, 1000);
+      try{
+        await this.getUserTopTracks();
+      }catch{
+        this.errorPresentedTracks = true;
+      }
+      
+      try{
+        await this.getUserTopArtists();
+      }catch{
+        this.errorPresentedArtists = true;
+      }
+
+      try{
+        await this.getUserRecentlyPlayed();
+      }catch{
+        this.errorPresentedRecentlyPlayed = true;
+      }
+
+      this.cargado = true;
+      this.loading.pararLoading();  
+      }, 1000);
+    
   }
 
   /**

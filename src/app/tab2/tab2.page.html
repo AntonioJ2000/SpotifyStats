@@ -18,7 +18,19 @@
 
 
 <ion-content [fullscreen]="true" class="fontStyle">
-  <div *ngIf="this.cargado && !this.emptyList">
+  <div *ngIf="this.errorPresentedSavedTracks && this.cargado" style="text-align: center;">
+    <ion-icon src="assets/music-file.svg" style="width:50%; margin-top: -50px; font-size: 512px; color:#1DB954;"></ion-icon>
+    <p style="font-family: 'Poppins', sans-serif; width: 90%; text-align: center; margin-left: auto; margin-right: auto; margin-top:-100px; color: white;">
+      ¡Ups, esto no debería de haber ocurrido!</p>
+      <p style="font-family: 'Poppins', sans-serif; width: 90%; text-align: center; margin-left: auto; margin-right: auto; color: white;">
+      Por favor, asegurate de que tienes conexión a Internet, por el contrario, contacta con uno de los desarrolladores.
+      </p>    
+        <ion-button size="large" shape="round" class="reloadAuxiliar" slots="icon-only" fill="outline" (click)="reloadSavedSongs()">    
+            <ion-label style="font-size: 14px; font-family: 'Poppins', sans-serif; font-weight: bold;">Recargar canciones</ion-label>
+        </ion-button>
+  </div>
+
+  <div *ngIf="this.cargado && !this.emptyList && !this.errorPresentedSavedTracks">
   <ion-list>
     <ion-item lines="none" style="margin-top: -7px;" *ngFor = "let savedTrack of listaCancionesGuardadas; let i=index"> 
       <ion-card style="width:100%; margin-left: auto; margin-right: auto; align-items: center;">
@@ -47,7 +59,7 @@
   </ion-list>
   </div>
 
-  <div *ngIf="this.cargado && this.emptyList" style="text-align: center;">
+  <div *ngIf="this.cargado && this.emptyList && !this.errorPresentedSavedTracks" style="text-align: center;">
     <img src="assets/spotifypng.png" style="margin-top: 40%; width: 40%;">
     <p style="font-family: 'Poppins', sans-serif; width: 90%; text-align: center; margin-left: auto; margin-right: auto; color: white;">Aún no tienes ninguna canción guardada, ¡guárdalas en Spotify y aparecerán aquí!</p>
         
@@ -56,7 +68,7 @@
         </ion-button>
   </div>
 
-  <div *ngIf="!this.cargado && !this.emptyList">
+  <div *ngIf="!this.cargado && !this.emptyList && !this.errorPresentedSavedTracks">
     <ion-list>
     <ion-item lines="none" *ngFor="let skeletonTrack of skeletonList;">
       <ion-card style="width:100%; margin-left: auto; margin-right: auto; align-items: center;">

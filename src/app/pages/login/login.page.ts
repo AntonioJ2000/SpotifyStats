@@ -47,7 +47,9 @@ export class LoginPage {
    */
   async login(){ 
     this.loading.cargarLoading();
+
     this.authService.login(); 
+  
   }
 
 

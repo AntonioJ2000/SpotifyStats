@@ -13,6 +13,7 @@ import { SpotifyApiService } from '../services/spotify-api.service';
 export class Tab2Page {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
+  errorPresentedSavedTracks: boolean = false;
   cargado:boolean = false;
   emptyList:boolean = false;
 
@@ -55,6 +56,7 @@ export class Tab2Page {
     if(!this.emptyList){
       this.loading.cargarLoading();
       setTimeout(async() => {
+        try{
         await this.getUserSavedTracks().then(()=>{
           if(this.listaCancionesGuardadas.length == 0){
             this.emptyList = true;
@@ -66,6 +68,11 @@ export class Tab2Page {
             this.loading.pararLoading();
           }, 250);
         });
+        }catch{
+          this.cargado = true;
+          this.errorPresentedSavedTracks = true;
+          this.loading.pararLoading();
+        }
       }, 750); 
     }else{
       this.cargado = true;
@@ -77,6 +84,7 @@ export class Tab2Page {
    * offsetVar must be set to 0 due to the successful result of the next requests
    */
   ionViewWillLeave(){
+    this.errorPresentedSavedTracks = false;
     this.cargado = false;
     if(this.listaCancionesGuardadas.length != 0){
       this.listaCancionesGuardadas.splice(0, this.listaCancionesGuardadas.length);
@@ -111,6 +119,7 @@ export class Tab2Page {
    */
   public async reloadSavedSongs(){
     this.loading.cargarLoading();
+    this.errorPresentedSavedTracks = false;
     this.cargado = false;
     this.emptyList = false;
 
@@ -118,6 +127,7 @@ export class Tab2Page {
     this.offsetVar = 0;
 
     setTimeout(async() => {
+      try{
       await this.getUserSavedTracks().then(async()=>{
         setTimeout(() => {
           if(this.listaCancionesGuardadas.length == 0){
@@ -130,6 +140,11 @@ export class Tab2Page {
           this.loading.pararLoading();
         }, 350);
       })
+    }catch{
+        this.cargado = true;
+        this.errorPresentedSavedTracks = true;
+        this.loading.pararLoading();
+    }
     }, 500);
    
       

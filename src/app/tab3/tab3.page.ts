@@ -1,8 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { File } from '@ionic-native/file/ngx';
-import { Media, MediaObject } from '@ionic-native/media/ngx';
-import { ModalController, NavController, Platform, PopoverController } from '@ionic/angular';
-import { MediaCapture, MediaFile, CaptureError, CaptureImageOptions } from '@ionic-native/media-capture/ngx';
+import { Component } from '@angular/core';
+import { MediaObject } from '@ionic-native/media/ngx';
+import { NavController, PopoverController } from '@ionic/angular';
 import { ClientcredentialsService } from '../services/clientcredentials.service';
 import { SpotifyApiService } from '../services/spotify-api.service';
 import { LoadingService } from '../services/loading.service';
@@ -11,14 +9,10 @@ import { track } from '../model/track';
 import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
 import { artist } from '../model/artist';
 import { ProfilepopoverComponent } from '../components/profilepopover/profilepopover.component';
-import { SocialPage } from '../pages/social/social.page';
-import { Animation, AnimationController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { user } from '../model/user';
 import { ApiUserService } from '../services/api-user.service';
 
-
-const MEDIA_FOLDER_NAME = "my_media";
 
 @Component({
   selector: 'app-tab3',
@@ -26,6 +20,8 @@ const MEDIA_FOLDER_NAME = "my_media";
   styleUrls: ['tab3.page.scss']
 })
 export class Tab3Page{
+
+  errorProfile:boolean = false;
 
   firstTime:boolean = false;
   specialInfoLoaded:boolean = false;
@@ -51,10 +47,6 @@ export class Tab3Page{
   audioFile:MediaObject;
 
   constructor(
-    private media:Media, 
-    private file:File, 
-    private mediaCapture:MediaCapture,         
-    private plt:Platform,
     public navCtrl:NavController,
     private loading:LoadingService,
     private clientCredentials:ClientcredentialsService,
@@ -75,6 +67,7 @@ export class Tab3Page{
         this.loading.cargarLoadingOscuro();
 
         setTimeout(async() => {
+          try{
           await this.getUserProfile().then(async()=>{
             await this.getUserFavourite3Songs().then(async()=>{
               await this.getUserFavourite3Artists().then(async()=>{
@@ -86,21 +79,39 @@ export class Tab3Page{
               })
             });     
           });
+        }catch{
+            this.errorProfile = true;
+            this.loading.pararLoading();
+        }
         }, 750);
       }
+  }
 
-    /*
-    this.plt.ready().then(()=>{
-      let path = this.file.externalRootDirectory;
-      //this.file.checkDir(path, MEDIA_FOLDER_NAME);
-      //this.file.createDir(path, MEDIA_FOLDER_NAME, true);
-      console.log(path);
-    }, err => {
-      let path = this.file.externalRootDirectory;
-      
-      console.log("hola");
-    })
-    */
+  ionViewWillLeave(){
+    this.errorProfile = false;
+  }
+
+  public reloadProfile(){
+    this.errorProfile = false;
+    this.loading.cargarLoading();
+        setTimeout(async() => {
+          try{
+          await this.getUserProfile().then(async()=>{
+            await this.getUserFavourite3Songs().then(async()=>{
+              await this.getUserFavourite3Artists().then(async()=>{
+                  await this.addUserToBBDD().then(()=>{
+                    this.firstTime = true;
+                    this.specialInfoLoaded = true;  
+                    this.loading.pararLoading();
+                });
+              })
+            });     
+          });
+        }catch{
+            this.errorProfile = true;
+            this.loading.pararLoading();
+        }
+      }, 750);
   }
 
   public async addUserToBBDD(){
@@ -278,71 +289,5 @@ export class Tab3Page{
     }, 1000);
     this.authService.logout();
   }
-
-  /*
-  public grabarAudio(){
-    this.audioFile = this.media.create(this.file.externalRootDirectory+"/audiofile.mp3");
-    this.audioFile.setRate(44100);
-    this.audioFile.startRecord();
-    this.status = "recording...";
-  }
-
-  public pararAudio(){
-    this.audioFile.stopRecord();
-    this.status = "stopped";
-
-    this.file.readAsDataURL(this.file.externalRootDirectory, "audiofile.mp3").then((base64Audio) => {
-      console.log(base64Audio.substring(23, base64Audio.length));
-      console.log(base64Audio);
-    })
-
-  }
-
-  public recordAudio(){
-    this.mediaCapture.captureAudio().then(
-      (data: MediaFile[]) => {
-        if(data.length > 0){
-          console.log(data[0].fullPath);
-          this.copyFileToLocalDir(data[0].fullPath);
-        }
-      },
-      (err:CaptureError) => console.error(err)
-    )
-
-  }
-
-
-  public copyFileToLocalDir(fullPath){
-    let myPath = fullPath;
-
-    if(fullPath.indexOf('file://') < 0){
-      myPath = 'file://' + fullPath;
-    }
-
-    const ext = myPath.split('.').pop();
-    const d = Date.now();
-    const newName = `${d}.${ext}`;
-
-    const name = myPath.substr(myPath.lastIndexOf('/')+1);
-    console.log(name);
-    const copyFrom = myPath.substr(0, myPath.lastIndexOf('/')+1);
-    console.log(copyFrom);
-    const copyTo = this.file.externalRootDirectory + MEDIA_FOLDER_NAME;
-    console.log(copyTo);
-    console.log(newName);
-
-    this.file.checkFile(copyFrom, name).then((data)=>{
-      console.log(data);
-    })
-
-    this.file.moveFile(copyFrom, name, copyTo, newName).then(()=>{
-      console.log("Copiado");
-    },err => console.log("error: ", err))
-
-    this.file.copyFile(copyFrom, name, copyTo, newName).then(()=>{
-      console.log("Copiado");
-    },err => console.log("error: ", err))
-  }
-  */
 
 }
