@@ -82,7 +82,6 @@ public async searchUser(ev:any){
    * Function that reloads the social page if any problem was encountered.
    */
   public async reloadSocial(){
-    this.serverError = false;
     this.isLoaded = false;
     this.loadingController.cargarLoading();
     
@@ -92,13 +91,16 @@ public async searchUser(ev:any){
     try{
     await this.getFollowedUsers().then(async()=>{
       await this.getUnfowedUsers().then(()=>{
+        this.serverError = false;
         this.isLoaded = true;
         this.loadingController.pararLoading();
       });
     })
       }catch{
         this.serverError = true;
-        this.loadingController.pararLoading();
+        setTimeout(() => {
+          this.loadingController.pararLoading();
+        }, 400);   
       }
   }
   

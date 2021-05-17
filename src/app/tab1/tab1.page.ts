@@ -108,6 +108,7 @@ export class Tab1Page {
     let t = await this.spotifyApi.getCurrentUserTopTracks();
     let trackToView: track;
     for(let i=0; i < t.items.length; i++){
+      try{
         trackToView = {
         id: t.items[i].id,
         trackName: t.items[i].name,
@@ -117,6 +118,10 @@ export class Tab1Page {
         trackThumbnail: t.items[i].album.images[1].url
       }  
       this.listaTopCanciones.push(trackToView);
+      }catch{
+          console.log("Canción top con fallo detectada")
+          console.log(trackToView)
+      }
     }
   }
 
@@ -127,6 +132,7 @@ export class Tab1Page {
     let t = await this.spotifyApi.getCurrentUserTopArtists();
     let artistToView: artist;
     for(let i=0; i < t.items.length; i++){
+        try{
         artistToView = {
         image: t.items[i].images[2].url,
         name: t.items[i].name,
@@ -135,8 +141,12 @@ export class Tab1Page {
         followers: t.items[i].followers.total
       }
       this.listaTopArtistas.push(artistToView);
+        }catch{
+            console.log("Artista con fallo detectado")
+            console.log(artistToView)
+        }
     }
-  }
+}
 
   /**
    * Get client recently played tracks via HTTP request to the Spotify API.
@@ -145,6 +155,7 @@ export class Tab1Page {
     let t = await this.spotifyApi.getCurrentUserRecentlyPlayed();
     let trackToView:track
     for(let i=0; i < t.items.length; i++){
+      try{
         trackToView = {
         id: t.items[i].track.id,
         trackName: t.items[i].track.name,
@@ -154,8 +165,14 @@ export class Tab1Page {
         trackThumbnail: t.items[i].track.album.images[1].url,
         playedat: t.items[i].played_at
       }
-      
       this.listaEscuchadasRecientemente.push(trackToView);
+    
+    }catch{
+        console.log("Canción reciente con fallo detectada")
+        console.log(trackToView)
+    }
+      
+      
     }
   }
 

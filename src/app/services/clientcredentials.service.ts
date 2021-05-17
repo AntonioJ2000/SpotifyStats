@@ -8,8 +8,6 @@ import { user } from '../model/user';
 })
 export class ClientcredentialsService {
 
-  exampleTrack:track;
-  exampleArtist:artist;
 
   /**
    * Used just to work with both tokens in the entire App.

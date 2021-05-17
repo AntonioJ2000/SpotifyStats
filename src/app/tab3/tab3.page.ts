@@ -167,23 +167,11 @@ export class Tab3Page{
       this.loggedUser.tracks.push(userTrack);
     }
 
-    //NO SIRVE PARA NADA SOLO PARA LA VISTA DE LOS AMIGOS
-    let trackForFriendExample: track = {
-      id: favSong.items[0].id,
-      trackName: favSong.items[0].name,
-      spotifyURL: favSong.items[0].external_urls.spotify,
-      artists: favSong.items[0].artists,
-      trackThumbnail: favSong.items[0].album.images[1].url,
-      top: 0
-    }
-
     this.favouriteSong.id = favSong.items[0].id;
     this.favouriteSong.trackName = favSong.items[0].name;
     this.favouriteSong.spotifyURL = favSong.items[0].external_urls.spotify;
     this.favouriteSong.artists = favSong.items[0].artists;
     this.favouriteSong.trackThumbnail = favSong.items[0].album.images[1].url;
-
-    this.clientCredentials.exampleTrack = trackForFriendExample;
   }
 
   /**
@@ -205,15 +193,6 @@ export class Tab3Page{
       this.loggedUser.artists.push(userArtist);
     }
 
-    //NO SIRVE PARA NADA SOLO PARA LA VISTA DE LOS AMIGOS
-    let artistForFriendExample: artist = {
-      name: favArtist.items[0].name, 
-      image: favArtist.items[0].images[2].url,
-      popularity: favArtist.items[0].popularity,
-      spotifyURL: favArtist.items[0].external_urls.spotify,
-      followers: favArtist.items[0].followers.total
-    }
-
     this.favouriteArtist.name = favArtist.items[0].name;
     if(favArtist.items[0].images.length != 0){
       this.favouriteArtist.image = favArtist.items[0].images[2].url;
@@ -221,8 +200,6 @@ export class Tab3Page{
     this.favouriteArtist.popularity = favArtist.items[0].popularity;
     this.favouriteArtist.spotifyURL = favArtist.items[0].external_urls.spotify,
     this.favouriteArtist.followers = favArtist.items[0].followers.total
-  
-    this.clientCredentials.exampleArtist = artistForFriendExample;
   }
   /**
    * Opens the social page

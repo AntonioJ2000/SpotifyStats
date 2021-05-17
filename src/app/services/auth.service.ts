@@ -54,7 +54,9 @@ export class AuthService implements CanActivate{
         }
       })
     });
+
   }
+  
 
   /**
    * Logs the client with the native storage skipping the normal login with the button.
