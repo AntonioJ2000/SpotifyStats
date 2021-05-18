@@ -190,8 +190,7 @@ export class ApiUserService {
   private get header():any{
     return {
       "Access-Control-Allow-Origin": "*",
-      "Content-Type": "application/json",
-      "apikey":"hola123"
+      "apikey": btoa("spotifystatsapikey")
     }
   }
 }

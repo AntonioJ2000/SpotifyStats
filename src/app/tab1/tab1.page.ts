@@ -134,7 +134,7 @@ export class Tab1Page {
     for(let i=0; i < t.items.length; i++){
         try{
         artistToView = {
-        image: t.items[i].images[2].url,
+        image: t.items[i].images[1].url,
         name: t.items[i].name,
         popularity: t.items[i].popularity,
         spotifyURL: t.items[i].external_urls.spotify,

@@ -157,6 +157,7 @@ export class Tab3Page{
     
     let userTrack:track;
     for(let i=0; i < favSong.items.length; i++){
+      try{
         userTrack = {
         id: favSong.items[i].id,
         trackName: favSong.items[i].name,
@@ -165,6 +166,10 @@ export class Tab3Page{
         trackThumbnail: favSong.items[i].album.images[1].url,
       }
       this.loggedUser.tracks.push(userTrack);
+
+      }catch{
+        console.log("Error en la obtencion de la cancion")   
+      }
     }
 
     this.favouriteSong.id = favSong.items[0].id;
@@ -182,20 +187,25 @@ export class Tab3Page{
 
     let userArtist:artist;
     for(let i=0; i < favArtist.items.length; i++){
+      try{
       userArtist = {
         name: favArtist.items[i].name, 
-        image: favArtist.items[i].images[2].url,
+        image: favArtist.items[i].images[1].url,
         popularity: favArtist.items[i].popularity,
         spotifyURL: favArtist.items[i].external_urls.spotify,
         followers: favArtist.items[i].followers.total,
         top: 0
       }
       this.loggedUser.artists.push(userArtist);
+      
+      }catch{
+        console.log("Error en la obtencion del artista")    
+      }
     }
 
     this.favouriteArtist.name = favArtist.items[0].name;
     if(favArtist.items[0].images.length != 0){
-      this.favouriteArtist.image = favArtist.items[0].images[2].url;
+      this.favouriteArtist.image = favArtist.items[0].images[1].url;
     }
     this.favouriteArtist.popularity = favArtist.items[0].popularity;
     this.favouriteArtist.spotifyURL = favArtist.items[0].external_urls.spotify,
@@ -265,10 +275,5 @@ export class Tab3Page{
       this.loading.pararLoading();
     }, 1000);
     this.authService.logout();
-  }
-
-  public getAll(){
-    let t = this.apiUser.getAllUsers();
-    console.log(t);
   }
 }

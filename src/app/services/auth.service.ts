@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
-import { ToastController } from '@ionic/angular';
+import { NavController, ToastController } from '@ionic/angular';
 import { ClientcredentialsService } from './clientcredentials.service';
 import { LoadingService } from './loading.service';
 
@@ -16,7 +16,8 @@ export class AuthService implements CanActivate{
               private router:Router,
               private storage:NativeStorage,
               private toastController:ToastController,
-              private loading:LoadingService) { }
+              private loading:LoadingService,
+              private navCtrl: NavController) { }
 
   /**
    * Logs in the client into the Ionic App using his Spotify Account via Spotify API.
@@ -57,7 +58,7 @@ export class AuthService implements CanActivate{
       
       this.storage.setItem('refreshToken',{encryptedRefreshToken}).then(()=>{
         if(this.clientCredentials.client.access_token != ''){
-          this.router.navigate(['/']);
+          this.navCtrl.navigateRoot(['/']);
         }
       })
     });
@@ -75,7 +76,7 @@ export class AuthService implements CanActivate{
    */
   public loginNative(){
     if(this.clientCredentials.client.refresh_token != ''){
-      this.router.navigate(['/']);
+      this.navCtrl.navigateRoot(['/']);
     }
   }
 
@@ -87,7 +88,7 @@ export class AuthService implements CanActivate{
     this.clientCredentials.forgetToken();
 
     setTimeout(() => {
-        this.router.navigate(['/login'])
+        this.navCtrl.navigateRoot(['/login'])
       },750);
   }
 

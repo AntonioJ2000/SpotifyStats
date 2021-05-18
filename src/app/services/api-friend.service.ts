@@ -152,7 +152,7 @@ export class ApiFriendService {
   private get header():any{
     return {
       "Access-Control-Allow-Origin": "*",
-      "Content-Type": "application/json"
+      "apikey": btoa("spotifystatsapikey")
     }
   }
 }
