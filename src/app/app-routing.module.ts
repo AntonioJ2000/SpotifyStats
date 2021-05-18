@@ -5,13 +5,15 @@ import { AuthService } from './services/auth.service';
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule),
-    canActivate: [AuthService]
+    canActivate: [AuthService],
+    loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
+    
   },
   {
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
-  },  {
+  },
+  {
     path: 'about',
     loadChildren: () => import('./pages/about/about.module').then( m => m.AboutPageModule)
   },

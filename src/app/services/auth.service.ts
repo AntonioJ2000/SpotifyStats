@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
+import { ToastController } from '@ionic/angular';
 import { ClientcredentialsService } from './clientcredentials.service';
+import { LoadingService } from './loading.service';
 
 declare var cordova: any;
 
@@ -12,7 +14,9 @@ export class AuthService implements CanActivate{
 
   constructor(private clientCredentials:ClientcredentialsService,
               private router:Router,
-              private storage:NativeStorage) { }
+              private storage:NativeStorage,
+              private toastController:ToastController,
+              private loading:LoadingService) { }
 
   /**
    * Logs in the client into the Ionic App using his Spotify Account via Spotify API.
@@ -34,6 +38,8 @@ export class AuthService implements CanActivate{
      - expiresAt (Not used): Gives you more information about when is stop working our accessToken
    */
   public login(){
+    let statusOK:boolean = false; 
+
     const config = {
       clientId: "6c3f918a4ab240db97b1c104475c8ea6",
       redirectUrl: "spotifystats://callback",
@@ -44,6 +50,7 @@ export class AuthService implements CanActivate{
 
     cordova.plugins.spotifyAuth.authorize(config)
     .then(({ accessToken, encryptedRefreshToken, expiresAt }) =>{
+        statusOK = true;
        //Sobreescribimos las variables del cliente
         this.clientCredentials.client.access_token = accessToken;
         this.clientCredentials.client.refresh_token = encryptedRefreshToken;
@@ -54,7 +61,12 @@ export class AuthService implements CanActivate{
         }
       })
     });
-
+      setTimeout(async() => {
+        if(!statusOK){
+          await this.errorToastSignInButton();
+          this.loading.pararLoading();
+        }
+      }, 2000);  
   }
   
 
@@ -79,21 +91,30 @@ export class AuthService implements CanActivate{
       },750);
   }
 
-
-  public isLogged():boolean{
-    if(this.clientCredentials.client.refresh_token == ''){
-      return false;
-    }else{
-      return true;
-    }
-  }
-
-  canActivate(route: ActivatedRouteSnapshot): boolean {
-      if(this.clientCredentials.client.refresh_token == ''){
+   canActivate(route: ActivatedRouteSnapshot): boolean {
+      if(!this.isLogged()){
         this.router.navigate(['/login']);
         return false;
       }
         return true;
+    }
+
+    public isLogged(): boolean {
+      if (this.clientCredentials.client.refresh_token == '') {
+        return false;
+      } else {
+        return true;
+      }
+    }
+
+    async errorToastSignInButton() {
+      const toast = await this.toastController.create({
+        cssClass: 'myToastLoginError',
+        message: "Ha habido un error, por favor, revisa tu conexión a Internet o inténtalo de nuevo más tarde",
+        duration: 2000,
+        position:"bottom"
+      });
+      toast.present();
     }
 
 

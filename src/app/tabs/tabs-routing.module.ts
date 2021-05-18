@@ -22,9 +22,9 @@ const routes: Routes = [
       {
         path: '',
         redirectTo: '/tabs/tab2',
-        pathMatch: 'full'
+        pathMatch: 'full',
       }
-    ]
+    ],
   },
   {
     path: '',

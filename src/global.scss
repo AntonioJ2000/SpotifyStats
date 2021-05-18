@@ -33,11 +33,20 @@
     font-size: 12px;
 }
 
+
 .myToastv2 {
     --background: #1DB954;
     --color: black;
     font-family: 'Poppins', sans-serif;
     font-size: 12px;
+}
+
+.myToastLoginError {
+    transform: translateY(-70px) !important;
+    --background: rgb(219, 0, 0);
+    --color: rgb(255, 255, 255);
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
 }
 
 

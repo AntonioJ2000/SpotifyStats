@@ -267,4 +267,8 @@ export class Tab3Page{
     this.authService.logout();
   }
 
+  public getAll(){
+    let t = this.apiUser.getAllUsers();
+    console.log(t);
+  }
 }
