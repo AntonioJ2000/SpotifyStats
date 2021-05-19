@@ -5,19 +5,19 @@
     </ion-title>
     <ion-buttons *ngIf="!this.errorProfile" slot="start">
       <ion-button (click)="openFriendsPage()">
-        <ion-icon slot="icon-only" name="people"></ion-icon>
+        <ion-icon slot="icon-only" name="people" class="iconStyle"></ion-icon>
       </ion-button>
     </ion-buttons>
 
     <ion-buttons *ngIf="!this.errorProfile" slot="end">
       <ion-button (click)="presentPopover($event)">
-        <ion-icon slot="icon-only" name="ellipsis-vertical"></ion-icon>
+        <ion-icon slot="icon-only" name="ellipsis-vertical" class="iconStyle"></ion-icon>
       </ion-button>
     </ion-buttons>
 
     <ion-buttons style="margin-left: -15%;" *ngIf="this.errorProfile" slot="end">
       <ion-button (click)="presentPopover($event)">
-        <ion-icon slot="icon-only" name="ellipsis-vertical"></ion-icon>
+        <ion-icon slot="icon-only" name="ellipsis-vertical" class="iconStyle"></ion-icon>
       </ion-button>
     </ion-buttons>
 
@@ -27,7 +27,7 @@
 <ion-content [fullscreen]="true">
  
   <div *ngIf="this.errorProfile" style="text-align: center;">
-    <ion-icon src="assets/anonymous.svg" style="width:60%; margin-top: -50px; font-size: 512px; color:#1DB954;"></ion-icon>
+    <ion-icon src="assets/anonymous.svg" class="errorSvg2"></ion-icon>
     <p style="font-family: 'Poppins', sans-serif; width: 90%; text-align: center;font-weight: bold; margin-left: auto; margin-right: auto; margin-top:-100px; color: white;">
       ¿Quién eres?</p>
       <p style="font-family: 'Poppins', sans-serif; width: 90%; text-align: center; margin-left: auto; margin-right: auto; color: white;">
@@ -106,7 +106,7 @@
 
 <ion-footer *ngIf="!this.errorProfile" class="ion-no-border">
   <div style="text-align: center; padding-top: 10px; background-color:#141414;">
-    <ion-button fill="outline" shape="round" class="closeButton" (click)="logout()">
+    <ion-button fill="outline" shape="round" class="logoutButton" (click)="logout()">
       <ion-label style="font-family: 'Poppins', sans-serif;">Cerrar sesión</ion-label> 
     </ion-button>
   </div>

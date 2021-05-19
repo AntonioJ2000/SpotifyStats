@@ -13,8 +13,10 @@
   
   <p class="displayName">{{this.selectedUser.displayName}}</p>
 
-  <p class="followers">{{this.selectedUser.followers}} <span *ngIf="this.selectedUser.followers > 1">seguidores</span><span *ngIf="this.selectedUser.followers == 1">seguidor</span></p> 
-  
+  <p *ngIf="this.selectedUser.followers > 0" class="followers">{{this.selectedUser.followers}} <span *ngIf="this.selectedUser.followers > 1">seguidores</span><span *ngIf="this.selectedUser.followers == 1">seguidor</span></p> 
+  <p *ngIf="this.selectedUser.followers === 0" class="followers">No tiene seguidores</p>
+
+
   <div style="text-align: center;">
     <ion-button fill="outline" shape="round" class="profileButton" (click)="openFriendSpotifyProfile()">
       <ion-icon src="assets/spotify.svg" slot="start"></ion-icon>

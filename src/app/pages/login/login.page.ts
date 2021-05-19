@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ClientcredentialsService } from 'src/app/services/clientcredentials.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { SpotifyApiService } from 'src/app/services/spotify-api.service';
+import { ThemeService } from 'src/app/services/theme.service';
 
 
 @Component({
@@ -20,13 +21,35 @@ export class LoginPage {
               private clientCredentials:ClientcredentialsService,
               private spotifyApi:SpotifyApiService,
               private storage:NativeStorage,
-              private toastController: ToastController) { }
+              private toastController: ToastController,
+              private themeService: ThemeService) { }
 
   /**
    * If a user signed in before this, refreshToken should be taken to an instant sign in to the app
    * without giving credentials again to the server.
    */
   async ngOnInit(){
+    try{
+      this.storage.getItem('themeColor').then((data)=>{
+        this.themeService.setThemeOnInit(data.theme)
+      })
+
+    }catch{
+      console.log('Error al obtener color');
+    }
+
+    try{
+      this.storage.getItem('conditionsAccepted').then((data)=>{
+        this.clientCredentials.config.topAlertAccepted = data.isAccepted;
+      })
+      this.storage.getItem('topConfig').then((data)=>{
+        this.clientCredentials.config.stats_cap = data.value;
+      })
+    }catch{
+      console.log('Error al leer la configuración')
+      this.clientCredentials.config.topAlertAccepted = false;
+    }
+
     try{
     await this.storage.getItem('refreshToken').then(
       async(data)=>{

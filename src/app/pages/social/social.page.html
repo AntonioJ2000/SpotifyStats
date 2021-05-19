@@ -3,7 +3,7 @@
     <ion-title class="socialTitle">Social</ion-title>
     <ion-buttons slot="start">
       <ion-button size="large" (click)="this.closeSocialPage()">
-        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+        <ion-icon slot="icon-only" class="iconStyle" name="arrow-back"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-buttons slot="end">
@@ -17,7 +17,7 @@
 <ion-content>
 
   <div *ngIf="this.serverError" style="text-align: center;">
-    <ion-icon src="assets/error_server.svg" style="width:70%; margin-top: -50px; font-size: 512px; color:#1DB954;"></ion-icon>
+    <ion-icon src="assets/error_server.svg" class="errorSvg3"></ion-icon>
     <p style="font-family: 'Poppins', sans-serif; width: 90%; text-align: center;font-weight: bold; margin-left: auto; margin-right: auto; margin-top:-110px; color: white;">
       Error del servidor</p>
       <p style="font-family: 'Poppins', sans-serif; width: 90%; text-align: center; margin-left: auto; margin-right: auto; color: white;">
@@ -28,7 +28,7 @@
         </ion-button>
   </div>
 
-  <super-tabs *ngIf="!this.serverError" style="--st-indicator-color: #1DB954;">
+  <super-tabs *ngIf="!this.serverError">
     <super-tabs-toolbar slot="top" style="background-color: rgb(59, 59, 59);">
       
       <super-tab-button>
@@ -56,17 +56,18 @@
                                   
                         <ion-label style="padding-bottom: 7px; padding-top: 7px;">
                           <!------ Nombre de usuario a mostrar (displayName) -->
-                          <p class="userName">{{this.followedUser.displayName}}</p>
-                        
+                          <p class="userName">{{this.followedUser.displayName}} <ion-icon *ngIf="this.isTheUserDeveloper(this.followedUser)" src="assets/developermedal.svg"></ion-icon> </p>
+                          
                           <!------ Seguidores del usuario -->
                           <ion-label>
-                            <p class="defaultFont" style="font-size: 13px;">{{this.followedUser.followers}} <span *ngIf="this.followedUser.followers > 1">seguidores</span><span *ngIf="this.followedUser.followers == 1">seguidor</span></p>
+                            <p *ngIf="this.followedUser.followers > 0" class="defaultFont" style="font-size: 13px;">{{this.followedUser.followers}} <span *ngIf="this.followedUser.followers > 1">seguidores</span><span *ngIf="this.followedUser.followers == 1">seguidor</span></p>
+                            <p *ngIf="this.followedUser.followers === 0" class="defaultFont" style="font-size: 13px;">No tiene seguidores</p>
                           </ion-label>
                         </ion-label>
                         <!--- Cuando se haga click en el botón, preguntar con un alert si está seguro de dejar de seguir al usuario -->
                         <ion-buttons>
                           <ion-button fill="none" size="medium" (click)="openUserProfile(this.followedUser)">
-                            <ion-icon slot="icon-only" src="assets/open_profile.svg" style="color: #1DB954;"></ion-icon>
+                            <ion-icon slot="icon-only" src="assets/open_profile.svg" class="iconStyle"></ion-icon>
                           </ion-button>
                           
                           <ion-button size="medium" fill="none" (click)="alertUnfollow(this.followedUser)"> 
@@ -100,11 +101,12 @@
                              
                   <ion-label style="padding-bottom: 7px; padding-top: 7px;">
                     <!------ Nombre de usuario a mostrar (displayName) -->
-                    <p class="userName">{{this.user.displayName}}</p>
+                    <p class="userName">{{this.user.displayName}} <ion-icon *ngIf="this.isTheUserDeveloper(this.user)" src="assets/developermedal.svg"></ion-icon></p>
                   
                     <!------ Seguidores del usuario -->
                     <ion-label>
-                      <p class="defaultFont" style="font-size: 13px;">{{this.user.followers}} <span *ngIf="this.user.followers > 1">seguidores</span><span *ngIf="this.user.followers == 1">seguidor</span></p>
+                      <p *ngIf="this.user.followers > 0" class="defaultFont" style="font-size: 13px;">{{this.user.followers}} <span *ngIf="this.user.followers > 1">seguidores</span><span *ngIf="this.user.followers == 1">seguidor</span></p>
+                      <p *ngIf="this.user.followers === 0" class="defaultFont" style="font-size: 13px;">No tiene seguidores</p>
                     </ion-label>
                   </ion-label>
                   <!--- Cuando se haga click en el botón, seguir al usuario y eliminarlo de esta misma lista (o no) -->

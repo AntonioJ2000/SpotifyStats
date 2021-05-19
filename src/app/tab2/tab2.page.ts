@@ -213,8 +213,7 @@ export class Tab2Page {
           cssClass: 'alertOK'
         }
       ]
-    });
-      
+    });   
     await alert.present();
   }
 }

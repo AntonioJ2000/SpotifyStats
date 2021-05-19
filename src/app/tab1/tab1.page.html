@@ -7,7 +7,7 @@
 
     <ion-buttons slot="end">   
         <ion-button (click)="reloadStats()">
-          <ion-icon slot="icon-only" class="iconColor" name="reload-outline"></ion-icon>
+          <ion-icon slot="icon-only" class="iconStyle" name="reload-outline"></ion-icon>
         </ion-button>
 <!--
         <ion-button (click)="presentActionSheet()" fill="clear">
@@ -18,7 +18,7 @@
 
     <ion-buttons slot="start">
       <ion-button (click)="timeLapseSheet()">
-        <ion-icon slot="icon-only" class="iconColor" name="time-outline"></ion-icon>
+        <ion-icon slot="icon-only" class="iconStyle" name="time-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
     
@@ -26,7 +26,7 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="fontStyle">
-  <super-tabs style="--st-indicator-color: #1DB954;">
+  <super-tabs>
     <super-tabs-toolbar slot="top" style="background-color: rgb(59, 59, 59);">
       
       <super-tab-button>

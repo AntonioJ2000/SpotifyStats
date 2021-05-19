@@ -73,10 +73,56 @@
   --ion-toolbar-background: #222222;
   --ion-tab-bar-background: #222222;
   
+  --st-indicator-color: #1DB954;
+
   ion-skeleton-text {
     --background-rgb: 255, 255, 255;
   }
 
+  .reloadAuxiliar{
+    --border-color: #1db954;
+    --color: #1DB954;
+    margin-top: 10%;
+  }
+
+  .iconStyle{
+    color: #1DB954;
+  }
+
+  .seeProfileButton{
+    --border-color: #1DB954;
+    --color: #1DB954;
+  }
+
+  .errorSvg{
+    width:50%; 
+    margin-top: -50px; 
+    font-size: 512px; 
+    color:#1DB954;
+  }
+
+  .errorSvg2{
+    width:60%; 
+    margin-top: -50px; 
+    font-size: 512px; 
+    color:#1DB954;
+  }
+
+  .errorSvg3{
+    width:70%; 
+    margin-top: -50px; 
+    font-size: 512px; 
+    color:#1DB954;
+  }
+
+  .toogleStyle{
+    --background-checked: #aed6be; 
+    --handle-background-checked:#1DB954;
+  }
+
+  .sstats{
+    color: #1DB954;
+  }
 
   .myTabBar{
     --ion-tab-bar-color-selected: #2ae76c;
@@ -86,6 +132,459 @@
     --color: rgb(175, 175, 175);
   }
 
+  .logoutButton{
+    margin-bottom: 15px;
+    --border-color: rgb(211, 0, 0);
+    --color: rgb(211, 0, 0);
+  }
+
+  /** TEMAS TOTALMENTE PERSONALIZADOS **/
+  .white-theme{
+    --ion-border-color: white;
+    --ion-tab-bar-border-color: white;
+    --ion-item-border-color: white;
+
+    /** super-tabs detail color **/
+    --st-indicator-color: white;
+
+    .myTabBar{
+      --ion-tab-bar-color-selected: white;
+    }
+
+    .reloadAuxiliar{
+      --border-color: white;
+      --color: white;
+      margin-top: 10%;
+    }
+
+    .iconStyle{
+      color: white;
+    }
+   
+    .seeProfileButton{
+      --border-color: white;
+      --color: white;
+    }
+
+    .errorSvg{
+      width:50%; 
+      margin-top: -50px; 
+      font-size: 512px; 
+      color:white;
+    }
+  
+    .errorSvg2{
+      width:60%; 
+      margin-top: -50px; 
+      font-size: 512px; 
+      color:white;
+    }
+
+    .errorSvg3{
+      width:70%; 
+      margin-top: -50px; 
+      font-size: 512px; 
+      color:white;
+    }
+
+    .toogleStyle{
+      --background-checked:#414141; 
+      --handle-background-checked:#ffffff;
+    }
+
+    .sstats{
+      color: #1DB954;
+    }
+
+    .logoutButton{
+      margin-bottom: 15px;
+      --border-color: rgb(211, 0, 0);
+      --color: rgb(211, 0, 0);
+    }
+  }
+
+  .yellow-theme{
+    --ion-border-color: rgb(255, 255, 80);
+    --ion-tab-bar-border-color: rgb(255, 255, 80);
+    --ion-item-border-color: rgb(255, 255, 80);
+
+    /** super-tabs detail color **/
+    --st-indicator-color: rgb(255, 255, 80);
+
+    .myTabBar{
+      --ion-tab-bar-color-selected: rgb(255, 255, 80);
+    }
+
+    .reloadAuxiliar{
+      --border-color: rgb(255, 255, 80);
+      --color: rgb(255, 255, 80);
+      margin-top: 10%;
+    }
+
+    .iconStyle{
+      color: rgb(255, 255, 80);
+    }
+   
+    .seeProfileButton{
+      --border-color: rgb(255, 255, 80);
+      --color: rgb(255, 255, 80);
+    }
+
+    .errorSvg{
+      width:50%; 
+      margin-top: -50px; 
+      font-size: 512px; 
+      color:rgb(255, 255, 80);
+    }
+  
+    .errorSvg2{
+      width:60%; 
+      margin-top: -50px; 
+      font-size: 512px; 
+      color:rgb(255, 255, 80);
+    }
+
+    .errorSvg3{
+      width:70%; 
+      margin-top: -50px; 
+      font-size: 512px; 
+      color:rgb(255, 255, 80);
+    }
+
+    .toogleStyle{
+      --background-checked: rgb(255, 255, 223); 
+      --handle-background-checked: rgb(255, 255, 80);
+    }
+
+    .sstats{
+      color: rgb(255, 255, 80);
+    }
+
+    .logoutButton{
+      margin-bottom: 15px;
+      --border-color: rgb(255, 255, 80);
+      --color: rgb(255, 255, 80);
+    }
+  }
+
+  .orange-theme{
+    --ion-border-color: #ff6d00;
+    --ion-tab-bar-border-color: #ff6d00;
+    --ion-item-border-color: #ff6d00;
+
+    /** super-tabs detail color **/
+    --st-indicator-color: #ff6d00;
+
+    .myTabBar{
+      --ion-tab-bar-color-selected: #ff6d00;
+    }
+
+    .reloadAuxiliar{
+      --border-color: #ff6d00;
+      --color: #ff6d00;
+      margin-top: 10%;
+    }
+
+    .iconStyle{
+      color: #ff6d00;
+    }
+   
+    .seeProfileButton{
+      --border-color: #ff6d00;
+      --color: #ff6d00;
+    }
+
+    .errorSvg{
+      width:50%; 
+      margin-top: -50px; 
+      font-size: 512px; 
+      color:#ff6d00;
+    }
+  
+    .errorSvg2{
+      width:60%; 
+      margin-top: -50px; 
+      font-size: 512px; 
+      color:#ff6d00;
+    }
+
+    .errorSvg3{
+      width:70%; 
+      margin-top: -50px; 
+      font-size: 512px; 
+      color:#ff6d00;
+    }
+
+    .toogleStyle{
+      --background-checked: rgb(255, 231, 188); 
+      --handle-background-checked:#ff6d00;
+    }
+
+    .sstats{
+      color: #ff6d00;
+    }
+    .logoutButton{
+      margin-bottom: 15px;
+      --border-color: #ff6d00;
+      --color: #ff6d00;
+    }
+  }
+
+  .red-theme{
+    --ion-border-color: rgb(255, 64, 64);
+    --ion-tab-bar-border-color: rgb(255, 64, 64);
+    --ion-item-border-color: rgb(255, 64, 64);
+
+    /** super-tabs detail color **/
+    --st-indicator-color: rgb(255, 64, 64);
+
+    .myTabBar{
+      --ion-tab-bar-color-selected: rgb(255, 64, 64);
+    }
+
+    .reloadAuxiliar{
+      --border-color: rgb(255, 64, 64);
+      --color: rgb(255, 64, 64);
+      margin-top: 10%;
+    }
+
+    .iconStyle{
+      color: rgb(255, 64, 64);
+    }
+   
+    .seeProfileButton{
+      --border-color: rgb(255, 64, 64);
+      --color: rgb(255, 64, 64);
+    }
+
+    .errorSvg{
+      width:50%; 
+      margin-top: -50px; 
+      font-size: 512px; 
+      color:rgb(255, 64, 64);
+    }
+  
+    .errorSvg2{
+      width:60%; 
+      margin-top: -50px; 
+      font-size: 512px; 
+      color:rgb(255, 64, 64);
+    }
+
+    .errorSvg3{
+      width:70%; 
+      margin-top: -50px; 
+      font-size: 512px; 
+      color:rgb(255, 64, 64);
+    }
+
+    .toogleStyle{
+      --background-checked:rgb(255, 173, 173); 
+      --handle-background-checked:red;
+    }
+
+    .sstats{
+      color: rgb(255, 64, 64);
+    }
+
+    .logoutButton{
+      margin-bottom: 15px;
+      --border-color: rgb(255, 64, 64);
+      --color: rgb(255, 64, 64);
+    }
+  }
+
+  .blue-theme{
+    --ion-border-color: rgb(12, 183, 242);
+    --ion-tab-bar-border-color: #0CB7F2;
+    --ion-item-border-color: #0CB7F2;
+
+    /** super-tabs detail color **/
+    --st-indicator-color: #0CB7F2;
+
+    .myTabBar{
+      --ion-tab-bar-color-selected: #0CB7F2;
+    }
+
+    .reloadAuxiliar{
+      --border-color: #0CB7F2;
+      --color: #0CB7F2;
+      margin-top: 10%;
+    }
+
+    .iconStyle{
+      color: #0CB7F2;
+    }
+   
+    .seeProfileButton{
+      --border-color: #0CB7F2;
+      --color: #0CB7F2;
+    }
+
+    .errorSvg{
+      width:50%; 
+      margin-top: -50px; 
+      font-size: 512px; 
+      color:#0CB7F2;
+    }
+  
+    .errorSvg2{
+      width:60%; 
+      margin-top: -50px; 
+      font-size: 512px; 
+      color:#0CB7F2;
+    }
+
+    .errorSvg3{
+      width:70%; 
+      margin-top: -50px; 
+      font-size: 512px; 
+      color:#0CB7F2;
+    }
+
+    .toogleStyle{
+      --background-checked: rgb(200, 220, 255); 
+      --handle-background-checked:#0CB7F2;
+    }
+
+    .sstats{
+      color: #0CB7F2;
+    }
+
+    .logoutButton{
+      margin-bottom: 15px;
+      --border-color: #0CB7F2;
+      --color: #0CB7F2;
+    }
+  }
+
+  .purple-theme{
+    --ion-border-color: rgb(178, 122, 204);
+    --ion-tab-bar-border-color: #B27ACC;
+    --ion-item-border-color: #B27ACC;
+
+    /** super-tabs detail color **/
+    --st-indicator-color: #B27ACC;
+
+    .myTabBar{
+      --ion-tab-bar-color-selected: #B27ACC;
+    }
+
+    .reloadAuxiliar{
+      --border-color: #B27ACC;
+      --color: #B27ACC;
+      margin-top: 10%;
+    }
+
+    .iconStyle{
+      color: #B27ACC;
+    }
+   
+    .seeProfileButton{
+      --border-color: #B27ACC;
+      --color: #B27ACC;
+    }
+
+    .errorSvg{
+      width:50%; 
+      margin-top: -50px; 
+      font-size: 512px; 
+      color:#B27ACC;
+    }
+  
+    .errorSvg2{
+      width:60%; 
+      margin-top: -50px; 
+      font-size: 512px; 
+      color:#B27ACC;
+    }
+
+    .errorSvg3{
+      width:70%; 
+      margin-top: -50px; 
+      font-size: 512px; 
+      color:#B27ACC;
+    }
+
+    .toogleStyle{
+      --background-checked:#c2b4c9; 
+      --handle-background-checked:#B27ACC;
+    }
+
+    .sstats{
+      color: #B27ACC;
+    }
+
+    .logoutButton{
+      margin-bottom: 15px;
+      --border-color: #B27ACC;
+      --color: #B27ACC;
+    }
+  }
+
+  .magenta-theme{
+    --ion-border-color: magenta;
+    --ion-tab-bar-border-color: magenta;
+    --ion-item-border-color: magenta;
+
+    /** super-tabs detail color **/
+    --st-indicator-color: magenta;
+
+    .myTabBar{
+      --ion-tab-bar-color-selected: magenta;
+    }
+
+    .reloadAuxiliar{
+      --border-color: rgb(255, 0, 255);
+      --color: magenta;
+      margin-top: 10%;
+    }
+
+    .iconStyle{
+      color: magenta;
+    }
+   
+    .seeProfileButton{
+      --border-color: magenta;
+      --color: magenta;
+    }
+
+    .errorSvg{
+      width:50%; 
+      margin-top: -50px; 
+      font-size: 512px; 
+      color:magenta;
+    }
+  
+    .errorSvg2{
+      width:60%; 
+      margin-top: -50px; 
+      font-size: 512px; 
+      color:magenta;
+    }
+
+    .errorSvg3{
+      width:70%; 
+      margin-top: -50px; 
+      font-size: 512px; 
+      color:magenta;
+    }
+
+    .toogleStyle{
+      --background-checked:rgb(255, 170, 255); 
+      --handle-background-checked: magenta;
+    }
+
+    .sstats{
+      color: magenta;
+    }
+
+    .logoutButton{
+      margin-bottom: 15px;
+      --border-color: magenta;
+      --color: magenta;
+    }
+  }
 
   /** primary **/
   --ion-color-primary: #3880ff;

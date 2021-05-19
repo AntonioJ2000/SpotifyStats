@@ -34,7 +34,9 @@ export class ClientcredentialsService {
    * Default value for the HTTP requests.
    */
   config = {
-    time_range: 'long_term'
+    time_range: 'long_term',
+    stats_cap: 20,
+    topAlertAccepted: false
   }
 
 

@@ -3,7 +3,7 @@
     <ion-title class="titleConfigurationPage">Configuración</ion-title>
     <ion-buttons slot="start" style="margin-right: -15%;">
       <ion-button size="large" (click)="this.closeConfigPage()">
-        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+        <ion-icon slot="icon-only" name="arrow-back" class="iconStyle"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -11,12 +11,12 @@
 
 <ion-content>
   <ion-item lines="none" style="--background:transparent">
-    <p class="defaultFont" slot="start">Mostrar mi perfil en Social</p>
-    <ion-toggle slot="end" style="--background-checked: #42d77d; --handle-background-checked:#1DB954;" checked></ion-toggle>
+    <p class="defaultFont" slot="start" style="color: rgb(145, 145, 145);">Mostrar mi perfil en Social</p>
+    <ion-toggle slot="end" class="toogleStyle" disabled="true" checked></ion-toggle>
   </ion-item>
 
   <ion-item lines="none" style="--background:transparent">
-    <p class="defaultFont" slot="start">Selecciona un tema:</p>
+    <p class="defaultFont" slot="start">Cambiar el tema:</p>
     <ion-buttons slot="end">
       <ion-button style="margin-right: -7px;" (click)="colorSheet()">
         <ion-icon slot="icon-only" src="assets/color-circle.svg"></ion-icon>
@@ -25,17 +25,35 @@
   </ion-item>
 
   <ion-item lines="none" style="--background:transparent">
-    <p class="defaultFont" slot="start">Cambia el lenguaje</p>
+    <p class="defaultFont" slot="start" style="color: rgb(145, 145, 145);">Cambiar el idioma:</p>
     <ion-buttons slot="end">
-      <ion-button style="margin-right: -7px;" (click)="languageSheet()">
+      <ion-button disabled="true" style="margin-right: -7px;" (click)="languageSheet()">
         <ion-icon slot="icon-only" name="language-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-item>
 
+  <ion-item lines="none" style="--background:transparent">
+    <p class="defaultFont" slot="start">Configurar Top (Actual: Top {{this.statsCap}})</p>
+    <ion-buttons slot="end">
+      <ion-button *ngIf="this.conditionsAccepted" style="margin-right: -7px;" (click)="statsSize()">
+        <ion-icon slot="icon-only" name="bar-chart-sharp"></ion-icon>
+      </ion-button>
+      <ion-button *ngIf="!this.conditionsAccepted" style="margin-right: -7px;" (click)="acceptConditionsOfTop()">
+        <ion-icon slot="icon-only" name="bar-chart-sharp"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-item>
+
   <div style="text-align: center; padding-top: 10px;">
-    <ion-button fill="outline" class="deleteSocialProfile" (click)="alertConfirmDeleteSocialProfile()">
-      <ion-label style="font-family: 'Poppins', sans-serif;">Eliminar perfil de Social</ion-label> 
+    <ion-button disabled="true" fill="outline" class="deleteSocialProfile" (click)="alertConfirmDeleteSocialProfile()">
+      <ion-label style="font-family: 'Poppins', sans-serif;">Eliminar cuenta</ion-label> 
     </ion-button>
+  </div>
+
+  <div style="width:100%; text-align: center; padding-top: 10px;">
+    <p class="defaultFont" style="font-size:12px;">Si tienes algún problema o sugerencia con respecto a la aplicación no dudes en escribir 
+      a los desarrolladores en alguna de sus redes sociales (las podrás encontrar encontrar en la ventana "Sobre la aplicación").
+    </p>
   </div>
 </ion-content>

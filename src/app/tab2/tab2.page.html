@@ -19,7 +19,7 @@
 
 <ion-content [fullscreen]="true" class="fontStyle">
   <div *ngIf="this.errorPresentedSavedTracks && this.cargado" style="text-align: center;">
-    <ion-icon src="assets/music-file.svg" style="width:50%; margin-top: -50px; font-size: 512px; color:#1DB954;"></ion-icon>
+    <ion-icon src="assets/music-file.svg" class="errorSvg"></ion-icon>
     <p style="font-family: 'Poppins', sans-serif; width: 90%; text-align: center; margin-left: auto; margin-right: auto; margin-top:-100px; color: white;">
       Algo no ha salido como esperábamos...</p>
       <p style="font-family: 'Poppins', sans-serif; width: 90%; text-align: center; margin-left: auto; margin-right: auto; color: white;">
@@ -46,7 +46,7 @@
             </ion-label>
 
           </ion-label>
-          <ion-icon class="playStyle" name="play-outline" slot="end"></ion-icon>
+          <ion-icon class="iconStyle" name="play-outline" slot="end"></ion-icon>
           </ion-item>
       </ion-card>
     </ion-item>

@@ -104,6 +104,13 @@ public async searchUser(ev:any){
       }
   }
   
+  private isTheUserDeveloper(user:user):boolean{
+    if(user.id === "antoniojl69" || user.id === "ciscu6"){
+      return true;
+    }
+    return false;
+  }
+
   /**
    * Function that gets all the followed users from the database.
    */

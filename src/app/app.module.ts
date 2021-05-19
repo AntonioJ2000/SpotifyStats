@@ -18,6 +18,7 @@ import { MediaCapture } from '@ionic-native/media-capture/ngx';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { AuthService } from './services/auth.service';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
+import { ThemeService } from './services/theme.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -33,6 +34,7 @@ import { NativeStorage } from '@ionic-native/native-storage/ngx';
     AuthService,
     InAppBrowser,
     NativeStorage,
+    ThemeService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent],
