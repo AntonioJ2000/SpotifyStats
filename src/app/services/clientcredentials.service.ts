@@ -31,12 +31,13 @@ export class ClientcredentialsService {
   }
 
   /**
-   * Default value for the HTTP requests.
+   * Config adjusted by the client.
    */
   config = {
     time_range: 'long_term',
     stats_cap: 20,
-    topAlertAccepted: false
+    topAlertAccepted: false,
+    profileVisible: true
   }
 
 

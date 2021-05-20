@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ModalController, PopoverController } from '@ionic/angular';
+import { ModalController, NavController, PopoverController } from '@ionic/angular';
 import { AboutPage } from 'src/app/pages/about/about.page';
 
 @Component({
@@ -12,11 +12,12 @@ export class ProfilepopoverComponent {
 
   constructor(public popoverController: PopoverController,
               public modalController:ModalController,
-              private router: Router) { }
+              private router: Router,
+              private navCtrl:NavController) { }
 
   openConfigPage(){
     this.popoverController.dismiss();
-    this.router.navigate(['/configuration'])
+    this.navCtrl.navigateRoot(['/configuration'])
   }
 
   /**

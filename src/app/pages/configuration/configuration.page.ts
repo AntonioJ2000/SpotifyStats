@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
-import { ActionSheetController, AlertController } from '@ionic/angular';
+import { ActionSheetController, AlertController, NavController } from '@ionic/angular';
+import { ApiUserService } from 'src/app/services/api-user.service';
 import { ClientcredentialsService } from 'src/app/services/clientcredentials.service';
+import { LoadingService } from 'src/app/services/loading.service';
 import { ThemeService } from 'src/app/services/theme.service';
 
 @Component({
@@ -12,6 +14,8 @@ import { ThemeService } from 'src/app/services/theme.service';
 })
 export class ConfigurationPage {
 
+  booleanToView
+  toggleChecked:boolean = this.clientCredentials.config.profileVisible;
   statsCap:number = this.clientCredentials.config.stats_cap;
   conditionsAccepted:boolean = this.clientCredentials.config.topAlertAccepted;
 
@@ -20,15 +24,51 @@ export class ConfigurationPage {
               private actionSheetController:ActionSheetController,
               private themeService:ThemeService,
               private storage:NativeStorage,
-              private clientCredentials:ClientcredentialsService) { }
+              private clientCredentials:ClientcredentialsService,
+              private loading:LoadingService,
+              private apiUser:ApiUserService,
+              private navCtrl:NavController) {  }
 
   closeConfigPage(){
-    this.router.navigate(['/tabs/tab3'])
+    this.navCtrl.navigateRoot(['/tabs/tab3'])
   }
 
-  deleteUserSocialProfile(){
+  deleteUserAccount(){
     //Borrar al usuario de la base de datos y sacarlo al login.
   }
+
+  async makeUserProfileVisibleSocial(){
+    this.loading.cargarLoading();
+    setTimeout(async() => {
+    this.toggleChecked = !this.toggleChecked;
+    this.clientCredentials.config.profileVisible = !this.clientCredentials.config.profileVisible;
+    
+    try{
+      if(this.toggleChecked){  
+            this.storage.setItem('visibleProfile',{isVisible: true})
+            this.loading.pararLoading();
+        }
+    }catch{
+        this.loading.pararLoading();
+    }
+
+    try{
+      if(!this.toggleChecked){
+        if(await this.apiUser.getUser(this.clientCredentials.user.id)){
+          await this.apiUser.removeUser(this.clientCredentials.user.id).then(()=>{
+            this.storage.setItem('visibleProfile',{isVisible: false})
+            this.loading.pararLoading();
+          });
+        } 
+      }
+    }catch{
+      this.storage.setItem('visibleProfile',{isVisible: false})
+      this.loading.pararLoading();
+      console.log('El usuario no existe')
+    }
+    }, 1000);
+  }
+
 
   async alertConfirmDeleteSocialProfile(){
     const alert = await this.alertController.create({
@@ -46,7 +86,7 @@ export class ConfigurationPage {
           cssClass: 'alertDELETE',
           handler: () => {
             //Borrar perfil
-            this.deleteUserSocialProfile();
+            this.deleteUserAccount();
           }
         }
       ]
@@ -154,7 +194,7 @@ export class ConfigurationPage {
       header: '¿Qué top quieres ver en tus estadísticas?',
       cssClass: 'config-sheet',
       buttons: [{
-          text: 'Top 20 Canciones y artistas',
+          text: 'Top 20 canciones y artistas',
           handler: ()=>{
           if(this.statsCap != 20){
             this.storage.setItem('topConfig',{value: 20})

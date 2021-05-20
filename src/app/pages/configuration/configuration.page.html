@@ -11,8 +11,15 @@
 
 <ion-content>
   <ion-item lines="none" style="--background:transparent">
-    <p class="defaultFont" slot="start" style="color: rgb(145, 145, 145);">Mostrar mi perfil en Social</p>
-    <ion-toggle slot="end" class="toogleStyle" disabled="true" checked></ion-toggle>
+    <p class="defaultFont" slot="start">Mostrar mi perfil en Social</p>
+    <ion-toggle *ngIf="this.toggleChecked" slot="end" class="toogleStyle" checked="true" (ionChange)="makeUserProfileVisibleSocial()"></ion-toggle>
+    <ion-toggle *ngIf="!this.toggleChecked" slot="end" class="toogleStyle" checked="false" (ionChange)="makeUserProfileVisibleSocial()"></ion-toggle>
+  </ion-item>
+
+  <ion-item lines="full" style="--background:transparent; margin-top: -10px;">
+    <p class="defaultFont" style="font-size:12px;">
+      *Tu perfil se ocultará y nadie podrá verlo, por el contrario, no podrás usar este servicio.
+    </p>
   </ion-item>
 
   <ion-item lines="none" style="--background:transparent">
@@ -52,8 +59,10 @@
   </div>
 
   <div style="width:100%; text-align: center; padding-top: 10px;">
-    <p class="defaultFont" style="font-size:12px;">Si tienes algún problema o sugerencia con respecto a la aplicación no dudes en escribir 
-      a los desarrolladores en alguna de sus redes sociales (las podrás encontrar encontrar en la ventana "Sobre la aplicación").
+    <p class="defaultFont" style="font-size:12px;">
+      Si tienes algún problema o sugerencia con respecto a la aplicación no dudes en escribir 
+      a los desarrolladores en alguna de sus redes sociales (las podrás encontrar encontrar en 
+      la ventana "Sobre la aplicación").
     </p>
   </div>
 </ion-content>

@@ -18,6 +18,8 @@ import { FriendprofilePage } from '../friendprofile/friendprofile.page';
 })
 export class SocialPage {
 
+  loggedUser:user = this.clientCredentials.user;
+
   serverError:boolean = false;
   filter:aux_user_filter;
 
@@ -36,6 +38,10 @@ export class SocialPage {
               private toastController: ToastController,
               private loadingController: LoadingService) { }
 
+  async ngOnInit(){
+    await this.addUserToBBDD();
+  }            
+
   async ionViewWillEnter(){
     this.loadingController.cargarLoading();
     try{
@@ -52,6 +58,20 @@ export class SocialPage {
         this.loadingController.pararLoading();
       }, 500);
     }
+  }
+
+  public async addUserToBBDD(){
+      try{
+        if(await this.apiUser.getUser(this.loggedUser.id)){
+          await this.apiUser.updateUser(this.loggedUser).then(async()=>{
+              console.log("He actualizado el usuario");
+          });
+        }else{
+          await this.apiUser.createUser(this.loggedUser);
+        }
+      }catch{
+        console.log("Error en la matrix");
+      }
   }
 
   ionViewWillLeave(){

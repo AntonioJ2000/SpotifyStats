@@ -21,6 +21,7 @@ import { ApiUserService } from '../services/api-user.service';
 })
 export class Tab3Page{
 
+  visibleSocialButton:boolean = this.clientCredentials.config.profileVisible;
   errorProfile:boolean = false;
 
   firstTime:boolean = false;
@@ -57,25 +58,17 @@ export class Tab3Page{
     private apiUser: ApiUserService,
     private router:Router) {}
 
-  
-    /**
-     * If its the first time the user enters the view, load al his profile obtined via requests.
-       (Not ngOnInit used due to performance issues)
-    */
-    ionViewDidEnter(){
-      if(!this.firstTime){
-        this.loading.cargarLoadingOscuro();
+  ngOnInit(){
+    this.loading.cargarLoadingOscuro();
 
         setTimeout(async() => {
           try{
           await this.getUserProfile().then(async()=>{
             await this.getUserFavourite3Songs().then(async()=>{
               await this.getUserFavourite3Artists().then(async()=>{
-                  await this.addUserToBBDD().then(()=>{
                     this.firstTime = true;
                     this.specialInfoLoaded = true;  
-                    this.loading.pararLoading();
-                });
+                    this.loading.pararLoading();    
               })
             });     
           });
@@ -84,8 +77,11 @@ export class Tab3Page{
             this.loading.pararLoading();
         }
         }, 750);
-      }
   }
+    /**
+     * If its the first time the user enters the view, load al his profile obtined via requests.
+       (Not ngOnInit used due to performance issues)
+    */
 
   ionViewWillLeave(){
     this.errorProfile = false;
@@ -99,11 +95,9 @@ export class Tab3Page{
           await this.getUserProfile().then(async()=>{
             await this.getUserFavourite3Songs().then(async()=>{
               await this.getUserFavourite3Artists().then(async()=>{
-                  await this.addUserToBBDD().then(()=>{
                     this.firstTime = true;
                     this.specialInfoLoaded = true;  
                     this.loading.pararLoading();
-                });
               })
             });     
           });
@@ -112,25 +106,6 @@ export class Tab3Page{
             this.loading.pararLoading();
         }
       }, 750);
-  }
-
-  public async addUserToBBDD(){
-    try{
-      try{
-        if(await this.apiUser.getUser(this.loggedUser.id)){
-          await this.apiUser.updateUser(this.loggedUser).then(async()=>{
-              console.log("He actualizado el usuario");
-          });
-        }
-      }catch(err){
-        console.log("He creado el usuario");
-        await this.apiUser.createUser(this.loggedUser);
-      }
-
-    }catch(err){
-      console.log("No se ha podido crear el usuario");
-      console.log(err);
-    }
   }
 
   /**

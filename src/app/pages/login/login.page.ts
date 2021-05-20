@@ -38,6 +38,15 @@ export class LoginPage {
       console.log('Error al obtener color');
     }
 
+    
+    try{
+      this.storage.getItem('visibleProfile').then((data)=>{
+        this.clientCredentials.config.profileVisible = data.isVisible;
+      })
+    }catch{
+      console.log('Error al obtener la preferencia')
+    }
+ 
     try{
       this.storage.getItem('conditionsAccepted').then((data)=>{
         this.clientCredentials.config.topAlertAccepted = data.isAccepted;

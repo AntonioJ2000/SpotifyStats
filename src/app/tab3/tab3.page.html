@@ -3,19 +3,25 @@
     <ion-title class="titleTab3">
       Mi perfil
     </ion-title>
-    <ion-buttons *ngIf="!this.errorProfile" slot="start">
+    <ion-buttons *ngIf="!this.errorProfile && this.visibleSocialButton" slot="start">
       <ion-button (click)="openFriendsPage()">
         <ion-icon slot="icon-only" name="people" class="iconStyle"></ion-icon>
       </ion-button>
     </ion-buttons>
 
-    <ion-buttons *ngIf="!this.errorProfile" slot="end">
+    <ion-buttons *ngIf="!this.errorProfile && this.visibleSocialButton" slot="end">
       <ion-button (click)="presentPopover($event)">
         <ion-icon slot="icon-only" name="ellipsis-vertical" class="iconStyle"></ion-icon>
       </ion-button>
     </ion-buttons>
 
-    <ion-buttons style="margin-left: -15%;" *ngIf="this.errorProfile" slot="end">
+    <ion-buttons style="margin-left: -15%;" *ngIf="this.errorProfile && !this.visibleSocialButton" slot="end">
+      <ion-button (click)="presentPopover($event)">
+        <ion-icon slot="icon-only" name="ellipsis-vertical" class="iconStyle"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons style="margin-left: -15%;" *ngIf="!this.errorProfile && !this.visibleSocialButton" slot="end">
       <ion-button (click)="presentPopover($event)">
         <ion-icon slot="icon-only" name="ellipsis-vertical" class="iconStyle"></ion-icon>
       </ion-button>
