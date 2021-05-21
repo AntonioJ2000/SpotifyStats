@@ -20,7 +20,9 @@ export class SupportPage {
   async ionViewWillEnter() {
     this.loading.cargarLoading();
       await this.getAllReports().then(()=>{
-        this.loading.pararLoading();
+        setTimeout(() => {
+          this.loading.pararLoading();
+        }, 750);
       })
   }
 
@@ -39,7 +41,9 @@ export class SupportPage {
   async reloadReportList(){
     this.loading.cargarLoading();
       await this.getAllReports().then(()=>{
-        this.loading.pararLoading();
+        setTimeout(() => {
+          this.loading.pararLoading();
+        }, 750);
       })
   }
 

@@ -58,31 +58,34 @@ export class Tab1Page {
   /**
   * Get or update the client statistics every time the view is displayed
   */
-    ionViewDidEnter(){
+    async ionViewDidEnter(){
       this.loading.cargarLoading();
 
-      setTimeout(async() => {
-      try{
-        await this.getUserTopTracks();
-      }catch{
-        this.errorPresentedTracks = true;
-      }
-      
-      try{
-        await this.getUserTopArtists();
-      }catch{
-        this.errorPresentedArtists = true;
-      }
+      setTimeout(async() => { 
+        try{
+          await this.getUserTopTracks();
+        }catch{
+          this.errorPresentedTracks = true;
+        }
+        
+        try{
+          await this.getUserTopArtists();
+        }catch{
+          this.errorPresentedArtists = true;
+        }
 
-      try{
-        await this.getUserRecentlyPlayed();
-      }catch{
-        this.errorPresentedRecentlyPlayed = true;
-      }
+        try{
+          await this.getUserRecentlyPlayed();
+        }catch{
+          this.errorPresentedRecentlyPlayed = true;
+        }
+         
 
-      this.cargado = true;
-      this.loading.pararLoading();  
+        setTimeout(() => { 
+        this.cargado = true;
+        this.loading.pararLoading();  
       }, 1000);
+    }, 750); 
   }
  
   /**
@@ -97,7 +100,6 @@ export class Tab1Page {
       this.listaTopCanciones.splice(0, this.listaTopCanciones.length);
       this.listaTopArtistas.splice(0, this.listaTopArtistas.length);
       this.listaEscuchadasRecientemente.splice(0, this.listaEscuchadasRecientemente.length);
-  
     }
   }
   
@@ -190,7 +192,6 @@ export class Tab1Page {
     this.listaTopArtistas.splice(0, this.listaTopArtistas.length);
     this.listaEscuchadasRecientemente.splice(0, this.listaEscuchadasRecientemente.length);
     
-    setTimeout(async() => {
       try{
         await this.getUserTopTracks();
       }catch{
@@ -209,9 +210,10 @@ export class Tab1Page {
         this.errorPresentedRecentlyPlayed = true;
       }
 
-      this.cargado = true;
-      this.loading.pararLoading();  
-      }, 1000);
+      setTimeout(async() => {
+       this.cargado = true;
+       this.loading.pararLoading();  
+      }, 1000); 
     
   }
 

@@ -53,7 +53,7 @@ export class Tab2Page {
    * Everytime the view is created, gets the saved tracks of the current user, if there are
    * no tracks, appears another view (thats emptyList).
    */
-   ionViewDidEnter(){
+   async ionViewDidEnter(){
     if(!this.emptyList){
       this.loading.cargarLoading();
       setTimeout(async() => {
@@ -67,14 +67,17 @@ export class Tab2Page {
           this.cargado = true;
           setTimeout(async() => {
             this.loading.pararLoading();
-          }, 250);
+          }, 500);
         });
         }catch{
           this.cargado = true;
           this.errorPresentedSavedTracks = true;
-          this.loading.pararLoading();
+          setTimeout(async() => {
+            this.loading.pararLoading();
+        }, 500);
+        
         }
-      }, 750); 
+      }, 1000);
     }else{
       this.cargado = true;
     }
@@ -124,13 +127,13 @@ export class Tab2Page {
     this.cargado = false;
     this.emptyList = false;
 
+    setTimeout(async() => {
     this.listaCancionesGuardadas.splice(0, this.listaCancionesGuardadas.length);
     this.offsetVar = 0;
 
-    setTimeout(async() => {
       try{
       await this.getUserSavedTracks().then(async()=>{
-        setTimeout(() => {
+        
           if(this.listaCancionesGuardadas.length == 0){
             this.emptyList = true;
             this.cargado = true;
@@ -138,16 +141,18 @@ export class Tab2Page {
             this.emptyList = false;
           }
           this.cargado = true;
+          setTimeout(() => {
           this.loading.pararLoading();
-        }, 350);
+        }, 500);
       })
     }catch{
         this.cargado = true;
         this.errorPresentedSavedTracks = true;
-        this.loading.pararLoading();
-    }
-    }, 500);
-   
+        setTimeout(() => {
+          this.loading.pararLoading();
+        }, 500);
+    };
+  }, 500);
       
   }
 

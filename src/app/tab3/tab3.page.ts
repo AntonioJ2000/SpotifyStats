@@ -56,35 +56,33 @@ export class Tab3Page{
     private spotifyApi:SpotifyApiService,
     private authService:AuthService,
     private inAppBrowser:InAppBrowser,
-    public popoverController: PopoverController,
-    private apiUser: ApiUserService,
-    private router:Router) {}
+    public popoverController: PopoverController) {}
 
     /**
      * If its the first time the user enters the view, load al his profile obtined via requests.
     */
-  async ionViewWillEnter(){
+  async ionViewDidEnter(){
       if(!this.firstTime){
         this.loading.cargarLoadingOscuro();
           try{
           await this.getUserProfile().then(async()=>{
             await this.getUserFavourite3Songs().then(async()=>{
               await this.getUserFavourite3Artists().then(async()=>{
-                setTimeout(async() => {
                     this.firstTime = true;
-                    this.specialInfoLoaded = true;  
-                    this.loading.pararLoading(); 
+                    this.specialInfoLoaded = true;
+                  setTimeout(async() => {  
+                     this.loading.pararLoading(); 
                   }, 500);   
               })
             });     
           });
         }catch{
-          setTimeout(() => {
             this.errorProfile = true;
-            this.loading.pararLoading();
+            setTimeout(() => {
+              this.loading.pararLoading();
             }, 500);
           }
-      }     
+      } 
   }
 
 
