@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component } from '@angular/core';
 import { ModalController, NavController, PopoverController } from '@ionic/angular';
 import { AboutPage } from 'src/app/pages/about/about.page';
+import { ClientcredentialsService } from 'src/app/services/clientcredentials.service';
 
 @Component({
   selector: 'app-profilepopover',
@@ -10,14 +10,21 @@ import { AboutPage } from 'src/app/pages/about/about.page';
 })
 export class ProfilepopoverComponent {
 
+  developerAccount:boolean = this.clientCredentials.config.developerAccount;
+
   constructor(public popoverController: PopoverController,
               public modalController:ModalController,
-              private router: Router,
-              private navCtrl:NavController) { }
+              private navCtrl:NavController,
+              private clientCredentials:ClientcredentialsService) { }
 
   openConfigPage(){
     this.popoverController.dismiss();
-    this.navCtrl.navigateRoot(['/configuration'])
+    this.navCtrl.navigateRoot(['/configuration']);
+  }
+
+  openIssueList(){
+    this.popoverController.dismiss();
+    this.navCtrl.navigateForward(['/support']);
   }
 
   /**

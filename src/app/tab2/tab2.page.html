@@ -4,12 +4,12 @@
       Canciones que te gustan
     </ion-title>
     <ion-buttons *ngIf="!errorPresentedSavedTracks" slot="start">   
-        <ion-button (click)="HelpForSavedTracks()" size="large">
+        <ion-button (click)="HelpForSavedTracks()">
           <ion-icon slot="icon-only" class="iconStyle" name="help-circle-outline"></ion-icon>
         </ion-button>
       </ion-buttons>
       <ion-buttons *ngIf="!errorPresentedSavedTracks" slot="end">
-        <ion-button (click)="reloadSavedSongs()" size="large">
+        <ion-button (click)="reloadSavedSongs()">
           <ion-icon slot="icon-only" class="iconStyle" name="reload-outline"></ion-icon>
         </ion-button>
       </ion-buttons>

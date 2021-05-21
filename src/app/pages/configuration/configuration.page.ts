@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
-import { ActionSheetController, AlertController, NavController } from '@ionic/angular';
+import { ActionSheetController, AlertController, NavController, ToastController } from '@ionic/angular';
+import { issue } from 'src/app/model/issue';
+import { ApiIssueService } from 'src/app/services/api-issue.service';
 import { ApiUserService } from 'src/app/services/api-user.service';
 import { ClientcredentialsService } from 'src/app/services/clientcredentials.service';
 import { LoadingService } from 'src/app/services/loading.service';
@@ -13,30 +16,48 @@ import { ThemeService } from 'src/app/services/theme.service';
   styleUrls: ['./configuration.page.scss'],
 })
 export class ConfigurationPage {
+  public tasks:FormGroup;
 
-  booleanToView
   toggleChecked:boolean = this.clientCredentials.config.profileVisible;
   statsCap:number = this.clientCredentials.config.stats_cap;
   conditionsAccepted:boolean = this.clientCredentials.config.topAlertAccepted;
 
-  constructor(private router:Router,
-              private alertController:AlertController,
+  constructor(private alertController:AlertController,
               private actionSheetController:ActionSheetController,
               private themeService:ThemeService,
               private storage:NativeStorage,
               private clientCredentials:ClientcredentialsService,
               private loading:LoadingService,
               private apiUser:ApiUserService,
-              private navCtrl:NavController) {  }
+              private navCtrl:NavController,
+              private formBuilder:FormBuilder,
+              private apiIssue:ApiIssueService,
+              private toastController: ToastController) {  
 
-  closeConfigPage(){
-    this.navCtrl.navigateRoot(['/tabs/tab3'])
+       this.tasks=this.formBuilder.group({
+          issueTitle:['', Validators.required],
+          issueDescription:['', Validators.required]
+       })         
   }
 
+  /**
+   * Closes the config page.
+   */
+  closeConfigPage(){
+    this.navCtrl.navigateBack(['/tabs/tab3'])
+  }
+
+  /**
+   * Function that deletes the user created account for social and logs out from the app.
+   */
   deleteUserAccount(){
     //Borrar al usuario de la base de datos y sacarlo al login.
   }
 
+  /**
+   * Function that deletes the current user profile from the social side of the app making it
+   * unavailable until the toggle button is active
+   */
   async makeUserProfileVisibleSocial(){
     this.loading.cargarLoading();
     setTimeout(async() => {
@@ -44,13 +65,19 @@ export class ConfigurationPage {
     this.clientCredentials.config.profileVisible = !this.clientCredentials.config.profileVisible;
     
     try{
-      if(this.toggleChecked){  
+      if(this.toggleChecked){ 
+        if(await this.apiUser.getUser(this.clientCredentials.user.id)) {
+          await this.apiUser.updateUser(this.clientCredentials.user).then(()=>{
             this.storage.setItem('visibleProfile',{isVisible: true})
             this.loading.pararLoading();
-        }
-    }catch{
-        this.loading.pararLoading();
-    }
+          });
+        } 
+      }
+      }catch{
+          await this.apiUser.createUser(this.clientCredentials.user).then(()=>{
+            this.loading.pararLoading();
+          })   
+      }
 
     try{
       if(!this.toggleChecked){
@@ -62,14 +89,37 @@ export class ConfigurationPage {
         } 
       }
     }catch{
-      this.storage.setItem('visibleProfile',{isVisible: false})
       this.loading.pararLoading();
       console.log('El usuario no existe')
     }
     }, 1000);
   }
 
+  async sendReport(){
+    this.loading.cargarLoading();
 
+    let issueToDb:issue = {
+      id_user: this.clientCredentials.user.id,
+      issue: this.tasks.get('issueTitle').value,
+      description: this.tasks.get('issueDescription').value
+    }
+
+    try{
+      await this.apiIssue.createIssue(issueToDb).then(()=>{
+        this.issueSent(true);
+        this.tasks.setValue({issueTitle: '', issueDescription: ''});
+        this.loading.pararLoading();
+      });
+    }catch{
+      this.issueSent(false);
+      this.loading.pararLoading();
+    }
+    
+  }
+
+  /**
+   * Shows an alert that must be accepted in order to delete the current user account
+   */
   async alertConfirmDeleteSocialProfile(){
     const alert = await this.alertController.create({
       cssClass: 'myAlert',
@@ -95,6 +145,9 @@ export class ConfigurationPage {
     await alert.present();
   }
 
+  /**
+   * Shows a menu with the different themes that the current user can pick.
+   */
   async colorSheet(){
     const actionSheet = await this.actionSheetController.create({
       header: 'Temas',
@@ -167,6 +220,9 @@ export class ConfigurationPage {
   await actionSheet.present();
   }
 
+  /**
+   * Shows a menu with the different languages that the current user can pick.
+   */
   async languageSheet(){
     const actionSheet = await this.actionSheetController.create({
       header: 'Selecciona un lenguaje',
@@ -189,6 +245,9 @@ export class ConfigurationPage {
   await actionSheet.present();
   }
 
+  /**
+   * Shows a menu with the different config that the current user can pick, alert must be accepted.
+   */
   async statsSize(){
     const actionSheet = await this.actionSheetController.create({
       header: '¿Qué top quieres ver en tus estadísticas?',
@@ -217,6 +276,9 @@ export class ConfigurationPage {
   await actionSheet.present();
   }
 
+  /**
+   * Alert that the user should accept in order to modify the configuration
+   */
   async acceptConditionsOfTop() {
     const alert = await this.alertController.create({
       cssClass: 'myAlert',
@@ -242,5 +304,22 @@ export class ConfigurationPage {
       ]
     });   
     await alert.present();
+  }
+
+  async issueSent(success:boolean) {
+    let msg;
+    if(success){
+      msg = "El reporte ha sido enviado correctamente.";
+    }else if(!success){
+      msg = "Error al enviar el reporte, inténtalo más tarde o comprueba tu conexión a Internet."
+    }
+
+    const toast = await this.toastController.create({
+      cssClass: 'myToast',
+      message: msg,
+      duration: 1500,
+      position:"bottom"
+    });
+    toast.present();
   }
 }

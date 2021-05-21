@@ -19,9 +19,11 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { AuthService } from './services/auth.service';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { ThemeService } from './services/theme.service';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ProfilepopoverComponent } from './components/profilepopover/profilepopover.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, ProfilepopoverComponent],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, SuperTabsModule.forRoot()],
   providers: [
@@ -35,6 +37,7 @@ import { ThemeService } from './services/theme.service';
     InAppBrowser,
     NativeStorage,
     ThemeService,
+    ReactiveFormsModule,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent],

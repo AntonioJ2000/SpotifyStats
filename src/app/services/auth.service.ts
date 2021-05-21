@@ -85,7 +85,7 @@ export class AuthService implements CanActivate{
 
    canActivate(route: ActivatedRouteSnapshot): boolean {
       if(!this.isLogged()){
-        this.router.navigate(['/login']);
+        this.navCtrl.navigateRoot(['/login']);
         return false;
       }
         return true;

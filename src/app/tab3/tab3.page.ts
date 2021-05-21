@@ -24,6 +24,8 @@ export class Tab3Page{
   visibleSocialButton:boolean = this.clientCredentials.config.profileVisible;
   errorProfile:boolean = false;
 
+  isDeveloperAccount:boolean = false;
+
   firstTime:boolean = false;
   specialInfoLoaded:boolean = false;
   loggedUser:user = this.clientCredentials.user;
@@ -58,35 +60,41 @@ export class Tab3Page{
     private apiUser: ApiUserService,
     private router:Router) {}
 
-  ngOnInit(){
-    this.loading.cargarLoadingOscuro();
-
-        setTimeout(async() => {
+    /**
+     * If its the first time the user enters the view, load al his profile obtined via requests.
+    */
+  async ionViewWillEnter(){
+      if(!this.firstTime){
+        this.loading.cargarLoadingOscuro();
           try{
           await this.getUserProfile().then(async()=>{
             await this.getUserFavourite3Songs().then(async()=>{
               await this.getUserFavourite3Artists().then(async()=>{
+                setTimeout(async() => {
                     this.firstTime = true;
                     this.specialInfoLoaded = true;  
-                    this.loading.pararLoading();    
+                    this.loading.pararLoading(); 
+                  }, 500);   
               })
             });     
           });
         }catch{
+          setTimeout(() => {
             this.errorProfile = true;
             this.loading.pararLoading();
-        }
-        }, 750);
+            }, 500);
+          }
+      }     
   }
-    /**
-     * If its the first time the user enters the view, load al his profile obtined via requests.
-       (Not ngOnInit used due to performance issues)
-    */
+
 
   ionViewWillLeave(){
     this.errorProfile = false;
   }
 
+  /**
+   * Reloads the current user profile
+   */
   public reloadProfile(){
     this.errorProfile = false;
     this.loading.cargarLoading();
@@ -114,6 +122,10 @@ export class Tab3Page{
   public async getUserProfile(){
     let u = await this.spotifyApi.getCurrentUserProfile();
 
+      if(u.id == "antoniojl69" || u.id == "ciscu6"){
+        this.isDeveloperAccount = true;
+        this.clientCredentials.config.developerAccount = true;
+      }
       this.clientCredentials.user.displayName = u.display_name;
       this.clientCredentials.user.spotifyURL = u.external_urls.spotify;
       this.clientCredentials.user.followers = u.followers.total;
@@ -190,7 +202,7 @@ export class Tab3Page{
    * Opens the social page
    */
   async openFriendsPage(){
-    this.router.navigate(['/social']);
+    this.navCtrl.navigateForward(['/social']);
   }
 
   /**

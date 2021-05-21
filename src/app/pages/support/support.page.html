@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="titleSupportPage">Reportes enviados</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="this.closeSupportPage()">
+        <ion-icon slot="icon-only" name="arrow-back" class="iconStyle"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="reloadReportList()">
+        <ion-icon slot="icon-only" class="iconStyle" name="reload-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+      <ion-item-sliding lines="none" style="margin-top: -7px;" *ngFor = "let report of reportList;"> 
+        <ion-item-options side="start" (ionSwipe)="this.deleteSelectedReport()">
+          <ion-item-option color="transparent" expandable (click)="this.deleteSelectedReport()">
+            <ion-icon name="trash" style="font-size: x-large;" 
+            ></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+        <ion-card style="width:100%; margin-left: auto; margin-right: auto; align-items: center;">
+          <ion-item lines="full" class="itemBackground">
+              <ion-label class="defaultFont">
+                <p class="defaultFont" style="font-weight: bold; color:white; font-size: 16px;">{{report.issue}}</p>
+                  <ion-label class="defaultFont" style="color:rgb(192, 192, 192); font-size: 13px; margin-top: 5px;" text-wrap>
+                  {{report.description}}
+                  </ion-label>
+                <p class="defaultFont" style="font-size: 14px; margin-top: 13px;">Escrito por: <span class="reportBy">{{report.id_user}}</span></p>
+              </ion-label>
+            </ion-item>
+        </ion-card>
+      </ion-item-sliding>
+  </ion-list>
+</ion-content>

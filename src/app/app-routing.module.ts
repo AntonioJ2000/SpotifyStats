@@ -24,9 +24,13 @@ const routes: Routes = [
   {
     path: 'friendprofile',
     loadChildren: () => import('./pages/friendprofile/friendprofile.module').then( m => m.FriendprofilePageModule)
-  },  {
+  },
+  {
     path: 'configuration',
     loadChildren: () => import('./pages/configuration/configuration.module').then( m => m.ConfigurationPageModule)
+  },  {
+    path: 'support',
+    loadChildren: () => import('./pages/support/support.module').then( m => m.SupportPageModule)
   }
 
 

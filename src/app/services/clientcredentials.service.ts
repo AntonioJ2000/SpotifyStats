@@ -37,7 +37,8 @@ export class ClientcredentialsService {
     time_range: 'long_term',
     stats_cap: 20,
     topAlertAccepted: false,
-    profileVisible: true
+    profileVisible: true,
+    developerAccount: false
   }
 
 

@@ -1,9 +1,15 @@
 <ion-header>
   <ion-toolbar>
     <ion-title class="titleConfigurationPage">Configuración</ion-title>
-    <ion-buttons slot="start" style="margin-right: -15%;">
-      <ion-button size="large" (click)="this.closeConfigPage()">
+    <ion-buttons slot="start">
+      <ion-button (click)="this.closeConfigPage()">
         <ion-icon slot="icon-only" name="arrow-back" class="iconStyle"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+        <ion-button disabled="true" (click)="alertConfirmDeleteSocialProfile()">
+        <ion-icon slot="icon-only" src="assets/remove-user.svg" style="color: rgb(255, 64, 64);"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -11,7 +17,7 @@
 
 <ion-content>
   <ion-item lines="none" style="--background:transparent">
-    <p class="defaultFont" slot="start">Mostrar mi perfil en Social</p>
+    <p class="defaultFont" slot="start">Mostrar mi perfil en Social <ion-icon class="iconStyle" src="assets/beta-icon.svg"></ion-icon></p>
     <ion-toggle *ngIf="this.toggleChecked" slot="end" class="toogleStyle" checked="true" (ionChange)="makeUserProfileVisibleSocial()"></ion-toggle>
     <ion-toggle *ngIf="!this.toggleChecked" slot="end" class="toogleStyle" checked="false" (ionChange)="makeUserProfileVisibleSocial()"></ion-toggle>
   </ion-item>
@@ -35,7 +41,7 @@
     <p class="defaultFont" slot="start" style="color: rgb(145, 145, 145);">Cambiar el idioma:</p>
     <ion-buttons slot="end">
       <ion-button disabled="true" style="margin-right: -7px;" (click)="languageSheet()">
-        <ion-icon slot="icon-only" name="language-outline"></ion-icon>
+        <ion-icon slot="icon-only" class="iconStyle" name="language-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-item>
@@ -44,25 +50,39 @@
     <p class="defaultFont" slot="start">Configurar Top (Actual: Top {{this.statsCap}})</p>
     <ion-buttons slot="end">
       <ion-button *ngIf="this.conditionsAccepted" style="margin-right: -7px;" (click)="statsSize()">
-        <ion-icon slot="icon-only" name="bar-chart-sharp"></ion-icon>
+        <ion-icon slot="icon-only" class="iconStyle" name="bar-chart-sharp"></ion-icon>
       </ion-button>
       <ion-button *ngIf="!this.conditionsAccepted" style="margin-right: -7px;" (click)="acceptConditionsOfTop()">
-        <ion-icon slot="icon-only" name="bar-chart-sharp"></ion-icon>
+        <ion-icon slot="icon-only" class="iconStyle" name="bar-chart-sharp"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-item>
 
-  <div style="text-align: center; padding-top: 10px;">
-    <ion-button disabled="true" fill="outline" class="deleteSocialProfile" (click)="alertConfirmDeleteSocialProfile()">
-      <ion-label style="font-family: 'Poppins', sans-serif;">Eliminar cuenta</ion-label> 
-    </ion-button>
-  </div>
-
-  <div style="width:100%; text-align: center; padding-top: 10px;">
-    <p class="defaultFont" style="font-size:12px;">
-      Si tienes algún problema o sugerencia con respecto a la aplicación no dudes en escribir 
-      a los desarrolladores en alguna de sus redes sociales (las podrás encontrar encontrar en 
-      la ventana "Sobre la aplicación").
+  <div style="width:100%; text-align: center; margin-top: 55px;">
+    <p class="defaultFont" style="font-size:13px;">
+      Si tienes algún problema con la app, escríbenos aquí:
     </p>
+    <form [formGroup]="tasks" (ngSubmit)="this.sendReport()">
+    <ion-card class="cardColor">
+      <ion-item class="cardColor" lines="full">
+        <ion-input formControlName="issueTitle" class="defaultFont" type="text" autocapitalize="true" placeholder="¿Que problema tienes?">
+        </ion-input>
+      </ion-item>
+    
+      <ion-card-content>
+        <ion-item class="cardColor" lines=full>
+          <ion-textarea formControlName="issueDescription" class="defaultFont" style="height:100px" placeholder="Descríbelo" autocapitalize="true" auto-grow="true">
+         </ion-textarea>
+        </ion-item>
+      </ion-card-content>
+      
+      <div style="width:100%; text-align: center; padding-top: 4px; padding-bottom: 7px; background-color: #222222;">
+        <ion-button type="submit" [disabled]=!tasks.valid fill="clear" class="sendButton">
+          <ion-label class="defaultFont">Enviar reporte</ion-label>
+        </ion-button>
+      </div>
+    </ion-card>
+  </form>
   </div>
 </ion-content>
+

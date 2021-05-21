@@ -61,6 +61,8 @@
       <p slot="start" class="userId" *ngIf="specialInfoLoaded">ID: {{loggedUser.id}}</p>
       <p slot="end" class="followers" *ngIf="specialInfoLoaded">{{loggedUser.followers}} <span *ngIf="this.loggedUser.followers > 1">seguidores</span><span *ngIf="this.loggedUser.followers == 1">seguidor</span></p> 
     </ion-toolbar>
+
+  <p *ngIf="this.isDeveloperAccount && this.specialInfoLoaded" class="defaultFont" style="color:gold; text-align: center; margin-top: -5px;">Cuenta de desarrollador</p>
   
   <div *ngIf="!this.errorProfile" style="text-align: center; margin-top: -15px;">
     <ion-button fill="outline" shape="round" class="profileButton" (click)="openUserProfile()">
@@ -112,7 +114,7 @@
 
 <ion-footer *ngIf="!this.errorProfile" class="ion-no-border">
   <div style="text-align: center; padding-top: 10px; background-color:#141414;">
-    <ion-button fill="outline" shape="round" class="logoutButton" (click)="logout()">
+    <ion-button fill="outline" shape="round" class="customButton" (click)="logout()">
       <ion-label style="font-family: 'Poppins', sans-serif;">Cerrar sesión</ion-label> 
     </ion-button>
   </div>

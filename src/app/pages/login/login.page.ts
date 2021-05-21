@@ -51,12 +51,18 @@ export class LoginPage {
       this.storage.getItem('conditionsAccepted').then((data)=>{
         this.clientCredentials.config.topAlertAccepted = data.isAccepted;
       })
+    }catch{
+      console.log('Error al leer la configuración')
+      this.clientCredentials.config.topAlertAccepted = false;
+    }
+
+    try{
       this.storage.getItem('topConfig').then((data)=>{
         this.clientCredentials.config.stats_cap = data.value;
       })
     }catch{
       console.log('Error al leer la configuración')
-      this.clientCredentials.config.topAlertAccepted = false;
+      this.clientCredentials.config.stats_cap = 20;
     }
 
     try{

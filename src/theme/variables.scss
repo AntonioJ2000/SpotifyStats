@@ -64,6 +64,44 @@
     overflow: hidden;
   }
 
+  .myAlert {
+    font-family: 'Poppins', sans-serif;
+    .alertOK{
+        font-family: 'Poppins', sans-serif;
+        color:#1DB954;
+        margin-right: auto;
+        margin-left: auto;
+    }  
+    .alertDELETE{
+        font-family: 'Poppins', sans-serif;
+        color:rgb(173, 0, 0);
+        margin-right: auto;
+        margin-left: auto;
+    }
+    .alertSURE{
+        font-family: 'Poppins', sans-serif;
+        color:rgb(173, 0, 0);
+        margin-right: auto;
+        margin-left: auto;
+    }  
+  }
+
+  .myToast {
+    transform: translateY(-70px) !important;
+    --background: #1DB954;
+    --color: black;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+  }
+
+
+  .myToastv2 {
+      --background: #1DB954;
+      --color: black;
+      font-family: 'Poppins', sans-serif;
+      font-size: 12px;
+  }
+
  /** my-app-theming **/
   --ion-text-color:white;
   --ion-background-color: #141414;
@@ -138,11 +176,22 @@
     --color: rgb(175, 175, 175);
   }
 
-  .logoutButton{
+  .customButton{
     margin-bottom: 15px;
     --border-color: rgb(211, 0, 0);
     --color: rgb(211, 0, 0);
   }
+
+  .sendButton{
+    margin-bottom: 15px;
+    --border-color: #1DB954;
+    --color: #1DB954;
+  }
+
+  .reportBy{
+    color: #1DB954;
+  }
+
 
   /** TEMAS TOTALMENTE PERSONALIZADOS **/
   .white-theme{
@@ -208,10 +257,58 @@
       color: #1DB954;
     }
 
-    .logoutButton{
+    .customButton{
       margin-bottom: 15px;
       --border-color: rgb(211, 0, 0);
       --color: rgb(211, 0, 0);
+    }
+
+    .sendButton{
+      margin-bottom: 15px;
+      --border-color: white;
+      --color: white;
+    }
+
+    .myAlert {
+      font-family: 'Poppins', sans-serif;
+      .alertOK{
+          font-family: 'Poppins', sans-serif;
+          color:white;
+          margin-right: auto;
+          margin-left: auto;
+      }  
+      .alertDELETE{
+          font-family: 'Poppins', sans-serif;
+          color:rgb(173, 0, 0);
+          margin-right: auto;
+          margin-left: auto;
+      }
+      .alertSURE{
+          font-family: 'Poppins', sans-serif;
+          color:rgb(173, 0, 0);
+          margin-right: auto;
+          margin-left: auto;
+      }
+    }
+
+    .myToast {
+      transform: translateY(-70px) !important;
+      --background: white;
+      --color: black;
+      font-family: 'Poppins', sans-serif;
+      font-size: 12px;
+    }
+  
+  
+    .myToastv2 {
+        --background: white;
+        --color: black;
+        font-family: 'Poppins', sans-serif;
+        font-size: 12px;
+    }
+
+    .reportBy{
+      color: white;
     }
   }
 
@@ -278,10 +375,55 @@
       color: rgb(255, 255, 80);
     }
 
-    .logoutButton{
+    .customButton{
       margin-bottom: 15px;
       --border-color: rgb(255, 255, 80);
       --color: rgb(255, 255, 80);
+    }
+
+    .sendButton{
+      margin-bottom: 15px;
+      --border-color: rgb(255, 255, 80);
+      --color: rgb(255, 255, 80);
+    }
+
+    .myAlert {
+      font-family: 'Poppins', sans-serif;
+      .alertOK{
+          font-family: 'Poppins', sans-serif;
+          color:rgb(255, 255, 80);
+          margin-right: auto;
+          margin-left: auto;
+      }  
+      .alertDELETE{
+          font-family: 'Poppins', sans-serif;
+          color:rgb(173, 0, 0);
+          margin-right: auto;
+          margin-left: auto;
+      }
+      .alertSURE{
+          font-family: 'Poppins', sans-serif;
+          color:rgb(173, 0, 0);
+          margin-right: auto;
+          margin-left: auto;
+      }
+    }
+    .myToast {
+      transform: translateY(-70px) !important;
+      --background: rgb(255, 255, 80);
+      --color: black;
+      font-family: 'Poppins', sans-serif;
+      font-size: 12px;
+    }
+  
+    .myToastv2 {
+        --background: rgb(255, 255, 80);
+        --color: black;
+        font-family: 'Poppins', sans-serif;
+        font-size: 12px;
+    }
+    .reportBy{
+      color: rgb(255, 255, 80);
     }
   }
 
@@ -347,10 +489,56 @@
     .sstats{
       color: #ff6d00;
     }
-    .logoutButton{
+    .customButton{
       margin-bottom: 15px;
       --border-color: #ff6d00;
       --color: #ff6d00;
+    }
+
+    .sendButton{
+      margin-bottom: 15px;
+      --border-color: #ff6d00;
+      --color: #ff6d00;
+    }
+
+    .myAlert {
+      font-family: 'Poppins', sans-serif;
+      .alertOK{
+          font-family: 'Poppins', sans-serif;
+          color:#ff6d00;
+          margin-right: auto;
+          margin-left: auto;
+      }  
+      .alertDELETE{
+          font-family: 'Poppins', sans-serif;
+          color:rgb(173, 0, 0);
+          margin-right: auto;
+          margin-left: auto;
+      }
+      .alertSURE{
+          font-family: 'Poppins', sans-serif;
+          color:rgb(173, 0, 0);
+          margin-right: auto;
+          margin-left: auto;
+      }
+    }
+    .myToast {
+      transform: translateY(-70px) !important;
+      --background: #ff6d00;
+      --color: black;
+      font-family: 'Poppins', sans-serif;
+      font-size: 12px;
+    }
+  
+    .myToastv2 {
+        --background: #ff6d00;
+        --color: black;
+        font-family: 'Poppins', sans-serif;
+        font-size: 12px;
+    }
+    
+    .reportBy{
+      color: #ff6d00;
     }
   }
 
@@ -417,10 +605,56 @@
       color: rgb(255, 64, 64);
     }
 
-    .logoutButton{
+    .customButton{
       margin-bottom: 15px;
       --border-color: rgb(255, 64, 64);
       --color: rgb(255, 64, 64);
+    }
+
+    .sendButton{
+      margin-bottom: 15px;
+      --border-color: rgb(255, 64, 64);
+      --color: rgb(255, 64, 64);
+    }
+
+    .myAlert {
+      font-family: 'Poppins', sans-serif;
+      .alertOK{
+          font-family: 'Poppins', sans-serif;
+          color:#1DB954;
+          margin-right: auto;
+          margin-left: auto;
+      }  
+      .alertDELETE{
+          font-family: 'Poppins', sans-serif;
+          color:rgb(173, 0, 0);
+          margin-right: auto;
+          margin-left: auto;
+      }
+      .alertSURE{
+          font-family: 'Poppins', sans-serif;
+          color:rgb(173, 0, 0);
+          margin-right: auto;
+          margin-left: auto;
+      }
+    }
+    .myToast {
+      transform: translateY(-70px) !important;
+      --background: rgb(255, 64, 64);
+      --color: black;
+      font-family: 'Poppins', sans-serif;
+      font-size: 12px;
+    }
+  
+    .myToastv2 {
+        --background: rgb(255, 64, 64);
+        --color: black;
+        font-family: 'Poppins', sans-serif;
+        font-size: 12px;
+    }
+
+    .reportBy{
+      color: rgb(255, 64, 64);
     }
   }
 
@@ -487,10 +721,56 @@
       color: #0CB7F2;
     }
 
-    .logoutButton{
+    .customButton{
       margin-bottom: 15px;
       --border-color: #0CB7F2;
       --color: #0CB7F2;
+    }
+    
+    .sendButton{
+      margin-bottom: 15px;
+      --border-color: #0CB7F2;
+      --color: #0CB7F2;
+    }
+
+    .myAlert {
+      font-family: 'Poppins', sans-serif;
+      .alertOK{
+          font-family: 'Poppins', sans-serif;
+          color:#0CB7F2;
+          margin-right: auto;
+          margin-left: auto;
+      }  
+      .alertDELETE{
+          font-family: 'Poppins', sans-serif;
+          color:rgb(173, 0, 0);
+          margin-right: auto;
+          margin-left: auto;
+      }
+      .alertSURE{
+          font-family: 'Poppins', sans-serif;
+          color:rgb(173, 0, 0);
+          margin-right: auto;
+          margin-left: auto;
+      }
+    }
+    .myToast {
+      transform: translateY(-70px) !important;
+      --background: #0CB7F2;
+      --color: black;
+      font-family: 'Poppins', sans-serif;
+      font-size: 12px;
+    }
+  
+    .myToastv2 {
+        --background: #0CB7F2;
+        --color: black;
+        font-family: 'Poppins', sans-serif;
+        font-size: 12px;
+    }
+
+    .reportBy{
+      color: #0CB7F2;
     }
   }
 
@@ -557,10 +837,56 @@
       color: #B27ACC;
     }
 
-    .logoutButton{
+    .customButton{
       margin-bottom: 15px;
       --border-color: #B27ACC;
       --color: #B27ACC;
+    }
+
+    .sendButton{
+      margin-bottom: 15px;
+      --border-color: #B27ACC;
+      --color: #B27ACC;
+    }
+
+    .myAlert {
+      font-family: 'Poppins', sans-serif;
+      .alertOK{
+          font-family: 'Poppins', sans-serif;
+          color:#B27ACC;
+          margin-right: auto;
+          margin-left: auto;
+      }  
+      .alertDELETE{
+          font-family: 'Poppins', sans-serif;
+          color:rgb(173, 0, 0);
+          margin-right: auto;
+          margin-left: auto;
+      }
+      .alertSURE{
+          font-family: 'Poppins', sans-serif;
+          color:rgb(173, 0, 0);
+          margin-right: auto;
+          margin-left: auto;
+      }
+    }
+    .myToast {
+      transform: translateY(-70px) !important;
+      --background: #B27ACC;
+      --color: black;
+      font-family: 'Poppins', sans-serif;
+      font-size: 12px;
+    }
+  
+    .myToastv2 {
+        --background: #B27ACC;
+        --color: black;
+        font-family: 'Poppins', sans-serif;
+        font-size: 12px;
+    }
+
+    .reportBy{
+      color: #B27ACC;
     }
   }
 
@@ -627,10 +953,56 @@
       color: magenta;
     }
 
-    .logoutButton{
+    .customButton{
       margin-bottom: 15px;
       --border-color: magenta;
       --color: magenta;
+    }
+
+    .sendButton{
+      margin-bottom: 15px;
+      --border-color: magenta;
+      --color: magenta;
+    }
+
+    .myAlert {
+      font-family: 'Poppins', sans-serif;
+      .alertOK{
+          font-family: 'Poppins', sans-serif;
+          color:magenta;
+          margin-right: auto;
+          margin-left: auto;
+      }  
+      .alertDELETE{
+          font-family: 'Poppins', sans-serif;
+          color:rgb(173, 0, 0);
+          margin-right: auto;
+          margin-left: auto;
+      }
+      .alertSURE{
+          font-family: 'Poppins', sans-serif;
+          color:rgb(173, 0, 0);
+          margin-right: auto;
+          margin-left: auto;
+      }
+    }
+    .myToast {
+      transform: translateY(-70px) !important;
+      --background: magenta;
+      --color: black;
+      font-family: 'Poppins', sans-serif;
+      font-size: 12px;
+    }
+  
+    .myToastv2 {
+        --background: magenta;
+        --color: black;
+        font-family: 'Poppins', sans-serif;
+        font-size: 12px;
+    }
+    
+    .reportBy{
+      color: magenta;
     }
   }
 
