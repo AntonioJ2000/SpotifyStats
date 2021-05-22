@@ -74,9 +74,12 @@ export class ConfigurationPage {
         } 
       }
       }catch{
-          await this.apiUser.createUser(this.clientCredentials.user);
-          this.loading.pararLoading();
-      }
+            try{
+              await this.apiUser.createUser(this.clientCredentials.user);
+            }catch{
+              this.loading.pararLoading();   
+            }
+        }
 
     try{
       if(!this.toggleChecked){

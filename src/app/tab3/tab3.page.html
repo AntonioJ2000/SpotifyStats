@@ -85,7 +85,7 @@
         <ion-label>
           <p *ngIf="specialInfoLoaded" class="track">{{this.favouriteSong.trackName}}</p>
         <ion-label *ngFor = "let artist of this.favouriteSong.artists">
-          <p style="font-family: 'Poppins', sans-serif; font-size: 13px;">{{artist.name}}</p>
+          <p *ngIf="specialInfoLoaded" style="font-family: 'Poppins', sans-serif; font-size: 13px;">{{artist.name}}</p>
         </ion-label>
         
         </ion-label>
@@ -96,9 +96,10 @@
     <h4 *ngIf="!this.errorProfile" style="margin-left: 5%; font-family: 'Poppins', sans-serif;">Tu artista más escuchado</h4>
     <ion-card *ngIf="!this.errorProfile" style="width:90%; margin-left: auto; margin-right: auto; align-items: center;">
       <ion-item class="itemBackground" lines="full" (click)="openFavouriteArtist()">
-          
-          <img *ngIf="specialInfoLoaded" style="width: 25%; margin-top: 7px; margin-bottom: 7px;" src="{{this.favouriteArtist.image}}">
-          
+        
+        <ion-thumbnail *ngIf="specialInfoLoaded" slot="start" style="width: 70px;height: 70px; margin-top: 7px; margin-bottom: 7px;">
+            <img src="{{this.favouriteArtist.image}}">
+          </ion-thumbnail>
           <ion-thumbnail style="width: 70px;height: 70px; margin-top: 7px; margin-bottom: 7px;" *ngIf="!specialInfoLoaded">
             <ion-skeleton-text animated></ion-skeleton-text>
           </ion-thumbnail>

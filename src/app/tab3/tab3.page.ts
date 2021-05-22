@@ -34,14 +34,14 @@ export class Tab3Page{
     id: '',
     previewURL: '',
     spotifyURL: '',
-    trackName: 'No hay canción que mostrar',
-    trackThumbnail: 'assets/no_profile_image.jpg'
+    trackName: 'N/A',
+    trackThumbnail: 'assets/vinyl_record.png'
   };
 
   favouriteArtist:artist = {
     followers: 0,
     image: 'assets/no_profile_image.jpg',
-    name: 'No hay artista que mostrar',
+    name: 'N/A',
     popularity: 0,
     spotifyURL: ''
   };
