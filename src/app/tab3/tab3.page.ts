@@ -64,50 +64,8 @@ export class Tab3Page{
   async ionViewDidEnter(){
       if(!this.firstTime){
         this.loading.cargarLoadingOscuro();
-          try{
-          
-          await this.getUserProfile();  
-          await this.getUserFavourite3Songs().then(()=>{
-            if(this.favouriteSong.id == ''){
-              this.specialInfoError = true;
-            }
-          });
-          await this.getUserFavourite3Artists().then(()=>{
-            if(this.favouriteArtist.id == ''){
-              this.specialInfoError = true;
-            }  
-          });  
-          
-          this.firstTime = true;
-          this.specialInfoLoaded = true;
-                  
-          setTimeout(async() => {  
-            this.loading.pararLoading(); 
-          }, 500);     
-       
-        }catch{
-            this.errorProfile = true;
-            setTimeout(() => {
-              this.loading.pararLoading();
-            }, 500);
-          }
-      } 
-  }
 
-
-  ionViewWillLeave(){
-    this.errorProfile = false;
-  }
-
-  /**
-   * Reloads the current user profile
-   */
-  public async reloadProfile(){
-    this.errorProfile = false;
-    this.loading.cargarLoading();
-    try{
-          
-      await this.getUserProfile();  
+      try{
       await this.getUserFavourite3Songs().then(()=>{
         if(this.favouriteSong.id == ''){
           this.specialInfoError = true;
@@ -118,20 +76,58 @@ export class Tab3Page{
           this.specialInfoError = true;
         }  
       });    
-      
-      this.firstTime = true;
-      this.specialInfoLoaded = true;
-              
-      setTimeout(async() => {  
-        this.loading.pararLoading(); 
-      }, 500);     
-   
+                  
+      await this.getUserProfile().then(()=>{
+        this.loading.pararLoading();
+      });
     }catch{
         this.errorProfile = true;
         setTimeout(() => {
           this.loading.pararLoading();
         }, 500);
       }
+
+      this.firstTime = true;
+      this.specialInfoLoaded = true;
+  }
+}
+
+  ionViewWillLeave(){
+    this.errorProfile = false;
+    this.specialInfoError = false;
+  }
+
+  /**
+   * Reloads the current user profile
+   */
+  public async reloadProfile(){
+    this.errorProfile = false;
+    this.loading.cargarLoading();
+
+    try{
+      await this.getUserFavourite3Songs().then(()=>{
+        if(this.favouriteSong.id == '' || this.favouriteSong.id == undefined){
+          this.specialInfoError = true;
+        }
+      });
+      await this.getUserFavourite3Artists().then(()=>{
+        if(this.favouriteArtist.id == '' || this.favouriteSong.id == undefined){
+          this.specialInfoError = true;
+        }  
+      });    
+                  
+      await this.getUserProfile().then(()=>{
+        this.loading.pararLoading();
+      });
+    }catch{
+        this.errorProfile = true;
+        setTimeout(() => {
+          this.loading.pararLoading();
+        }, 500);
+      }
+
+      this.firstTime = true;
+      this.specialInfoLoaded = true;
   }
 
   /**
@@ -144,14 +140,17 @@ export class Tab3Page{
         this.isDeveloperAccount = true;
         this.clientCredentials.config.developerAccount = true;
       }
-      this.clientCredentials.user.displayName = u.display_name;
-      this.clientCredentials.user.spotifyURL = u.external_urls.spotify;
-      this.clientCredentials.user.followers = u.followers.total;
-      this.clientCredentials.user.id = u.id;
-      if(u.images.length != 0){
-        this.clientCredentials.user.image = u.images[0].url;  
+      try{
+        this.clientCredentials.user.displayName = u.display_name;
+        this.clientCredentials.user.spotifyURL = u.external_urls.spotify;
+        this.clientCredentials.user.followers = u.followers.total;
+        this.clientCredentials.user.id = u.id;
+        if(u.images.length != 0){
+          this.clientCredentials.user.image = u.images[0].url;  
+        }
+      }catch{
+        console.log("Error en la obtención del perfil")
       }
-  
   }
 
   /**
@@ -177,11 +176,15 @@ export class Tab3Page{
       }
     }
 
-    this.favouriteSong.id = favSong.items[0].id;
-    this.favouriteSong.trackName = favSong.items[0].name;
-    this.favouriteSong.spotifyURL = favSong.items[0].external_urls.spotify;
-    this.favouriteSong.artists = favSong.items[0].artists;
-    this.favouriteSong.trackThumbnail = favSong.items[0].album.images[1].url;
+    try{
+      this.favouriteSong.id = favSong.items[0].id;
+      this.favouriteSong.trackName = favSong.items[0].name;
+      this.favouriteSong.spotifyURL = favSong.items[0].external_urls.spotify;
+      this.favouriteSong.artists = favSong.items[0].artists;
+      this.favouriteSong.trackThumbnail = favSong.items[0].album.images[1].url;
+    }catch{
+      console.log("No se puede leer la canción favorita")        
+    }
   }
 
   /**
@@ -208,13 +211,17 @@ export class Tab3Page{
       }
     }
 
-    this.favouriteArtist.name = favArtist.items[0].name;
-    if(favArtist.items[0].images.length != 0){
-      this.favouriteArtist.image = favArtist.items[0].images[1].url;
-    }
-    this.favouriteArtist.popularity = favArtist.items[0].popularity;
-    this.favouriteArtist.spotifyURL = favArtist.items[0].external_urls.spotify,
-    this.favouriteArtist.followers = favArtist.items[0].followers.total
+    try{
+      this.favouriteArtist.name = favArtist.items[0].name;
+      if(favArtist.items[0].images.length != 0){
+        this.favouriteArtist.image = favArtist.items[0].images[1].url;
+      }
+      this.favouriteArtist.popularity = favArtist.items[0].popularity;
+      this.favouriteArtist.spotifyURL = favArtist.items[0].external_urls.spotify,
+      this.favouriteArtist.followers = favArtist.items[0].followers.total
+    }catch{
+      console.log("Error al leer el artista favorito")
+    } 
   }
   /**
    * Opens the social page
