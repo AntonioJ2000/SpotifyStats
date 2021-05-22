@@ -44,7 +44,7 @@ export class ConfigurationPage {
    * Closes the config page.
    */
   closeConfigPage(){
-    this.navCtrl.navigateBack(['/tabs/tab3'])
+    this.navCtrl.navigateRoot(['/tabs/tab3'])
   }
 
   /**
@@ -74,9 +74,8 @@ export class ConfigurationPage {
         } 
       }
       }catch{
-          await this.apiUser.createUser(this.clientCredentials.user).then(()=>{
-            this.loading.pararLoading();
-          })   
+          await this.apiUser.createUser(this.clientCredentials.user);
+          this.loading.pararLoading();
       }
 
     try{
@@ -307,15 +306,18 @@ export class ConfigurationPage {
   }
 
   async issueSent(success:boolean) {
+    let cssCl;
     let msg;
     if(success){
+      cssCl = 'myToast'
       msg = "El reporte ha sido enviado correctamente.";
     }else if(!success){
+      cssCl = 'myToastError'
       msg = "Error al enviar el reporte, inténtalo más tarde o comprueba tu conexión a Internet."
     }
 
     const toast = await this.toastController.create({
-      cssClass: 'myToast',
+      cssClass: cssCl,
       message: msg,
       duration: 1500,
       position:"bottom"

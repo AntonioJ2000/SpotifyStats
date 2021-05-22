@@ -9,9 +9,7 @@ import { track } from '../model/track';
 import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
 import { artist } from '../model/artist';
 import { ProfilepopoverComponent } from '../components/profilepopover/profilepopover.component';
-import { Router } from '@angular/router';
 import { user } from '../model/user';
-import { ApiUserService } from '../services/api-user.service';
 
 
 @Component({
@@ -24,6 +22,8 @@ export class Tab3Page{
   visibleSocialButton:boolean = this.clientCredentials.config.profileVisible;
   errorProfile:boolean = false;
 
+  specialInfoError = false;
+
   isDeveloperAccount:boolean = false;
 
   firstTime:boolean = false;
@@ -34,14 +34,14 @@ export class Tab3Page{
     id: '',
     previewURL: '',
     spotifyURL: '',
-    trackName: '',
-    trackThumbnail: ''
+    trackName: 'No hay canción que mostrar',
+    trackThumbnail: 'assets/no_profile_image.jpg'
   };
 
   favouriteArtist:artist = {
     followers: 0,
-    image: '',
-    name: '',
+    image: 'assets/no_profile_image.jpg',
+    name: 'No hay artista que mostrar',
     popularity: 0,
     spotifyURL: ''
   };
@@ -65,17 +65,26 @@ export class Tab3Page{
       if(!this.firstTime){
         this.loading.cargarLoadingOscuro();
           try{
-          await this.getUserProfile().then(async()=>{
-            await this.getUserFavourite3Songs().then(async()=>{
-              await this.getUserFavourite3Artists().then(async()=>{
-                    this.firstTime = true;
-                    this.specialInfoLoaded = true;
-                  setTimeout(async() => {  
-                     this.loading.pararLoading(); 
-                  }, 500);   
-              })
-            });     
+          
+          await this.getUserProfile();  
+          await this.getUserFavourite3Songs().then(()=>{
+            if(this.favouriteSong.id == ''){
+              this.specialInfoError = true;
+            }
           });
+          await this.getUserFavourite3Artists().then(()=>{
+            if(this.favouriteArtist.id == ''){
+              this.specialInfoError = true;
+            }  
+          });  
+          
+          this.firstTime = true;
+          this.specialInfoLoaded = true;
+                  
+          setTimeout(async() => {  
+            this.loading.pararLoading(); 
+          }, 500);     
+       
         }catch{
             this.errorProfile = true;
             setTimeout(() => {
@@ -93,25 +102,36 @@ export class Tab3Page{
   /**
    * Reloads the current user profile
    */
-  public reloadProfile(){
+  public async reloadProfile(){
     this.errorProfile = false;
     this.loading.cargarLoading();
-        setTimeout(async() => {
-          try{
-          await this.getUserProfile().then(async()=>{
-            await this.getUserFavourite3Songs().then(async()=>{
-              await this.getUserFavourite3Artists().then(async()=>{
-                    this.firstTime = true;
-                    this.specialInfoLoaded = true;  
-                    this.loading.pararLoading();
-              })
-            });     
-          });
-        }catch{
-            this.errorProfile = true;
-            this.loading.pararLoading();
+    try{
+          
+      await this.getUserProfile();  
+      await this.getUserFavourite3Songs().then(()=>{
+        if(this.favouriteSong.id == ''){
+          this.specialInfoError = true;
         }
-      }, 750);
+      });
+      await this.getUserFavourite3Artists().then(()=>{
+        if(this.favouriteArtist.id == ''){
+          this.specialInfoError = true;
+        }  
+      });    
+      
+      this.firstTime = true;
+      this.specialInfoLoaded = true;
+              
+      setTimeout(async() => {  
+        this.loading.pararLoading(); 
+      }, 500);     
+   
+    }catch{
+        this.errorProfile = true;
+        setTimeout(() => {
+          this.loading.pararLoading();
+        }, 500);
+      }
   }
 
   /**

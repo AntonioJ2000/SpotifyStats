@@ -36,4 +36,8 @@
         </ion-card>
       </ion-item-sliding>
   </ion-list>
+
+  <div *ngIf="this.noReports" style="text-align: center;">
+    <p class="defaultFont">No hay ningun reporte para mostrar.</p>
+  </div>
 </ion-content>

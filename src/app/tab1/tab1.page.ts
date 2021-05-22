@@ -184,7 +184,7 @@ export class Tab1Page {
   public async reloadStats(){
     this.errorPresentedTracks = false;
     this.errorPresentedArtists = false;
-    this.errorPresentedRecentlyPlayed = false;;
+    this.errorPresentedRecentlyPlayed = false;
     this.cargado = false;
     this.loading.cargarLoading();
 

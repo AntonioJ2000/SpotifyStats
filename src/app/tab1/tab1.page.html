@@ -53,8 +53,20 @@
             <p style="font-family: 'Poppins', sans-serif; width: 90%; text-align: center; margin-left: auto; margin-right: auto;margin-top:-20px; color: white;">
               ¡Ups, esto no debería de haber ocurrido!</p>
               <p style="font-family: 'Poppins', sans-serif; width: 90%; text-align: center; margin-left: auto; margin-right: auto; color: white;">
-              Por favor, asegurate de que tu cuenta de Spotify sea lo suficientemente antigua 
-              como para mostrarte alguna estadística o de tener conexión a Internet.
+                Por favor, asegúrate de tener conexión a Internet.
+              </p>    
+                <ion-button size="large" shape="round" class="reloadAuxiliar" slots="icon-only" fill="outline" (click)="reloadStats()">    
+                    <ion-label style="font-size: 14px; font-family: 'Poppins', sans-serif; font-weight: bold;">Intentar de nuevo</ion-label>
+                </ion-button>
+          </div>
+
+          <div *ngIf="this.listaTopCanciones.length == 0 && this.cargado && !this.errorPresentedTracks" style="text-align: center;">
+            <img src="assets/stats_bars.png" style="width: 80%;">
+            <p style="font-family: 'Poppins', sans-serif; width: 90%; text-align: center; margin-left: auto; margin-right: auto;margin-top:-20px; color: white;">
+              ¡Ups, esto no debería de haber ocurrido!</p>
+              <p style="font-family: 'Poppins', sans-serif; width: 90%; text-align: center; margin-left: auto; margin-right: auto; color: white;">
+                Si estás viendo esto significa que tu cuenta es demasiado reciente o simplemente
+                no hay estadísticas que mostrarte, ¡vuelve más tarde!.
               </p>    
                 <ion-button size="large" shape="round" class="reloadAuxiliar" slots="icon-only" fill="outline" (click)="reloadStats()">    
                     <ion-label style="font-size: 14px; font-family: 'Poppins', sans-serif; font-weight: bold;">Intentar de nuevo</ion-label>
@@ -125,8 +137,20 @@
             <p style="font-family: 'Poppins', sans-serif; width: 90%; text-align: center; margin-left: auto; margin-right: auto;margin-top:-20px; color: white;">
               ¡Ups, esto no debería de haber ocurrido!</p>
               <p style="font-family: 'Poppins', sans-serif; width: 90%; text-align: center; margin-left: auto; margin-right: auto; color: white;">
-              Por favor, asegurate de que tu cuenta de Spotify sea lo suficientemente antigua 
-              como para mostrarte alguna estadística o de tener conexión a Internet.
+              Por favor, asegurate de tener conexión a Internet.
+              </p>    
+                <ion-button size="large" shape="round" class="reloadAuxiliar" slots="icon-only" fill="outline" (click)="reloadStats()">    
+                    <ion-label style="font-size: 14px; font-family: 'Poppins', sans-serif; font-weight: bold;">Intentar de nuevo</ion-label>
+                </ion-button>
+          </div>
+
+          <div *ngIf="this.listaTopArtistas.length == 0 && this.cargado && !this.errorPresentedTracks" style="text-align: center;">
+            <img src="assets/stats_bars.png" style="width: 80%;">
+            <p style="font-family: 'Poppins', sans-serif; width: 90%; text-align: center; margin-left: auto; margin-right: auto;margin-top:-20px; color: white;">
+              ¡Ups, esto no debería de haber ocurrido!</p>
+              <p style="font-family: 'Poppins', sans-serif; width: 90%; text-align: center; margin-left: auto; margin-right: auto; color: white;">
+              Si estás viendo esto significa que tu cuenta es demasiado reciente o simplemente
+              no hay estadísticas que mostrarte, ¡vuelve más tarde!.
               </p>    
                 <ion-button size="large" shape="round" class="reloadAuxiliar" slots="icon-only" fill="outline" (click)="reloadStats()">    
                     <ion-label style="font-size: 14px; font-family: 'Poppins', sans-serif; font-weight: bold;">Intentar de nuevo</ion-label>
@@ -135,37 +159,38 @@
 
           <div *ngIf="this.cargado && !this.errorPresentedArtists">
           <ion-list>
-            <ion-card *ngFor="let topArtist of listaTopArtistas; let i=index" style="--background: rgb(59, 59, 59); width:95%; margin-left: auto; margin-right: auto; align-items: center;">
-              <ion-card-header>
-                  <ion-toolbar style="--background: transparent">
-                    <ion-avatar>
-                      <img src="{{topArtist.image}}">
-                    </ion-avatar>
-                    <ion-buttons slot="end">
-                        <ion-icon *ngIf="this.i === 0" size="large" src="assets/trophy.svg" (click)="presentToast(1)"></ion-icon>
-                        <ion-icon *ngIf="this.topArtist.popularity > 80" size="large" src="assets/popularity.svg" (click)="presentToast(2)" style="margin-left: 8px;"></ion-icon>
-                        <ion-icon *ngIf="this.topArtist.followers > 1000000" size="large" src="assets/million.svg" (click)="presentToast(3)" style="margin-left: 8px;"></ion-icon>
+            <ion-item lines="full" *ngFor="let topArtist of listaTopArtistas; let i=index">
+              <ion-card style="--background: rgb(59, 59, 59); width:100%; margin-left: auto; margin-right: auto; align-items: center;">
+                <ion-card-header>
+                    <ion-toolbar style="--background: transparent">
+                      <ion-avatar>
+                        <img src="{{topArtist.image}}">
+                      </ion-avatar>
+                      <ion-buttons slot="end">
+                          <ion-icon *ngIf="this.i === 0" size="large" src="assets/trophy.svg" (click)="presentToast(1)"></ion-icon>
+                          <ion-icon *ngIf="this.topArtist.popularity > 80" size="large" src="assets/popularity.svg" (click)="presentToast(2)" style="margin-left: 8px;"></ion-icon>
+                          <ion-icon *ngIf="this.topArtist.followers > 1000000" size="large" src="assets/million.svg" (click)="presentToast(3)" style="margin-left: 8px;"></ion-icon>
+                        
+                        <ion-icon size="large" (click)="this.openArtistProfile(topArtist)" style="margin-left: 8px;" src="assets/spotify.svg"></ion-icon>
                       
-                      <ion-icon size="large" (click)="this.openArtistProfile(topArtist)" style="margin-left: 8px;" src="assets/spotify.svg"></ion-icon>
-                    
-                      </ion-buttons>
-                  </ion-toolbar>
-                 
-                <ion-card-title *ngIf="this.i > 2" style="font-family: 'Poppins', sans-serif; font-weight: bold; margin-top: 15px; color:white;">{{i+1}}. {{topArtist.name}}</ion-card-title>
-                <ion-card-title *ngIf="this.i === 0" style="font-family: 'Poppins', sans-serif; font-weight: bold; margin-top: 15px; color:gold">{{i+1}}. {{topArtist.name}}</ion-card-title>
-                <ion-card-title *ngIf="this.i === 1" style="font-family: 'Poppins', sans-serif; font-weight: bold; margin-top: 15px; color:silver">{{i+1}}. {{topArtist.name}}</ion-card-title>
-                <ion-card-title *ngIf="this.i === 2" style="font-family: 'Poppins', sans-serif; font-weight: bold; margin-top: 15px; color:#CD7F32">{{i+1}}. {{topArtist.name}}</ion-card-title>
+                        </ion-buttons>
+                    </ion-toolbar>
+                  
+                  <ion-card-title *ngIf="this.i > 2" style="font-family: 'Poppins', sans-serif; font-weight: bold; margin-top: 15px; color:white;">{{i+1}}. {{topArtist.name}}</ion-card-title>
+                  <ion-card-title *ngIf="this.i === 0" style="font-family: 'Poppins', sans-serif; font-weight: bold; margin-top: 15px; color:gold">{{i+1}}. {{topArtist.name}}</ion-card-title>
+                  <ion-card-title *ngIf="this.i === 1" style="font-family: 'Poppins', sans-serif; font-weight: bold; margin-top: 15px; color:silver">{{i+1}}. {{topArtist.name}}</ion-card-title>
+                  <ion-card-title *ngIf="this.i === 2" style="font-family: 'Poppins', sans-serif; font-weight: bold; margin-top: 15px; color:#CD7F32">{{i+1}}. {{topArtist.name}}</ion-card-title>
 
-                <ion-toolbar style="--background: transparent">
-                  <ion-chip slot="start" style="margin-top: 20px;">
-                    <ion-icon name="people" style="color:white;"></ion-icon>
-                    <ion-label style="color:white; font-family: 'Poppins', sans-serif; font-size: 11px;">Popularidad: {{topArtist.popularity}}</ion-label>
-                  </ion-chip>
-                    <p style="font-family: 'Poppins', sans-serif; text-align: right; margin-bottom: -5px; margin-right: 3px;">{{topArtist.followers}} seguidores</p>
-                </ion-toolbar>
-                
-              </ion-card-header>
-            </ion-card>
+                  <ion-toolbar style="--background: transparent">
+                    <ion-chip slot="start" style="margin-top: 20px;">
+                      <ion-icon name="people" style="color:white;"></ion-icon>
+                      <ion-label style="color:white; font-family: 'Poppins', sans-serif; font-size: 11px;">Popularidad: {{topArtist.popularity}}</ion-label>
+                    </ion-chip>
+                      <p slot="end" style="font-family: 'Poppins', sans-serif; text-align: right; margin-bottom: -5px; margin-right: 3px;">{{topArtist.followers}} seguidores</p>
+                  </ion-toolbar>  
+                </ion-card-header>
+              </ion-card>
+            </ion-item>
           </ion-list> 
         </div>
           
@@ -203,8 +228,7 @@
             <p style="font-family: 'Poppins', sans-serif; width: 90%; text-align: center; margin-left: auto; margin-right: auto;margin-top:-20px; color: white;">
               ¡Ups, esto no debería de haber ocurrido!</p>
               <p style="font-family: 'Poppins', sans-serif; width: 90%; text-align: center; margin-left: auto; margin-right: auto; color: white;">
-              Por favor, asegurate de que tu cuenta de Spotify sea lo suficientemente antigua 
-              como para mostrarte alguna estadística o de tener conexión a Internet.
+              Por favor, asegurate de tener conexión a Internet.
               </p>    
                 <ion-button size="large" shape="round" class="reloadAuxiliar" slots="icon-only" fill="outline" (click)="reloadStats()">    
                     <ion-label style="font-size: 14px; font-family: 'Poppins', sans-serif; font-weight: bold;">Intentar de nuevo</ion-label>

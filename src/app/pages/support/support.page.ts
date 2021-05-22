@@ -13,17 +13,30 @@ export class SupportPage {
 
   reportList:issue[] = [];
 
+  noReports:boolean = false;
+
   constructor(private navCtrl:NavController,
               private apiIssue:ApiIssueService,
               private loading:LoadingService) { }
 
   async ionViewWillEnter() {
     this.loading.cargarLoading();
+
+    try{
       await this.getAllReports().then(()=>{
+        if(this.reportList.length==0){
+          this.noReports = true;
+        }
         setTimeout(() => {
           this.loading.pararLoading();
         }, 750);
       })
+    }catch{
+      this.noReports = true;
+      setTimeout(() => {
+        this.loading.pararLoading();
+      }, 750); 
+    }
   }
 
   closeSupportPage(){
@@ -40,11 +53,20 @@ export class SupportPage {
 
   async reloadReportList(){
     this.loading.cargarLoading();
+    try{
       await this.getAllReports().then(()=>{
+        if(this.reportList.length==0){
+          this.noReports = true;
+        }
         setTimeout(() => {
           this.loading.pararLoading();
         }, 750);
       })
+    }catch{
+      this.noReports = true;
+      setTimeout(() => {
+        this.loading.pararLoading();
+      }, 750); 
+    }
   }
-
 }

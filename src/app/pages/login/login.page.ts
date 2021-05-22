@@ -95,7 +95,7 @@ export class LoginPage {
 
   async errorToast() {
     const toast = await this.toastController.create({
-      cssClass: 'myToastLoginError',
+      cssClass: 'myToastError',
       message: "Ha habido un error, por favor, revisa tu conexión a Internet o inténtalo de nuevo más tarde",
       duration: 2500,
       position:"bottom"
