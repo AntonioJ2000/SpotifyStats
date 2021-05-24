@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
-import { ActionSheetController, AlertController, ToastController } from '@ionic/angular';
+import { ActionSheetController, ToastController } from '@ionic/angular';
 import { artist } from '../model/artist';
 import { track } from '../model/track';
 import { ClientcredentialsService } from '../services/clientcredentials.service';

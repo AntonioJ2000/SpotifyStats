@@ -2,7 +2,6 @@ import { Component, ViewChild } from '@angular/core';
 import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
 import { AlertController, IonInfiniteScroll } from '@ionic/angular';
 import { track } from '../model/track';
-import { ClientcredentialsService } from '../services/clientcredentials.service';
 import { LoadingService } from '../services/loading.service';
 import { SpotifyApiService } from '../services/spotify-api.service';
 

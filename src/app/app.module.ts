@@ -8,7 +8,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { SuperTabsModule } from '@ionic-super-tabs/angular';
-import { ApiNodeService } from './services/api-node.service';
 import { HTTP } from '@ionic-native/http/ngx';
 
 import { File } from '@ionic-native/file/ngx';
@@ -27,8 +26,7 @@ import { ProfilepopoverComponent } from './components/profilepopover/profilepopo
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, SuperTabsModule.forRoot()],
   providers: [
-    HTTP, 
-    ApiNodeService,
+    HTTP,
     File,
     Media,
     MediaCapture,

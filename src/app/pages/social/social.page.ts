@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
-import { AlertController, LoadingController, ModalController, ToastController } from '@ionic/angular';
+import { AlertController, ModalController, ToastController } from '@ionic/angular';
 import { aux_user_filter } from 'src/app/model/aux_user_filter';
 import { friend } from 'src/app/model/friend';
 import { user } from 'src/app/model/user';

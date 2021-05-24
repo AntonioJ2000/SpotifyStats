@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { ActionSheetController, AlertController, NavController, ToastController } from '@ionic/angular';
 import { issue } from 'src/app/model/issue';

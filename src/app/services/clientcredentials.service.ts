@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
-import { artist } from '../model/artist';
-import { track } from '../model/track';
 import { user } from '../model/user';
 @Injectable({
   providedIn: 'root'
