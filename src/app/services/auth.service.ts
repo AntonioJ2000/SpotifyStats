@@ -79,7 +79,7 @@ export class AuthService implements CanActivate{
     this.clientCredentials.forgetToken();
 
     setTimeout(() => {
-        this.navCtrl.navigateRoot(['/login'])
+        this.navCtrl.navigateBack(['/login'])
       },750);
   }
 

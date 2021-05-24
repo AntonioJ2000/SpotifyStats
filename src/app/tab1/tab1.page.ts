@@ -140,7 +140,7 @@ export class Tab1Page {
         name: t.items[i].name,
         popularity: t.items[i].popularity,
         spotifyURL: t.items[i].external_urls.spotify,
-        followers: t.items[i].followers.total
+        followers: this.numberWithCommas(t.items[i].followers.total)
       }
       this.listaTopArtistas.push(artistToView);
         }catch{
@@ -227,6 +227,22 @@ export class Tab1Page {
       zoom: 'no'
     }
     this.inAppBrowser.create(selectedArtist.spotifyURL, '_system', options);
+  }
+
+  /**
+   * Opens and plays a track in Spotify
+   * @param selectedTrack selected track to play and open in Spotify.
+   */
+  public openTrackInSpotify(selectedTrack:track){
+    const options: InAppBrowserOptions = {
+      toolbar: 'yes',
+      zoom: 'no'
+    }
+    this.inAppBrowser.create(selectedTrack.spotifyURL, '_system', options);
+  }
+
+  public numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   }
 
   /**

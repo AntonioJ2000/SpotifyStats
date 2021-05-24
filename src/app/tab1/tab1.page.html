@@ -77,8 +77,11 @@
           <ion-list>
             <ion-item lines="none" style="margin-top: -7px;" *ngFor = "let topTrack of listaTopCanciones; let i=index"> 
               <ion-card style="width:100%; margin-left: auto; margin-right: auto; align-items: center;">
-                <ion-item lines="full" class="itemBackground">
+                <ion-item lines="full" class="itemBackground" (click)="openTrackInSpotify(this.topTrack)">
+               
+                  <ion-icon size="small" class="iconSPosition" src="assets/spotify.svg"></ion-icon>
                   
+
                   <p *ngIf="this.i > 2" slot="start" class="index">{{i+1}}.</p>
                   <p *ngIf="this.i === 0" slot="start" style="color:gold" class="index">{{i+1}}.</p>
                   <p *ngIf="this.i === 1" slot="start" style="color:silver" class="index">{{i+1}}.</p>
@@ -94,9 +97,7 @@
                     </ion-label>
                   </ion-label>
 
-                  <ion-icon *ngIf="this.i === 0" size="small" src="assets/goldmedal.svg" slot="end"></ion-icon>
-                  <ion-icon *ngIf="this.i === 1" size="small" src="assets/silvermedal.svg" slot="end"></ion-icon>
-                  <ion-icon *ngIf="this.i === 2" size="small" src="assets/bronzemedal.svg" slot="end"></ion-icon>
+                  
 
                   </ion-item>
               </ion-card>
@@ -238,8 +239,9 @@
           <ion-list>
             <ion-item lines="none" style="margin-top: -7px;" *ngFor = "let playedTrack of listaEscuchadasRecientemente"> 
               <ion-card style="width:100%; margin-left: auto; margin-right: auto; align-items: center;">
-                <ion-item lines="full" class="itemBackground">
-                      <img slot="start" style="height: 20%; width: 20%; margin-top: 7px; margin-bottom: 7px;" src="{{playedTrack.trackThumbnail}}">          
+                <ion-item lines="full" class="itemBackground" (click)="openTrackInSpotify(this.playedTrack)">
+                  <ion-icon size="small" class="iconSPosition" src="assets/spotify.svg"></ion-icon>
+                  <img slot="start" style="height: 20%; width: 20%; margin-top: 7px; margin-bottom: 7px;" src="{{playedTrack.trackThumbnail}}">          
                     <ion-label>
                     <p class="track">{{playedTrack.trackName}}</p>
 

@@ -17,8 +17,8 @@
 <ion-content>
   <ion-list>
       <ion-item-sliding lines="none" style="margin-top: -7px;" *ngFor = "let report of reportList;"> 
-        <ion-item-options side="start" (ionSwipe)="this.deleteSelectedReport()">
-          <ion-item-option color="transparent" expandable (click)="this.deleteSelectedReport()">
+        <ion-item-options side="start" (ionSwipe)="this.confirmDeleteReport(this.report.id)">
+          <ion-item-option color="transparent" expandable (click)="this.confirmDeleteReport(this.report.id)">
             <ion-icon name="trash" style="font-size: x-large;" 
             ></ion-icon>
           </ion-item-option>

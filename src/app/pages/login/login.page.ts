@@ -29,60 +29,57 @@ export class LoginPage {
    * without giving credentials again to the server.
    */
   async ngOnInit(){
-    try{
-      this.storage.getItem('themeColor').then((data)=>{
-        this.themeService.setThemeOnInit(data.theme)
-      })
+      try{
+        this.storage.getItem('themeColor').then((data)=>{
+          this.themeService.setThemeOnInit(data.theme)
+        })
 
-    }catch{
-      console.log('Error al obtener color');
-    }
+      }catch{
+        console.log('Error al obtener color');
+      }
 
-    
-    try{
-      this.storage.getItem('visibleProfile').then((data)=>{
-        this.clientCredentials.config.profileVisible = data.isVisible;
-      })
-    }catch{
-      console.log('Error al obtener la preferencia')
-    }
- 
-    try{
-      this.storage.getItem('conditionsAccepted').then((data)=>{
-        this.clientCredentials.config.topAlertAccepted = data.isAccepted;
-      })
-    }catch{
-      console.log('Error al leer la configuración')
-      this.clientCredentials.config.topAlertAccepted = false;
-    }
+      try{
+        this.storage.getItem('visibleProfile').then((data)=>{
+          this.clientCredentials.config.profileVisible = data.isVisible;
+        })
+      }catch{
+        console.log('Error al obtener la preferencia')
+      }
+  
+      try{
+        this.storage.getItem('conditionsAccepted').then((data)=>{
+          this.clientCredentials.config.topAlertAccepted = data.isAccepted;
+        })
+      }catch{
+        console.log('Error al leer la configuración')
+        this.clientCredentials.config.topAlertAccepted = false;
+      }
+
+      try{
+        this.storage.getItem('topConfig').then((data)=>{
+          this.clientCredentials.config.stats_cap = data.value;
+        })
+      }catch{
+        console.log('Error al leer la configuración')
+        this.clientCredentials.config.stats_cap = 20;
+      }
 
     try{
-      this.storage.getItem('topConfig').then((data)=>{
-        this.clientCredentials.config.stats_cap = data.value;
-      })
-    }catch{
-      console.log('Error al leer la configuración')
-      this.clientCredentials.config.stats_cap = 20;
-    }
+    await this.storage.getItem('refreshToken').then(async(data)=>{  
+      try{
+      this.clientCredentials.client.refresh_token = data.encryptedRefreshToken;
+      let refreshedToken = await this.spotifyApi.getRefreshedToken();
+      this.clientCredentials.client.access_token = refreshedToken.access_token;
+              
+      this.authService.loginNative(); 
+      }catch{
+        await this.errorToast();
+      }        
+    })
 
-    try{
-    await this.storage.getItem('refreshToken').then(
-      async(data)=>{
-        
-          try{
-          this.clientCredentials.client.refresh_token = data.encryptedRefreshToken;
-          let refreshedToken = await this.spotifyApi.getRefreshedToken();
-          this.clientCredentials.client.access_token = refreshedToken.access_token;
-                  
-          this.authService.loginNative(); 
-          }catch{
-            await this.errorToast();
-          }        
-      })
-      
-        }catch(err){
-          console.log('Storage Error')
-        }
+    }catch(err){
+      console.log('Storage Error')
+    }
   }
 
   /**

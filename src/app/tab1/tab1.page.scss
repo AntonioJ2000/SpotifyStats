@@ -29,6 +29,7 @@
 }
 
 .track{
+    width: 85%;
     font-family: 'Poppins', sans-serif;
     font-size: 14px;
     font-weight: bold;
@@ -44,4 +45,12 @@
 
 .index{
     font-weight: bold;
+}
+
+
+.iconSPosition{
+    //margin-top: -25px;
+    position:absolute;
+    right:15px;
+    top:15px;
 }

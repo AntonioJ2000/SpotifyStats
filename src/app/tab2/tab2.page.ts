@@ -183,12 +183,11 @@ export class Tab2Page {
    * Opens and plays a track in Spotify
    * @param selectedTrack selected track to play and open in Spotify.
    */
-  public openSongInSpotify(selectedTrack:track){
+  public openTrackInSpotify(selectedTrack:track){
     const options: InAppBrowserOptions = {
       toolbar: 'yes',
       zoom: 'no'
     }
-    console.log(selectedTrack.spotifyURL)
     this.inAppBrowser.create(selectedTrack.spotifyURL, '_system', options);
   }
 

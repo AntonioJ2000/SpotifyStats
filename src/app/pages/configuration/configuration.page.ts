@@ -6,6 +6,7 @@ import { ActionSheetController, AlertController, NavController, ToastController 
 import { issue } from 'src/app/model/issue';
 import { ApiIssueService } from 'src/app/services/api-issue.service';
 import { ApiUserService } from 'src/app/services/api-user.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { ClientcredentialsService } from 'src/app/services/clientcredentials.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { ThemeService } from 'src/app/services/theme.service';
@@ -32,7 +33,9 @@ export class ConfigurationPage {
               private navCtrl:NavController,
               private formBuilder:FormBuilder,
               private apiIssue:ApiIssueService,
-              private toastController: ToastController) {  
+              private toastController: ToastController,
+              private authS:AuthService)
+              {  
 
        this.tasks=this.formBuilder.group({
           issueTitle:['', Validators.required],
@@ -50,8 +53,24 @@ export class ConfigurationPage {
   /**
    * Function that deletes the user created account for social and logs out from the app.
    */
-  deleteUserAccount(){
-    //Borrar al usuario de la base de datos y sacarlo al login.
+  async deleteUserAccount(){
+    this.loading.cargarLoading();
+
+    try{
+      await this.apiUser.removeUser(this.clientCredentials.user.id).then(()=>{
+        this.authS.logout();
+        setTimeout(() => {
+          this.loading.pararLoading();
+        }, 500);
+      });
+    }catch{
+      console.log("No se ha podido eliminar el usuario");
+      setTimeout(() => {
+        this.removeClientToast();
+        this.loading.pararLoading();
+      }, 500);
+    }
+
   }
 
   /**
@@ -315,7 +334,7 @@ export class ConfigurationPage {
       cssCl = 'myToast'
       msg = "El reporte ha sido enviado correctamente.";
     }else if(!success){
-      cssCl = 'myToastError'
+      cssCl = 'myToastErrorBottom'
       msg = "Error al enviar el reporte, inténtalo más tarde o comprueba tu conexión a Internet."
     }
 
@@ -323,6 +342,16 @@ export class ConfigurationPage {
       cssClass: cssCl,
       message: msg,
       duration: 1500,
+      position:"bottom"
+    });
+    toast.present();
+  }
+
+  async removeClientToast(){
+    const toast = await this.toastController.create({
+      cssClass: 'myToastErrorBottom',
+      message: 'Error al eliminar tu cuenta, por favor inténtalo de nuevo más tarde.',
+      duration: 2000,
       position:"bottom"
     });
     toast.present();

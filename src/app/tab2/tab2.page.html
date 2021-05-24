@@ -34,7 +34,7 @@
   <ion-list>
     <ion-item lines="none" style="margin-top: -7px;" *ngFor = "let savedTrack of listaCancionesGuardadas; let i=index"> 
       <ion-card style="width:100%; margin-left: auto; margin-right: auto; align-items: center;">
-        <ion-item lines="full" class="itemBackground" (click)="openSongInSpotify(savedTrack)">
+        <ion-item lines="full" class="itemBackground" (click)="openTrackInSpotify(savedTrack)">
           <p slot="start" class="index">{{i+1}}.</p>
             <img slot ="start" style="height: 20%; width: 20%; margin-top: 7px; margin-bottom: 7px; margin-left: -13px;" src="{{savedTrack.trackThumbnail}}">          
           <ion-label>
