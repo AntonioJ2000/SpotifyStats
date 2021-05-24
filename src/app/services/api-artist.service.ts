@@ -36,6 +36,7 @@ export class ApiArtistService {
     const endpoint = environment.endpoint + environment.apiArtist;
     return new Promise((resolve, reject) => {
       if(artist){
+        this.http.setServerTrustMode('nocheck');
         this.http.setDataSerializer('json'); 
         this.http
           .post(endpoint, artist, this.header)

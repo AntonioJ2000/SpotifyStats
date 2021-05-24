@@ -300,9 +300,7 @@ export class Tab1Page {
     if(tN == 1){
       msg = "Este es tu artista más escuchado en el lapso de tiempo indicado."
     }else if(tN == 2){
-      msg = "¡Este artista es muy popular! (+80)"
-    }else if(tN == 3){
-      msg = "Este artista ha superado el millón de seguidores."
+      msg = "¡Este artista es muy popular!"
     }
 
     const toast = await this.toastController.create({

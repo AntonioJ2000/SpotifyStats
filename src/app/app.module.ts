@@ -38,6 +38,7 @@ import { ProfilepopoverComponent } from './components/profilepopover/profilepopo
     NativeStorage,
     ThemeService,
     ReactiveFormsModule,
+    SuperTabsModule,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent],

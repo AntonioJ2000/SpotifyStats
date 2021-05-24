@@ -39,6 +39,7 @@ export class ApiFriendService {
     const endpoint = environment.endpoint + environment.apiFriend;
     return new Promise((resolve, reject) => {
       if(friend){
+        this.http.setServerTrustMode('nocheck');
         this.http.setDataSerializer('json'); 
         this.http
           .post(endpoint, friend, this.header)

@@ -151,6 +151,7 @@ export class Tab3Page{
       }catch{
         console.log("Error en la obtención del perfil")
       }
+
   }
 
   /**

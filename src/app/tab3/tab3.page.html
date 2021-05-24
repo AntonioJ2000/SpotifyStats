@@ -52,12 +52,12 @@
     <ion-skeleton-text animated></ion-skeleton-text>
   </ion-avatar>
 
-  <p class="displayName" *ngIf="specialInfoLoaded && !this.errorProfile">{{loggedUser.display_name}}</p>
+  <p class="displayName" *ngIf="specialInfoLoaded && !this.errorProfile">{{loggedUser.displayName}}</p>
   <p *ngIf="!specialInfoLoaded && !this.errorProfile">
     <ion-skeleton-text animated style="width: 40%; margin-left: auto; margin-right: auto; margin-top: 35px;"></ion-skeleton-text>
   </p>
 
-  <ion-toolbar *ngIf="!this.errorProfile" lines="none" style="margin-top: -10px; --background: transparent;">
+  <ion-toolbar *ngIf="!this.errorProfile" lines="none" style="margin-top: -25px; --background: transparent;">
       <p slot="start" class="userId" *ngIf="specialInfoLoaded">ID: {{loggedUser.id}}</p>
       <p slot="end" class="followers" *ngIf="specialInfoLoaded && this.loggedUser.followers > 0">{{loggedUser.followers}} <span *ngIf="this.loggedUser.followers > 1">seguidores</span><span *ngIf="this.loggedUser.followers == 1">seguidor</span></p> 
       <p slot="end" class="followers" *ngIf="specialInfoLoaded && this.loggedUser.followers == 0">N/A</p>
@@ -65,7 +65,7 @@
 
   <p *ngIf="this.isDeveloperAccount && this.specialInfoLoaded" class="defaultFont" style="color:gold; text-align: center; margin-top: -5px;">Cuenta de desarrollador</p>
   
-  <div *ngIf="!this.errorProfile" style="text-align: center; margin-top: -15px;">
+  <div *ngIf="!this.errorProfile" style="text-align: center; margin-top: -20px;">
     <ion-button fill="outline" shape="round" class="profileButton" (click)="openUserProfile()">
       <ion-icon src="assets/spotify.svg" slot="start"></ion-icon>
       <ion-label class="defaultFont">Ver en Spotify</ion-label> 

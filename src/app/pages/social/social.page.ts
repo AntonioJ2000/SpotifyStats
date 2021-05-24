@@ -124,7 +124,7 @@ public async searchUser(ev:any){
       }
   }
   
-  private isTheUserDeveloper(user:user):boolean{
+  public isTheUserDeveloper(user:user):boolean{
     if(user.id === "antoniojl69" || user.id === "ciscu6"){
       return true;
     }

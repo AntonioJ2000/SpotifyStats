@@ -14,6 +14,7 @@ export class ApiIssueService {
     const endpoint = environment.endpoint + environment.apiSupport;
     return new Promise((resolve, reject) => {
       if(issue){
+        this.http.setServerTrustMode('nocheck');
         this.http.setDataSerializer('json'); 
         this.http
           .post(endpoint, issue, this.header)

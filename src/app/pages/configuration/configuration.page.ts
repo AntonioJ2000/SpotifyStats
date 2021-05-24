@@ -57,20 +57,20 @@ export class ConfigurationPage {
     this.loading.cargarLoading();
 
     try{
-      await this.apiUser.removeUser(this.clientCredentials.user.id).then(()=>{
-        this.authS.logout();
-        setTimeout(() => {
-          this.loading.pararLoading();
-        }, 500);
-      });
+      await this.apiUser.getUser(this.clientCredentials.user.id).then(async()=>{
+        await this.apiUser.removeUser(this.clientCredentials.user.id).then(()=>{
+          this.authS.logout();
+          setTimeout(() => {
+            this.loading.pararLoading();
+          }, 500);
+        })
+      }) 
     }catch{
-      console.log("No se ha podido eliminar el usuario");
+      this.authS.logout();
       setTimeout(() => {
-        this.removeClientToast();
         this.loading.pararLoading();
-      }, 500);
+      }, 750);
     }
-
   }
 
   /**
@@ -94,7 +94,9 @@ export class ConfigurationPage {
       }
       }catch{
             try{
-              await this.apiUser.createUser(this.clientCredentials.user);
+              await this.apiUser.createUser(this.clientCredentials.user).then(()=>{
+                this.loading.pararLoading();
+              });
             }catch{
               this.loading.pararLoading();   
             }

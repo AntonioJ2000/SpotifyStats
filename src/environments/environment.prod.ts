@@ -11,5 +11,6 @@ export const environment = {
   apiUser: 'user/',
   apiArtist: 'artist/',
   apiTrack: 'song/',
-  apiFriend: 'friend/'
+  apiFriend: 'friend/',
+  apiSupport: 'support/'
 };

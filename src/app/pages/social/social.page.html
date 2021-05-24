@@ -56,7 +56,7 @@
                                   
                         <ion-label style="padding-bottom: 7px; padding-top: 7px;">
                           <!------ Nombre de usuario a mostrar (displayName) -->
-                          <p class="userName">{{this.followedUser.displayName}} <ion-icon *ngIf="this.isTheUserDeveloper(this.followedUser)" src="assets/developermedal.svg"></ion-icon> </p>
+                          <p class="userName">{{this.followedUser.displayName}} <ion-icon *ngIf="isTheUserDeveloper(this.followedUser)" src="assets/developermedal.svg"></ion-icon> </p>
                           
                           <!------ Seguidores del usuario -->
                           <ion-label>
@@ -101,7 +101,7 @@
                              
                   <ion-label style="padding-bottom: 7px; padding-top: 7px;">
                     <!------ Nombre de usuario a mostrar (displayName) -->
-                    <p class="userName">{{this.user.displayName}} <ion-icon *ngIf="this.isTheUserDeveloper(this.user)" src="assets/developermedal.svg"></ion-icon></p>
+                    <p class="userName">{{this.user.displayName}} <ion-icon *ngIf="isTheUserDeveloper(this.user)" src="assets/developermedal.svg"></ion-icon></p>
                   
                     <!------ Seguidores del usuario -->
                     <ion-label>

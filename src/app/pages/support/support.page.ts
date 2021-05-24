@@ -61,9 +61,9 @@ export class SupportPage {
    */
   public async confirmDeleteReport(id:any){
     const alert = await this.alertController.create({
-      cssClass: 'deleteNote',
-      header: "Borrar rutina",
-      message: "¿Está usted seguro de que desea borrar la rutina?",
+      cssClass: 'myAlert',
+      header: "Borrar reporte",
+      message: "¿Estás seguro de que quieres borrar el reporte seleccionado?",
       buttons: [
         {
           text: "Cancelar",

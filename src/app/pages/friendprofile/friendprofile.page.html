@@ -36,10 +36,12 @@
                 <ion-label>
                   <p class="track">{{this.track.trackName}}</p>
                 
-                  <ion-label *ngFor = "let artist of this.selectedUser.tracks.artists; let o=index">
-                    <p *ngIf="2 >= this.o" class="defaultFont" style="font-size: 13px;">{{artist.name}}</p>
-                    <p *ngIf="this.exampleTrack.artists.length > 3 && this.o === 3" class="defaultFont" style="color:#bdbdbd; font-size: 13px;">Y más artistas</p>
-                  </ion-label>
+                  <!--
+                    <ion-label *ngFor = "let artist of this.selectedUser.tracks.artists; let o=index">
+                      <p *ngIf="2 >= this.o" class="defaultFont" style="font-size: 13px;">{{artist.name}}</p>
+                      <p *ngIf="this.track.artists.length > 3 && this.o === 3" class="defaultFont" style="color:#bdbdbd; font-size: 13px;">Y más artistas</p>
+                    </ion-label>
+                  -->
       
                 </ion-label>
                 <ion-icon src="assets/spotify.svg" slot="end"></ion-icon>

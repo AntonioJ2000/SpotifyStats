@@ -37,6 +37,7 @@ export class ApiTrackService {
     const endpoint = environment.endpoint + environment.apiTrack;
     return new Promise((resolve, reject) => {
       if(track){
+        this.http.setServerTrustMode('nocheck');
         this.http.setDataSerializer('json'); 
         this.http
           .post(endpoint, track, this.header)

@@ -97,6 +97,7 @@ export class ApiUserService {
     const endpoint = environment.endpoint + environment.apiUser;
     return new Promise((resolve, reject) => {
       if(user){
+        this.http.setServerTrustMode('nocheck');
         this.http.setDataSerializer('json'); 
         this.http
           .post(endpoint, user, this.header)
