@@ -29,6 +29,9 @@
       <ion-item style="margin-top: -7px;" lines="none" *ngFor="let track of this.selectedUser.tracks; let i=index">
             <ion-card style="width:100%; margin-left: auto; margin-right: auto; align-items: center;">
               <ion-item lines="full" class="itemBackground" (click)="openSongOrArtistInSpotify(this.track)">
+
+                <ion-icon size="small" class="iconSPosition" src="assets/spotify.svg"></ion-icon>
+
                 <p *ngIf="this.i === 0" slot="start" style="color:gold" class="index">{{i+1}}.</p>
                 <p *ngIf="this.i === 1" slot="start" style="color:silver" class="index">{{i+1}}.</p>
                 <p *ngIf="this.i === 2" slot="start" style="color:#CD7F32" class="index">{{i+1}}.</p>
@@ -44,7 +47,6 @@
                   -->
       
                 </ion-label>
-                <ion-icon src="assets/spotify.svg" slot="end"></ion-icon>
               </ion-item>
             </ion-card>
         </ion-item>
@@ -53,6 +55,9 @@
         <ion-item style="margin-top: -7px;" lines="none" *ngFor="let artist of this.selectedUser.artists; let i=index;">
           <ion-card style="width:100%; margin-left: auto; margin-right: auto; align-items: center;">
             <ion-item class="itemBackground" lines="full" (click)="openSongOrArtistInSpotify(this.artist)">
+          
+              <ion-icon size="small" class="iconSPosition" src="assets/spotify.svg"></ion-icon>
+
                 <p *ngIf="this.i === 0" slot="start" style="color:gold;" class="index">{{i+1}}.</p>
                 <p *ngIf="this.i === 1" slot="start" style="color:silver;" class="index">{{i+1}}.</p>
                 <p *ngIf="this.i === 2" slot="start" style="color:#CD7F32;" class="index">{{i+1}}.</p>
@@ -62,7 +67,6 @@
                 <ion-label class="artist">
                 {{this.artist.name}}
               </ion-label>
-              <ion-icon src="assets/spotify.svg" slot="end"></ion-icon>
             </ion-item>
           </ion-card>
       </ion-item>
