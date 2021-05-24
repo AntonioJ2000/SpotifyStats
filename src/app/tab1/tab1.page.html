@@ -169,9 +169,7 @@
                       </ion-avatar>
                       <ion-buttons slot="end">
                           <ion-icon *ngIf="this.i === 0" size="large" src="assets/trophy.svg" (click)="presentToast(1)"></ion-icon>
-                          <ion-icon *ngIf="this.topArtist.popularity > 80" size="large" src="assets/popularity.svg" (click)="presentToast(2)" style="margin-left: 8px;"></ion-icon>
-                          <ion-icon *ngIf="this.topArtist.followers > 1000000" size="large" src="assets/million.svg" (click)="presentToast(3)" style="margin-left: 8px;"></ion-icon>
-                        
+                          <ion-icon *ngIf="this.topArtist.popularity > 80" size="large" src="assets/popularity.svg" (click)="presentToast(2)" style="margin-left: 8px;"></ion-icon>                        
                         <ion-icon size="large" (click)="this.openArtistProfile(topArtist)" style="margin-left: 8px;" src="assets/spotify.svg"></ion-icon>
                       
                         </ion-buttons>
