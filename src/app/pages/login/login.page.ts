@@ -29,40 +29,14 @@ export class LoginPage {
    * without giving credentials again to the server.
    */
   async ngOnInit(){
-      try{
-        this.storage.getItem('themeColor').then((data)=>{
-          this.themeService.setThemeOnInit(data.theme)
-        })
 
-      }catch{
-        console.log('Error al obtener color');
-      }
+    await this.getThemeColorFromStorage();
 
-      try{
-        this.storage.getItem('visibleProfile').then((data)=>{
-          this.clientCredentials.config.profileVisible = data.isVisible;
-        })
-      }catch{
-        console.log('Error al obtener la preferencia')
-      }
-  
-      try{
-        this.storage.getItem('conditionsAccepted').then((data)=>{
-          this.clientCredentials.config.topAlertAccepted = data.isAccepted;
-        })
-      }catch{
-        console.log('Error al leer la configuración')
-        this.clientCredentials.config.topAlertAccepted = false;
-      }
+    await this.getVisibleSocialFromStorage();
 
-      try{
-        this.storage.getItem('topConfig').then((data)=>{
-          this.clientCredentials.config.stats_cap = data.value;
-        })
-      }catch{
-        console.log('Error al leer la configuración')
-        this.clientCredentials.config.stats_cap = 20;
-      }
+    await this.getConditionsAcceptedFromStorage();
+    
+    await this.getTopConfigurationFromStorage();
 
     try{
     await this.storage.getItem('refreshToken').then(async(data)=>{  
@@ -98,6 +72,49 @@ export class LoginPage {
       position:"bottom"
     });
     toast.present();
+  }
+
+  public async getThemeColorFromStorage(){
+    try{
+      await this.storage.getItem('themeColor').then((data)=>{
+        this.themeService.setThemeOnInit(data.theme)
+      })
+
+    }catch{
+      console.log('Error al obtener color');
+    }
+  }
+
+  public async getVisibleSocialFromStorage(){
+    try{
+      await this.storage.getItem('visibleProfile').then((data)=>{
+        this.clientCredentials.config.profileVisible = data.isVisible;
+      })
+    }catch{
+      console.log('Error al obtener la preferencia')
+    }
+  }
+
+  public async getConditionsAcceptedFromStorage(){
+    try{
+      await this.storage.getItem('conditionsAccepted').then((data)=>{
+        this.clientCredentials.config.topAlertAccepted = data.isAccepted;
+      })
+    }catch{
+      console.log('Error al leer la configuración')
+      this.clientCredentials.config.topAlertAccepted = false;
+    }
+  }
+
+  public async getTopConfigurationFromStorage(){
+    try{
+      await this.storage.getItem('topConfig').then((data)=>{
+        this.clientCredentials.config.stats_cap = data.value;
+      })
+    }catch{
+      console.log('Error al leer la configuración')
+      this.clientCredentials.config.stats_cap = 20;
+    }
   }
 
 }

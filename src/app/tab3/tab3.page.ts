@@ -10,6 +10,8 @@ import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/
 import { artist } from '../model/artist';
 import { ProfilepopoverComponent } from '../components/profilepopover/profilepopover.component';
 import { user } from '../model/user';
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
+import { ThemeService } from '../services/theme.service';
 
 
 @Component({
@@ -56,7 +58,9 @@ export class Tab3Page{
     private spotifyApi:SpotifyApiService,
     private authService:AuthService,
     private inAppBrowser:InAppBrowser,
-    public popoverController: PopoverController) {}
+    public popoverController: PopoverController,
+    private storage:NativeStorage,
+    private themeS:ThemeService) {}
 
     /**
      * If its the first time the user enters the view, load al his profile obtined via requests.
@@ -282,10 +286,12 @@ export class Tab3Page{
   /**
    * Allows the current client sign out from the app.
    */
-  public logout(){
+  public async logout(){
+    await this.storage.clear();
     this.loading.cargarLoading();
     setTimeout(() => {
       this.loading.pararLoading();
+      this.themeS.enableDefault();
     }, 1000);
     this.authService.logout();
   }

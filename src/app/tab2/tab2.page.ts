@@ -86,7 +86,7 @@ export class Tab2Page {
    * Removes all items from the list to make the aplication work out fast.
    * offsetVar must be set to 0 due to the successful result of the next requests
    */
-  ionViewWillLeave(){
+  ionViewDidLeave(){
     this.errorPresentedSavedTracks = false;
     this.cargado = false;
     if(this.listaCancionesGuardadas.length != 0){

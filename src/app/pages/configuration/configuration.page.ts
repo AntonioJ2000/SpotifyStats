@@ -57,15 +57,17 @@ export class ConfigurationPage {
 
     try{
       await this.apiUser.getUser(this.clientCredentials.user.id).then(async()=>{
-        await this.apiUser.removeUser(this.clientCredentials.user.id).then(()=>{
+        await this.apiUser.removeUser(this.clientCredentials.user.id).then(async()=>{
+          await this.storage.clear();
           this.authS.logout();
           setTimeout(() => {
+            this.themeService.enableDefault();
             this.loading.pararLoading();
           }, 500);
         })
       }) 
     }catch{
-      this.authS.logout();
+      this.removeClientToast();
       setTimeout(() => {
         this.loading.pararLoading();
       }, 750);
@@ -117,6 +119,9 @@ export class ConfigurationPage {
     }, 1000);
   }
 
+  /**
+   * Allows the client to send a new report to the developers
+   */
   async sendReport(){
     this.loading.cargarLoading();
 
@@ -328,6 +333,10 @@ export class ConfigurationPage {
     await alert.present();
   }
 
+  /**
+   * Toast that indicates if the issue has been succesfully been sent.
+   * @param success true if issue was sent succesfully, false if not.
+   */
   async issueSent(success:boolean) {
     let cssCl;
     let msg;
@@ -348,6 +357,9 @@ export class ConfigurationPage {
     toast.present();
   }
 
+  /**
+   * Toast if an error is encountered at user remove account time.
+   */
   async removeClientToast(){
     const toast = await this.toastController.create({
       cssClass: 'myToastErrorBottom',

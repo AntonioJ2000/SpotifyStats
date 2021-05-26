@@ -32,7 +32,7 @@ export class ClientcredentialsService {
    * Config adjusted by the client.
    */
   config = {
-    time_range: 'long_term',
+    time_range: 'short_term',
     stats_cap: 20,
     topAlertAccepted: false,
     profileVisible: true,

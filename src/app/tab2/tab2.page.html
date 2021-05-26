@@ -53,7 +53,7 @@
 
     <ion-infinite-scroll *ngIf="this.listaCancionesGuardadas.length > 0" threshold="60px" (ionInfinite)="loadData($event)">
       <ion-infinite-scroll-content *ngIf="100 > this.listaCancionesGuardadas.length"
-        loadingSpinner="dots">
+        loadingSpinner="crescent">
       </ion-infinite-scroll-content>
     </ion-infinite-scroll>
   </ion-list>

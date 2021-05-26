@@ -41,11 +41,11 @@ export class Tab1Page {
     this.skeletonTrack
   ]
 
-  listaTopCanciones: track[] = []; 
-  listaTopArtistas: artist[] = [];
-  listaEscuchadasRecientemente: track[] = [];
+  listaTopCanciones: any[] = []; 
+  listaTopArtistas: any[] = [];
+  listaEscuchadasRecientemente: any[] = [];
 
-  time_range:string='Siempre';
+  time_range:string = this.timeRange();
 
   constructor(private spotifyApi:SpotifyApiService,
               private inAppBrowser: InAppBrowser,
@@ -54,14 +54,19 @@ export class Tab1Page {
               private loading:LoadingService,
               private toastController:ToastController) {}
 
-  
   /**
   * Get or update the client statistics every time the view is displayed
   */
     async ionViewDidEnter(){
       this.loading.cargarLoading();
+        if(this.cargado){
+          this.cargado = false;
+          this.listaTopCanciones.splice(0, this.listaTopCanciones.length);
+          this.listaTopArtistas.splice(0, this.listaTopArtistas.length);
+          this.listaEscuchadasRecientemente.splice(0, this.listaEscuchadasRecientemente.length);  
+        }
 
-      setTimeout(async() => { 
+       setTimeout(async() => {
         try{
           await this.getUserTopTracks();
         }catch{
@@ -79,103 +84,48 @@ export class Tab1Page {
         }catch{
           this.errorPresentedRecentlyPlayed = true;
         }
-         
 
         setTimeout(() => { 
         this.cargado = true;
         this.loading.pararLoading();  
-      }, 1000);
-    }, 750); 
+      }, 1250);
+    }, 1000);
   }
  
   /**
    * Removes all items from the lists to make the aplication work out fast.
    */
-  async ionViewWillLeave(){
+   ionViewDidLeave(){
     this.errorPresentedTracks = false;
     this.errorPresentedArtists = false;
     this.errorPresentedRecentlyPlayed = false;
-    if(this.listaTopCanciones.length != 0 && this.listaTopArtistas.length != 0 && this.listaEscuchadasRecientemente.length != 0){
-      this.cargado = false;
-      this.listaTopCanciones.splice(0, this.listaTopCanciones.length);
-      this.listaTopArtistas.splice(0, this.listaTopArtistas.length);
-      this.listaEscuchadasRecientemente.splice(0, this.listaEscuchadasRecientemente.length);
-    }
   }
   
   /**
    * Get client top tracks via HTTP request to the Spotify API
    */
   public async getUserTopTracks(){
-    let t = await this.spotifyApi.getCurrentUserTopTracks();
-    let trackToView: track;
-    for(let i=0; i < t.items.length; i++){
-      try{
-        trackToView = {
-        id: t.items[i].id,
-        trackName: t.items[i].name,
-        spotifyURL: t.items[i].external_urls.spotify,
-        previewURL: t.items[i].preview_url,
-        artists: t.items[i].artists,
-        trackThumbnail: t.items[i].album.images[1].url
-      }  
-      this.listaTopCanciones.push(trackToView);
-      }catch{
-          console.log("Canción top con fallo detectada")
-          console.log(trackToView)
-      }
-    }
+    await this.spotifyApi.getCurrentUserTopTracks().then((data)=>{
+      this.listaTopCanciones = data.items;
+    });
   }
 
   /**
    * Get client top artists via HTTP request to the Spotify API
    */
   public async getUserTopArtists(){
-    let t = await this.spotifyApi.getCurrentUserTopArtists();
-    let artistToView: artist;
-    for(let i=0; i < t.items.length; i++){
-        try{
-        artistToView = {
-        image: t.items[i].images[1].url,
-        name: t.items[i].name,
-        popularity: t.items[i].popularity,
-        spotifyURL: t.items[i].external_urls.spotify,
-        followers: this.numberWithCommas(t.items[i].followers.total)
-      }
-      this.listaTopArtistas.push(artistToView);
-        }catch{
-            console.log("Artista con fallo detectado")
-            console.log(artistToView)
-        }
-    }
+    await this.spotifyApi.getCurrentUserTopArtists().then((data)=>{
+      this.listaTopArtistas = data.items
+    });
 }
 
   /**
    * Get client recently played tracks via HTTP request to the Spotify API.
    */
   public async getUserRecentlyPlayed(){
-    let t = await this.spotifyApi.getCurrentUserRecentlyPlayed();
-    let trackToView:track
-    for(let i=0; i < t.items.length; i++){
-      try{
-        trackToView = {
-        id: t.items[i].track.id,
-        trackName: t.items[i].track.name,
-        spotifyURL: t.items[i].track.external_urls.spotify,
-        previewURL: t.items[i].track.preview_url,
-        artists: t.items[i].track.artists,
-        trackThumbnail: t.items[i].track.album.images[1].url,
-        playedat: t.items[i].played_at
-      }
-      this.listaEscuchadasRecientemente.push(trackToView);
-    
-    }catch{
-        console.log("Canción reciente con fallo detectada")
-        console.log(trackToView)
-    }
-      
-      
-    }
+    await this.spotifyApi.getCurrentUserRecentlyPlayed().then((data)=>{
+      this.listaEscuchadasRecientemente = data.items
+    });
   }
 
   /**
@@ -221,28 +171,56 @@ export class Tab1Page {
    * Opens a selected artist profile in the Spotify App, if not installed, opens it with a browser.
    * @param selectedArtist artist to open. 
    */
-  public openArtistProfile(selectedArtist:artist){
+  public openArtistProfile(selectedArtist:any){
     const options: InAppBrowserOptions = {
       toolbar: 'yes',
       zoom: 'no'
     }
-    this.inAppBrowser.create(selectedArtist.spotifyURL, '_system', options);
+    this.inAppBrowser.create(selectedArtist.external_urls.spotify, '_system', options);
   }
 
   /**
    * Opens and plays a track in Spotify
    * @param selectedTrack selected track to play and open in Spotify.
    */
-  public openTrackInSpotify(selectedTrack:track){
+  public openTrackInSpotify(selectedTrack:any){
     const options: InAppBrowserOptions = {
       toolbar: 'yes',
       zoom: 'no'
     }
-    this.inAppBrowser.create(selectedTrack.spotifyURL, '_system', options);
+    this.inAppBrowser.create(selectedTrack.external_urls.spotify, '_system', options);
   }
 
+  /**
+   * Opens and plays a track in Spotify
+   * @param selectedTrack selected track to play and open in Spotify.
+   */
+  public openRecentlyTrackInSpotify(selectedRecentlyTrack:any){
+    const options: InAppBrowserOptions = {
+      toolbar: 'yes',
+      zoom: 'no'
+    }
+    this.inAppBrowser.create(selectedRecentlyTrack.track.external_urls.spotify, '_system', options);
+  }
+
+  /**
+   * Puts dots every 3 numbers starting from the end.
+   * @param x Number to put the dots in.
+   * @returns String with the new number
+   */
   public numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  }
+
+  public timeRange():string{
+    if(this.clientCredentials.config.time_range = 'short_term'){
+      return '4 sem.'
+    }else if(this.clientCredentials.config.time_range = 'medium_term'){
+      return '6 meses'
+    }else if(this.clientCredentials.config.time_range = 'long_term'){
+      return 'Siempre'
+    }
+
   }
 
   /**
