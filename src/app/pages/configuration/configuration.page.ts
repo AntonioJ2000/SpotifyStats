@@ -81,41 +81,43 @@ export class ConfigurationPage {
   async makeUserProfileVisibleSocial(){
     this.loading.cargarLoading();
     setTimeout(async() => {
-    this.toggleChecked = !this.toggleChecked;
-    this.clientCredentials.config.profileVisible = !this.clientCredentials.config.profileVisible;
-    
-    try{
-      if(this.toggleChecked){ 
-        if(await this.apiUser.getUser(this.clientCredentials.user.id)) {
-          await this.apiUser.updateUser(this.clientCredentials.user).then(()=>{
-            this.storage.setItem('visibleProfile',{isVisible: true})
-            this.loading.pararLoading();
-          });
-        } 
-      }
-      }catch{
-            try{
-              await this.apiUser.createUser(this.clientCredentials.user).then(()=>{
-                this.loading.pararLoading();
-              });
-            }catch{
-              this.loading.pararLoading();   
-            }
+      this.toggleChecked = !this.toggleChecked;
+      this.clientCredentials.config.profileVisible = !this.clientCredentials.config.profileVisible;
+      
+      console.log(this.toggleChecked);
+
+      try{
+        if(this.toggleChecked){ 
+          if(await this.apiUser.getUser(this.clientCredentials.user.id)) {
+            await this.apiUser.updateUser(this.clientCredentials.user).then(()=>{
+              this.storage.setItem('visibleProfile',{isVisible: true})
+              this.loading.pararLoading();
+            });
+          } 
+        }
+        }catch{
+          try{
+            await this.apiUser.createUser(this.clientCredentials.user).then(()=>{
+              this.loading.pararLoading();
+            });
+          }catch{
+            this.loading.pararLoading();   
+          }
         }
 
-    try{
-      if(!this.toggleChecked){
-        if(await this.apiUser.getUser(this.clientCredentials.user.id)){
-          await this.apiUser.removeUser(this.clientCredentials.user.id).then(()=>{
-            this.storage.setItem('visibleProfile',{isVisible: false})
-            this.loading.pararLoading();
-          });
-        } 
+      try{
+        if(!this.toggleChecked){
+          if(await this.apiUser.getUser(this.clientCredentials.user.id)){
+            await this.apiUser.removeUser(this.clientCredentials.user.id).then(()=>{
+              this.storage.setItem('visibleProfile',{isVisible: false})
+              this.loading.pararLoading();
+            });
+          } 
+        }
+      }catch{
+        this.loading.pararLoading();
+        console.log('El usuario no existe')
       }
-    }catch{
-      this.loading.pararLoading();
-      console.log('El usuario no existe')
-    }
     }, 1000);
   }
 

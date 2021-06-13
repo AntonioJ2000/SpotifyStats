@@ -40,8 +40,10 @@ export class AuthService implements CanActivate{
       clientId: "6c3f918a4ab240db97b1c104475c8ea6",
       redirectUrl: "spotifystats://callback",
       scopes: ["user-read-recently-played", "playlist-read-private", "playlist-read-collaborative", "user-top-read", "user-library-read"],
-      tokenExchangeUrl: "https://ajsstats.herokuapp.com/exchange",
-      tokenRefreshUrl: "https://ajsstats.herokuapp.com/refresh"
+      //tokenExchangeUrl: "https://ajsstats.herokuapp.com/exchange",
+      tokenExchangeUrl: "https://luque21.duckdns.org:4081/spotifynode/exchange",
+      //tokenRefreshUrl: "https://ajsstats.herokuapp.com/refresh"
+      tokenRefreshUrl: "https://luque21.duckdns.org:4081/spotifynode/refresh"
     };
 
     cordova.plugins.spotifyAuth.authorize(config)
