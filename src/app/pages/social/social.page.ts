@@ -63,6 +63,16 @@ export class SocialPage {
 
   public async addUserToBBDD(){
     try{
+      try{
+        if(await this.apiUser.getUser(this.loggedUser.id)){
+          await this.apiUser.updateUser(this.loggedUser).then(async()=>{
+              console.log("He actualizado el usuario");
+          });
+        }
+      }catch{
+        await this.apiUser.createUser(this.loggedUser);
+      }
+      /*
       if(await this.apiUser.getUser(this.loggedUser.id)){
         await this.apiUser.updateUser(this.loggedUser).then(async()=>{
             console.log("He actualizado el usuario");
@@ -70,6 +80,7 @@ export class SocialPage {
       }else{
         await this.apiUser.createUser(this.loggedUser);
       }
+      */
     }catch{
       console.log("Error en la matrix");
     }
@@ -121,7 +132,7 @@ public async searchUser(ev:any){
         this.serverError = true;
         setTimeout(() => {
           this.loadingController.pararLoading();
-        }, 400);   
+        }, 400);
       }
   }
   
