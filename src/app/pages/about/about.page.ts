@@ -30,6 +30,17 @@ export class AboutPage {
     this.inAppBrowser.create('https://twitter.com/antoniojl2000','_system', options);
   }
 
+    /**
+   * Opens the Instagram App with the Dev2 profile. If not installed, opens it in a web browser.
+   */
+     public openDev1Instagram(){
+      const options: InAppBrowserOptions = {
+        toolbar: 'yes',
+        zoom: 'no'
+      }
+      this.inAppBrowser.create('https://instagram.com/antoniojl2k','_system', options);
+    }
+
   /**
    * Opens the Twitter App with the Dev2 profile. If not installed, opens it in a web browser.
    */
