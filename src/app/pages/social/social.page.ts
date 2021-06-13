@@ -39,11 +39,12 @@ export class SocialPage {
               private loadingController: LoadingService) { }
 
   async ngOnInit(){
-    await this.addUserToBBDD();
+    
   }            
 
   async ionViewWillEnter(){
     this.loadingController.cargarLoading();
+    await this.addUserToBBDD();
     try{
     await this.getFollowedUsers().then(async ()=>{
       await this.getUnfowedUsers();
@@ -61,17 +62,17 @@ export class SocialPage {
   }
 
   public async addUserToBBDD(){
-      try{
-        if(await this.apiUser.getUser(this.loggedUser.id)){
-          await this.apiUser.updateUser(this.loggedUser).then(async()=>{
-              console.log("He actualizado el usuario");
-          });
-        }else{
-          await this.apiUser.createUser(this.loggedUser);
-        }
-      }catch{
-        console.log("Error en la matrix");
+    try{
+      if(await this.apiUser.getUser(this.loggedUser.id)){
+        await this.apiUser.updateUser(this.loggedUser).then(async()=>{
+            console.log("He actualizado el usuario");
+        });
+      }else{
+        await this.apiUser.createUser(this.loggedUser);
       }
+    }catch{
+      console.log("Error en la matrix");
+    }
   }
 
   ionViewWillLeave(){
