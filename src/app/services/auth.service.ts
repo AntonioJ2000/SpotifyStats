@@ -3,7 +3,6 @@ import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { NavController, ToastController } from '@ionic/angular';
 import { ClientcredentialsService } from './clientcredentials.service';
-import { LoadingService } from './loading.service';
 
 declare var cordova: any;
 
@@ -13,10 +12,8 @@ declare var cordova: any;
 export class AuthService implements CanActivate{
 
   constructor(private clientCredentials:ClientcredentialsService,
-              private router:Router,
               private storage:NativeStorage,
               private toastController:ToastController,
-              private loading:LoadingService,
               private navCtrl: NavController) { }
 
   /**
